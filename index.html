@@ -176,5 +176,5 @@ fetch("news.json?t="+Date.now()).then(function(r){return r.json()}).then(functio
 .catch(function(){if(!best){$("st").textContent="News load nahi ho payi. Internet check karo.";draw()}})}
 window.addEventListener("online",load);
 if("serviceWorker" in navigator&&location.protocol.indexOf("http")===0)navigator.serviceWorker.register("sw.js").catch(function(){});
-$("q").oninput=function(){lim=30;draw()};brand();load();setInterval(load,300000);
+$("q").oninput=function(){lim=30;draw()};brand();load();setInterval(load,120000);
 </script></body></html>
