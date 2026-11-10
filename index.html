@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Trading Desk: Stocks, Results, Crypto, Gold &amp; Silver News</title>
+<link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg"><meta name="theme-color" content="#0b5d4b">
+<style>
+:root{--bg:#f4f1ea;--card:#fff;--ink:#1d2433;--mute:#667085;--line:#e0dccf;--acc:#0b5d4b;--accink:#fff;--tag:#e7f1ee}
+@media (prefers-color-scheme:dark){:root{--bg:#10151c;--card:#171e28;--ink:#eaeef5;--mute:#98a2b3;--line:#27313f;--acc:#5fd3b0;--accink:#10151c;--tag:#1c3a33}}
+html{box-sizing:border-box}*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 "Segoe UI",system-ui,-apple-system,Roboto,sans-serif;padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}
+main{max-width:820px;margin:0 auto;padding:18px 14px 50px}
+h1{font:700 clamp(26px,6vw,36px)/1.1 Georgia,serif;margin:6px 0 4px}
+.sub{color:var(--mute);margin:0 0 14px;font-size:14px}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+input{flex:1 1 200px;font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 12px;min-height:44px}
+button,a.btn{font:inherit;cursor:pointer;min-height:44px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px 14px;text-decoration:none;display:inline-flex;align-items:center}
+button[aria-pressed="true"]{background:var(--acc);color:var(--accink);border-color:var(--acc)}
+.chips button{min-height:36px;padding:4px 12px;border-radius:99px;font-size:14px}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+ul{list-style:none;margin:14px 0 0;padding:0}
+li{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:8px}
+li a{color:var(--ink);font-weight:600;text-decoration:none}
+li a:hover{text-decoration:underline}
+.meta{color:var(--mute);font-size:13px;margin-top:4px}
+.tag{background:var(--tag);color:var(--acc);border-radius:99px;padding:1px 9px;margin-left:6px;font-size:12px}
+#st{color:var(--mute);font-size:13px;margin:6px 0}
+.brand{display:flex;align-items:center;gap:10px}.logo{width:38px;height:38px;border-radius:10px;background:var(--acc);color:var(--accink);display:grid;place-items:center;font:800 15px Georgia,serif;letter-spacing:.5px}
+.dis{color:var(--mute);font-size:12px;margin-top:26px;border-top:1px solid var(--line);padding-top:12px}
+</style></head><body><main>
+<div class="brand"><span class="logo">TD</span><h1>Trading Desk</h1></div>
+<p class="sub">Stocks, company results, crypto aur gold/silver ki news. Sirf headlines aur source links, koi buy/sell salah nahi. <a id="yt" target="_blank" rel="noopener" style="display:none;color:var(--acc)">YouTube pe dekho</a></p>
+<div class="row" id="tabs" role="group" aria-label="Section"></div>
+<div class="row chips" id="tags" role="group" aria-label="Filter"></div>
+<div class="row"><input id="q" type="search" placeholder="Company ya keyword (e.g. Reliance, Bitcoin)" aria-label="Search"><a class="btn" id="more" target="_blank" rel="noopener">Google News pe aur dekho</a></div>
+<div id="st" aria-live="polite"></div>
+<ul id="list"></ul>
+<p class="dis">Ye sirf news ka collection hai. Har headline uske original publisher ki hai, poori khabar ke liye link kholo. Ye investment advice ya research nahi hai. Invest karne se pehle apni research karo ya SEBI-registered advisor se poochho.</p>
+</main>
+<script src="news.js"></script>
+<script>
+var YT="";/* apne YouTube channel ka link yahan daalo, jaise https://youtube.com/@InsBySun */
+var TABS=[["all","Sab"],["stocks","Stocks"],["results","Results"],["crypto","Crypto"],["commodities","Gold & Silver"]];
+var TAGS=["Results","Dividend / Bonus / Split","Board & Deals"];
+var tab="all",tag="",data=[],$=function(i){return document.getElementById(i)};
+function btn(box,list,get,set){box.innerHTML="";list.forEach(function(x){var b=document.createElement("button");b.textContent=x[1];b.setAttribute("aria-pressed",get()===x[0]);b.onclick=function(){set(x[0]);draw()};box.appendChild(b)})}
+function ago(iso){var m=Math.max(1,Math.round((Date.now()-new Date(iso))/6e4));if(m<60)return m+" min pehle";var h=Math.round(m/60);return h<24?h+" ghante pehle":Math.round(h/24)+" din pehle"}
+function draw(){
+btn($("tabs"),TABS,function(){return tab},function(v){tab=v;tag=""});
+var showTags=tab==="all"||tab==="stocks"||tab==="results";
+btn($("tags"),[["","Sab type"]].concat(TAGS.map(function(t){return[t,t]})),function(){return tag},function(v){tag=v});
+$("tags").style.display=showTags?"flex":"none";
+var q=$("q").value.trim().toLowerCase();
+var l=data.filter(function(x){return(tab==="all"||x.c===tab)&&(!tag||x.g===tag)&&(!q||x.t.toLowerCase().indexOf(q)>-1)}).slice(0,80);
+var ul=$("list");ul.innerHTML="";
+l.forEach(function(x){var li=document.createElement("li"),a=document.createElement("a");a.href=x.u;a.target="_blank";a.rel="noopener";a.textContent=x.t;
+var m=document.createElement("div");m.className="meta";m.textContent=x.s+" - "+ago(x.d);
+if(x.g){var t=document.createElement("span");t.className="tag";t.textContent=x.g;m.appendChild(t)}
+li.appendChild(a);li.appendChild(m);ul.appendChild(li)});
+if(!l.length&&data.length)$("st").textContent="Is filter mein koi news nahi mili.";
+$("more").href="https://news.google.com/search?hl=en-IN&gl=IN&ceid=IN:en&q="+encodeURIComponent((q||"stock market India")+" when:2d")}
+function apply(j,saved){data=j.items||[];$("st").textContent=(j.updated?"Last update: "+ago(j.updated)+" ("+data.length+" headlines)":"News abhi load nahi hui. Thodi der baad check karo.")+(saved?" - saved copy, online aane pe update hogi":"");draw()}
+function load(){
+var best=window.NEWS||null;
+try{var c=JSON.parse(localStorage.getItem("td-news")||"null");if(c&&c.items&&c.items.length&&(!best||!best.updated||(c.updated&&c.updated>best.updated)))best=c}catch(e){}
+if(best&&best.items&&best.items.length)apply(best,!navigator.onLine);
+if(location.protocol==="file:")return;
+fetch("news.json?t="+Date.now()).then(function(r){return r.json()}).then(function(j){try{localStorage.setItem("td-news",JSON.stringify(j))}catch(e){}apply(j,false)})
+.catch(function(){if(!best)$("st").textContent="News load nahi ho payi. Internet check karo."})}
+window.addEventListener("online",load);
+if(YT){$("yt").href=YT;$("yt").style.display="inline"}
+if("serviceWorker" in navigator&&location.protocol.indexOf("http")===0)navigator.serviceWorker.register("sw.js").catch(function(){});
+$("q").oninput=draw;load();setInterval(load,300000);
+</script></body></html>
