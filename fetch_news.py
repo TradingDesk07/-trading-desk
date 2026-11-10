@@ -4,9 +4,9 @@ import xml.etree.ElementTree as ET
 from email.utils import parsedate_to_datetime
 from datetime import datetime, timezone
 
-def gn(q):
-    return "https://news.google.com/rss/search?" + urllib.parse.urlencode(
-        {"q": q + " when:2d", "hl": "en-IN", "gl": "IN", "ceid": "IN:en"})
+def gn(q, hi=False):
+    p = {"q": q + " when:2d", "hl": "hi" if hi else "en-IN", "gl": "IN", "ceid": "IN:hi" if hi else "IN:en"}
+    return "https://news.google.com/rss/search?" + urllib.parse.urlencode(p)
 
 FEEDS = [
     ("stocks", "Economic Times", "https://economictimes.indiatimes.com/markets/stocks/rssfeeds/2146842.cms"),
@@ -18,6 +18,15 @@ FEEDS = [
     ("results", "", gn("quarterly results net profit NSE company")),
     ("crypto", "Cointelegraph", "https://cointelegraph.com/rss"),
     ("crypto", "CoinDesk", "https://www.coindesk.com/arc/outboundfeeds/rss/"),
+    ("ipo", "", gn("IPO subscription listing NSE BSE")),
+    ("ipo", "", gn("IPO allotment date India")),
+    ("global", "", gn("Wall Street Dow Nasdaq S&P 500 stocks")),
+    ("global", "", gn("Asian markets Nikkei Hang Seng Europe stocks")),
+    ("economy", "", gn("RBI repo rate inflation India economy")),
+    ("economy", "", gn("India GDP budget economy news")),
+    ("hindi", "", gn("शेयर बाजार सेंसेक्स निफ्टी", True)),
+    ("hindi", "", gn("कंपनी नतीजे शेयर", True)),
+    ("hindi", "", gn("सोना चांदी भाव", True)),
     ("commodities", "", gn("gold price India")),
     ("commodities", "", gn("silver price India MCX")),
 ]
@@ -25,7 +34,7 @@ FEEDS = [
 # Tips/recommendation wali headlines hata do: ye tool sirf news hai.
 BLOCK = re.compile(r"stocks? to buy|buy or sell|to buy|target price|top picks?|should you buy|"
                    r"multibagger|stock tips?|buy rating|sell rating|price target|"
-                   r"intraday pick|trading call", re.I)
+                   r"intraday pick|trading call|खरीदें|टारगेट|टिप्स|मल्टीबैगर", re.I)
 
 TAGS = [
     ("Results", r"results?|net profit|earnings|\bq[1-4]\b|revenue|quarter"),
@@ -34,8 +43,9 @@ TAGS = [
 ]
 
 
-QUOTES = [("Nifty 50", "^NSEI", ""), ("Sensex", "^BSESN", ""), ("Bank Nifty", "^NSEBANK", ""),
-          ("Bitcoin", "BTC-USD", "$"), ("Gold", "GC=F", "$"), ("Silver", "SI=F", "$"), ("USD/INR", "USDINR=X", "")]
+QUOTES = [("Nifty 50", "^NSEI", ""), ("Sensex", "^BSESN", ""), ("Bank Nifty", "^NSEBANK", ""), ("India VIX", "^INDIAVIX", ""),
+          ("Dow Jones", "^DJI", ""), ("Nasdaq", "^IXIC", ""), ("Nikkei 225", "^N225", ""),
+          ("Bitcoin", "BTC-USD", "$"), ("Gold /oz", "GC=F", "$"), ("Silver /oz", "SI=F", "$"), ("Crude Oil", "CL=F", "$"), ("USD/INR", "USDINR=X", "")]
 
 def get_quotes():
     out = []
@@ -55,6 +65,26 @@ def get_quotes():
         except Exception as e:
             print("QUOTE SKIP", name, e)
     return out
+
+SECTORS = [
+    ("Banking", r"bank|hdfc|icici|\bsbi\b|axis|kotak|nbfc|financ"),
+    ("IT", r"infosys|\btcs\b|wipro|\bhcl|tech mahindra|\bIT (stocks?|sector|services|firm)|software"),
+    ("Auto", r"\bauto|maruti|tata motors|bajaj auto|hero moto|eicher|\bev\b|mahindra"),
+    ("Pharma", r"pharma|drug|cipla|dr reddy|hospital"),
+    ("Metals", r"metal|steel|jsw|hindalco|vedanta|aluminium|copper"),
+    ("Energy", r"\boil\b|\bgas\b|reliance|ongc|ntpc|power|coal|energy"),
+]
+
+def get_mood():
+    try:
+        req = urllib.request.Request("https://api.alternative.me/fng/?limit=1", headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=20) as r:
+            d = json.loads(r.read())["data"][0]
+        print("MOOD OK", d["value"])
+        return {"v": int(d["value"]), "l": d["value_classification"]}
+    except Exception as e:
+        print("MOOD SKIP", e)
+        return None
 
 def fetch(url):
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 NewsRadar"})
@@ -93,13 +123,19 @@ def main():
                     if re.search(pat, title, re.I):
                         tag = name
                         break
+            sc = ""
+            if cat in ("stocks", "results"):
+                for name, pat in SECTORS:
+                    if re.search(pat, title, re.I):
+                        sc = name
+                        break
             seen.add(key)
             items.append({"c": cat, "t": title, "u": link, "s": s or "News",
-                          "d": dt.isoformat(), "g": tag})
+                          "d": dt.isoformat(), "g": tag, "sc": sc})
             n += 1
         print("OK", cat, s or "Google News", n)
     items.sort(key=lambda x: x["d"], reverse=True)
-    out = {"updated": datetime.now(timezone.utc).isoformat(), "items": items[:400], "quotes": get_quotes()}
+    out = {"updated": datetime.now(timezone.utc).isoformat(), "items": items[:400], "quotes": get_quotes(), "mood": get_mood()}
     with open("news.json", "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False)
     with open("news.js", "w", encoding="utf-8") as f:
