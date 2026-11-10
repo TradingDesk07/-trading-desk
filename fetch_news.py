@@ -44,9 +44,12 @@ def get_quotes():
             u = "https://query1.finance.yahoo.com/v8/finance/chart/" + urllib.parse.quote(sym) + "?interval=1d&range=5d"
             req = urllib.request.Request(u, headers={"User-Agent": "Mozilla/5.0"})
             with urllib.request.urlopen(req, timeout=20) as r:
-                m = json.loads(r.read())["chart"]["result"][0]["meta"]
+                res = json.loads(r.read())["chart"]["result"][0]
+            m = res["meta"]
             p = float(m["regularMarketPrice"])
-            prev = float(m.get("chartPreviousClose") or m.get("previousClose"))
+            closes = [c for c in res["indicators"]["quote"][0]["close"] if c is not None]
+            # pichhle session ka close (5 din purana nahi): last bar aaj/latest session ka hota hai
+            prev = float(closes[-2]) if len(closes) >= 2 else float(m.get("previousClose") or p)
             out.append({"n": name, "p": round(p, 2), "c": round((p - prev) / prev * 100, 2), "cur": cur})
             print("QUOTE OK", name)
         except Exception as e:
