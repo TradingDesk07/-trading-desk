@@ -33,6 +33,26 @@ TAGS = [
     ("Board & Deals", r"board|acqui|merger|buyback|stake|order win|contract|\bipo\b|fund.?rais|\bqip\b|rights issue"),
 ]
 
+
+QUOTES = [("Nifty 50", "^NSEI", ""), ("Sensex", "^BSESN", ""), ("Bank Nifty", "^NSEBANK", ""),
+          ("Bitcoin", "BTC-USD", "$"), ("Gold", "GC=F", "$"), ("Silver", "SI=F", "$"), ("USD/INR", "USDINR=X", "")]
+
+def get_quotes():
+    out = []
+    for name, sym, cur in QUOTES:
+        try:
+            u = "https://query1.finance.yahoo.com/v8/finance/chart/" + urllib.parse.quote(sym) + "?interval=1d&range=5d"
+            req = urllib.request.Request(u, headers={"User-Agent": "Mozilla/5.0"})
+            with urllib.request.urlopen(req, timeout=20) as r:
+                m = json.loads(r.read())["chart"]["result"][0]["meta"]
+            p = float(m["regularMarketPrice"])
+            prev = float(m.get("chartPreviousClose") or m.get("previousClose"))
+            out.append({"n": name, "p": round(p, 2), "c": round((p - prev) / prev * 100, 2), "cur": cur})
+            print("QUOTE OK", name)
+        except Exception as e:
+            print("QUOTE SKIP", name, e)
+    return out
+
 def fetch(url):
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 NewsRadar"})
     with urllib.request.urlopen(req, timeout=25) as r:
@@ -76,7 +96,7 @@ def main():
             n += 1
         print("OK", cat, s or "Google News", n)
     items.sort(key=lambda x: x["d"], reverse=True)
-    out = {"updated": datetime.now(timezone.utc).isoformat(), "items": items[:400]}
+    out = {"updated": datetime.now(timezone.utc).isoformat(), "items": items[:400], "quotes": get_quotes()}
     with open("news.json", "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False)
     with open("news.js", "w", encoding="utf-8") as f:
