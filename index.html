@@ -96,6 +96,17 @@ details.about{margin-top:14px}details.about summary{cursor:pointer;font-weight:7
 .gl{display:flex;justify-content:space-between;gap:8px;font-size:13px;color:var(--mute)}.gl b{color:var(--ink)}
 .gd dt{font-weight:700}.gd dd{margin:4px 0 0;color:var(--mute);font-size:14.5px}
 .tbl{overflow-x:auto;margin-top:10px}.tbl table{border-collapse:collapse;width:100%;font-size:14px}.tbl th,.tbl td{text-align:left;padding:6px 8px;border-top:1px solid var(--line)}
+.cu{color:var(--up);fill:var(--up);stroke:var(--up)}.cd{color:var(--dn);fill:var(--dn);stroke:var(--dn)}
+.ed{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(270px,1fr))}
+.ed .card h4{margin:10px 0 4px;font-size:16px}.ed .card p{margin:4px 0;color:var(--mute);font-size:14px}.ed .card p b{color:var(--ink)}
+.ed .vis{background:var(--bg);border-radius:10px;padding:8px}.ed svg{width:100%;height:110px;display:block}
+.bd{display:inline-block;border-radius:99px;padding:1px 10px;font-size:12px;font-weight:700;border:1px solid currentColor}.bd.u{color:var(--up)}.bd.d{color:var(--dn)}.bd.n{color:var(--mute)}
+.edn{background:var(--soft);border-radius:12px;padding:12px 14px;font-size:13.5px;margin-bottom:14px}
+select{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:99px;padding:8px 14px;min-height:44px}
+.vi{display:flex;gap:10px;align-items:center;margin-bottom:10px;text-decoration:none;color:var(--ink);font-size:14px;font-weight:600}.vi img{width:104px;height:58px;object-fit:cover;border-radius:8px;flex:none}
+.bar{display:flex;height:12px;border-radius:99px;overflow:hidden;background:var(--line);margin:10px 0}.bar i{display:block;height:100%}#ba{background:var(--up)}#bd{background:var(--dn)}
+#wt{white-space:pre-wrap;font:13px/1.5 inherit;background:var(--bg);border-radius:10px;padding:10px;margin:0 0 10px;max-height:220px;overflow:auto}
+.tbl td.u{color:var(--up);font-weight:700}.tbl td.d{color:var(--dn);font-weight:700}
 </style></head><body>
 <a id="ann" class="ann" hidden></a>
 <div class="tk" id="tq" hidden aria-label="Index aur price flash"></div>
@@ -106,6 +117,7 @@ details.about{margin-top:14px}details.about summary{cursor:pointer;font-weight:7
 <nav class="stick" aria-label="News section"><div class="wrap"><div class="tabs" id="tabs" role="group"></div></div></nav>
 <div class="wrap grid">
 <section id="qc" class="card" hidden><h3>Markets (delayed)</h3><div class="qg" id="qg"></div>
+<div id="brd" hidden style="margin-top:14px"><h3>Large-cap breadth (approx)</h3><div class="bar"><i id="ba"></i><i id="bd"></i></div><div class="gl"><b id="bt"></b></div><p class="note2">Sirf hamare bade stocks ka hisaab hai, NSE ka asli ADR nahi.</p></div>
 <div id="mood" hidden style="margin-top:14px"><h3>Crypto market mood</h3><div class="gauge"><i id="gm"></i></div><div class="gl"><b id="mv"></b><span>Fear &larr; &rarr; Greed</span></div><p class="note2">Source: alternative.me. Ye sirf crypto market ka sentiment hai, kharidne-bechne ki salah nahi.</p></div></section>
 <main>
 <div class="sr" id="sr"><input id="q" type="search" placeholder="Company ya keyword search karo (Reliance, Bitcoin...)" aria-label="Search"><a class="btn" id="more" target="_blank" rel="noopener">Google News pe aur dekho</a></div>
@@ -115,10 +127,16 @@ details.about{margin-top:14px}details.about summary{cursor:pointer;font-weight:7
 <section class="card" id="ipo" hidden style="margin-bottom:12px"><h3>IPO Corner</h3><p style="margin:0 0 10px;color:var(--mute);font-size:14px">Open, upcoming aur closed IPO ki official list aur dates exchange ki site par hoti hain. Neeche IPO ki taaza headlines hain.</p><a class="btn" target="_blank" rel="noopener" href="https://www.nseindia.com/market-data/all-upcoming-issues-ipo">NSE: Current aur Upcoming IPO</a><div class="tbl" id="ipot"></div><p class="note2">Hum IPO apply karne ki salah nahi dete, aur GMP jaisi unofficial cheezein nahi dikhate.</p></section>
 <div class="cg" id="calc" hidden></div>
 <div class="cg" id="gl" hidden></div>
+<div id="edu" hidden></div>
+<div id="scn" hidden></div>
+<div class="ed" id="sa" hidden></div>
 <ul id="list"><li class="sk"></li><li class="sk"></li><li class="sk"></li><li class="sk"></li></ul>
 <div id="em"></div><button id="lm" hidden>Aur dikhao</button>
 </main>
-<aside><section class="card cta"><h3>Community</h3><p>Roz ki market news, videos aur updates ke liye jud jao.</p><div class="row" id="soc2"></div></section>
+<aside><section class="card" id="wrap" hidden><h3>Aaj ka Market Wrap</h3><pre id="wt"></pre><div class="row"><button id="wcp">Copy karo</button><button id="wsh">Share</button></div></section>
+<section class="card" id="vid" hidden><h3>Latest videos</h3><div id="vl"></div></section>
+<section class="card" id="evc" hidden><h3>Aane wale events</h3><div id="evl"></div></section>
+<section class="card cta"><h3>Community</h3><p>Roz ki market news, videos aur updates ke liye jud jao.</p><div class="row" id="soc2"></div></section>
 <p class="dis">Ye sirf news ka collection hai. Har headline uske original publisher ki hai, poori khabar ke liye link kholo. Prices delayed aur approximate hain. Ye investment advice ya research nahi hai. Invest karne se pehle apni research karo ya SEBI-registered advisor se poochho.</p><details class="card about"><summary>About, Disclaimer aur Privacy</summary>
 <p><b>About:</b> Trading Desk ek free market-news collection hai jo stocks, results, IPO, crypto aur gold/silver ki headlines ek jagah dikhata hai. Har headline publisher ke source ka link hai. Hum koi stock recommend nahi karte.</p>
 <p><b>Disclaimer:</b> Ye investment advice, research ya salah nahi hai. Prices delayed aur approximate hain. Hum SEBI-registered advisor nahi hain. Invest karne se pehle apni research karo ya registered advisor se poochho. Calculators sirf maths hain, returns guaranteed nahi hote.</p>
@@ -136,6 +154,9 @@ var CFG={
  logoImg:"logo-c-monitor.svg",
  accent:"",
  links:{youtube:"https://www.youtube.com/@TradingDeskWithSuraj07",instagram:"https://www.instagram.com/tradingdeskwithsuraj07",telegram:"https://t.me/tradingdeskwithsuraj",whatsapp:"https://chat.whatsapp.com/HnNIF39XQ8LFZCuuljmGzN",x:"",website:""},
+ newsletter:"",           /* email newsletter signup ka link (Buttondown/Mailchimp), khali = button nahi */
+ goatcounter:"",          /* GoatCounter ka naam (goatcounter.com par free account), jaise "tradingdesk" (khali = band) */
+ events:[],               /* aane wale events, jaise [{d:"2026-11-20",t:"RBI policy"},{d:"2026-11-25",t:"Q2 results season ka aakhri hafta"}] */
  feedback:"",             /* Google Form ka link, jaise "https://forms.gle/xxxx" (khali = button nahi dikhega) */
  ipos:[],                 /* IPO table (optional), jaise [{n:"Company",open:"12 Nov",close:"14 Nov",band:"Rs 100-105"}] */
  announce:{text:"",link:""},   /* upar ek line ki ghoshna, jaise "Naya video aa gaya" (khali = band) */
@@ -152,7 +173,7 @@ whatsapp:'<path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.1-1.3A10 10 0 1 0 12 2zm5.2 1
 x:'<path d="M18 3h3l-7.2 8.3L22 21h-6.5l-5-6.3L4.7 21H1.6l7.7-8.8L1 3h6.7l4.5 5.8zM16.9 19h1.7L6.3 4.9H4.5z"/>',
 website:'<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18" fill="none" stroke="currentColor" stroke-width="2"/>'};
 var NM={youtube:"YouTube",instagram:"Instagram",telegram:"Telegram",whatsapp:"WhatsApp",x:"X (Twitter)",website:"Website"};
-var TABS=[["all","Sab"],["stocks","Stocks"],["results","Results"],["crypto","Crypto"],["commodities","Gold & Silver"],["ipo","IPO"],["global","Global"],["economy","Economy"],["hindi","Hindi"],["wl","\u2605 Meri List"],["bm","Saved"],["gl","Glossary"],["calc","Calculators"]];
+var TABS=[["all","Sab"],["stocks","Stocks"],["results","Results"],["crypto","Crypto"],["commodities","Gold & Silver"],["ipo","IPO"],["global","Global"],["economy","Economy"],["hindi","Hindi"],["wl","\u2605 Meri List"],["bm","Saved"],["scn","Scanner"],["sa","Scam Alert"],["edu","Education"],["gl","Glossary"],["calc","Calculators"]];
 var SECT=["Banking","IT","Auto","Pharma","Metals","Energy"];
 var CATN={stocks:"STOCKS",results:"RESULTS",crypto:"CRYPTO",commodities:"GOLD & SILVER",ipo:"IPO",global:"GLOBAL",economy:"ECONOMY",hindi:"HINDI"};
 var TAGS=["Results","Dividend / Bonus / Split","Board & Deals"];
@@ -164,7 +185,8 @@ $("nm").textContent=CFG.name;document.title=CFG.name+": Stocks, Results, Crypto,
 var lg=$("logo");if(CFG.logoImg){var im=document.createElement("img");im.src=CFG.logoImg;im.alt=CFG.name+" logo";lg.textContent="";lg.appendChild(im)}else lg.textContent=CFG.logoText;
 if(/^#[0-9a-f]{6}$/i.test(CFG.accent)){var n=parseInt(CFG.accent.slice(1),16),L=0.299*(n>>16)+0.587*((n>>8)&255)+0.114*(n&255),s=document.documentElement.style;s.setProperty("--acc",CFG.accent);s.setProperty("--accink",L>150?"#10151c":"#ffffff")}
 addSoc($("soc"));addSoc($("soc2"));
-if(/^https?:\/\//.test(CFG.feedback||"")){var fb=document.createElement("a");fb.className="btn";fb.href=CFG.feedback;fb.target="_blank";fb.rel="noopener";fb.textContent="Kuch aur chahiye? Batao";$("soc2").appendChild(fb)}
+[[CFG.feedback,"Kuch aur chahiye? Batao"],[CFG.newsletter,"Roz ki news email par"]].forEach(function(x){if(/^https?:\/\//.test(x[0]||"")){var fb=document.createElement("a");fb.className="btn";fb.href=x[0];fb.target="_blank";fb.rel="noopener";fb.textContent=x[1];$("soc2").appendChild(fb)}});
+if(/^[a-z0-9-]+$/.test(CFG.goatcounter||"")){var gc=document.createElement("script");gc.async=true;gc.src="https://gc.zgo.at/count.js";gc.setAttribute("data-goatcounter","https://"+CFG.goatcounter+".goatcounter.com/count");document.head.appendChild(gc);var pv=document.createElement("p");pv.textContent="Analytics: ye site anonymous visitor ginti ke liye GoatCounter use karti hai (cookies ya personal tracking nahi).";document.querySelector("details.about").appendChild(pv)}
 var an=$("ann");if(CFG.announce&&CFG.announce.text){an.textContent=CFG.announce.text;if(/^https?:\/\//.test(CFG.announce.link||"")){an.href=CFG.announce.link;an.target="_blank";an.rel="noopener"}an.hidden=false}
 if(CFG.contact&&/^[^\s@]+@[^\s@]+$/.test(CFG.contact)){var ca=document.createElement("a");ca.href="mailto:"+CFG.contact;ca.textContent=CFG.contact;$("ct").appendChild(document.createTextNode("Contact: "));$("ct").appendChild(ca)}}
 $("th").onclick=function(){var d=document.documentElement,cur=d.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"),nx=cur==="dark"?"light":"dark";d.setAttribute("data-theme",nx);try{localStorage.setItem("td-theme",nx)}catch(e){}};
@@ -198,14 +220,17 @@ function drawWL(){var c=$("wc");c.innerHTML="";WL.forEach(function(w,i){var b=do
 function addWL(){var v=$("wi").value.trim();if(!v||WL.length>=20)return;if(!WL.some(function(w){return w.toLowerCase()===v.toLowerCase()}))WL.push(v);lsSet("td-wl",WL);$("wi").value="";draw()}
 $("wa").onclick=addWL;$("wi").onkeydown=function(e){if(e.key==="Enter")addWL()};
 function draw(){
-var cnt={all:data.length,wl:data.filter(matchWL).length,bm:BM.length};data.forEach(function(x){cnt[x.c]=(cnt[x.c]||0)+1});
+var wm=data.filter(matchWL),seen=0;try{seen=+localStorage.getItem("td-wl-seen")||0}catch(e){}
+var nn=wm.filter(function(x){return new Date(x.d)>seen}).length;
+var cnt={all:data.length,wl:(nn>0&&tab!=="wl"&&WL.length?wm.length+" (+"+nn+" nayi)":wm.length),bm:BM.length};data.forEach(function(x){cnt[x.c]=(cnt[x.c]||0)+1});
 btn($("tabs"),TABS,function(){return tab},function(v){tab=v;tag="";sec=""},cnt);
-var nl=tab==="calc"||tab==="gl",showF=(tab==="all"||tab==="stocks"||tab==="results");
-["sr","list","em","lm"].forEach(function(i){$(i).hidden=nl});$("calc").hidden=tab!=="calc";$("gl").hidden=tab!=="gl";$("ipo").hidden=tab!=="ipo";$("wl").hidden=tab!=="wl";
+var nl=tab==="calc"||tab==="gl"||tab==="edu"||tab==="scn"||tab==="sa",showF=(tab==="all"||tab==="stocks"||tab==="results");
+["sr","list","em","lm"].forEach(function(i){$(i).hidden=nl});$("calc").hidden=tab!=="calc";$("gl").hidden=tab!=="gl";$("edu").hidden=tab!=="edu";$("scn").hidden=tab!=="scn";$("sa").hidden=tab!=="sa";$("ipo").hidden=tab!=="ipo";$("wl").hidden=tab!=="wl";
 btn($("tags"),[["","Sab type"]].concat(TAGS.map(function(t){return[t,t]})),function(){return tag},function(v){tag=v});
 btn($("sect"),[["","Sab sector"]].concat(SECT.map(function(t){return[t,t]})),function(){return sec},function(v){sec=v});
 $("tags").hidden=!showF||nl;$("sect").hidden=!showF||nl;
-if(tab==="wl")drawWL();
+if(tab==="wl"){drawWL();try{localStorage.setItem("td-wl-seen",String(Date.now()))}catch(e){}}
+if(tab==="scn")scnDraw();
 if(nl)return;
 var q=$("q").value.trim().toLowerCase(),src=tab==="bm"?BM:data;
 var l=src.filter(function(x){if(tab==="wl"&&!matchWL(x))return false;if(tab!=="all"&&tab!=="wl"&&tab!=="bm"&&x.c!==tab)return false;if(tag&&x.g!==tag)return false;if(sec&&x.sc!==sec)return false;return !q||x.t.toLowerCase().indexOf(q)>-1});
@@ -224,7 +249,11 @@ var CALCS=[
 {t:"SIP calculator",f:[["Mahine ka SIP (\u20B9)",5000],["Expected saalana return (%)",12],["Saal",10]],fn:function(a){var i=a[1]/1200,n=a[2]*12,v=i?a[0]*((Math.pow(1+i,n)-1)/i)*(1+i):a[0]*n,inv=a[0]*n;return["Invest kiya: "+inr(inv),"Final value (approx): "+inr(v),"Gain: "+inr(v-inv)]}},
 {t:"Lumpsum calculator",f:[["Ek baar ka amount (\u20B9)",100000],["Expected saalana return (%)",12],["Saal",10]],fn:function(a){var v=a[0]*Math.pow(1+a[1]/100,a[2]);return["Invest kiya: "+inr(a[0]),"Final value (approx): "+inr(v),"Gain: "+inr(v-a[0])]}},
 {t:"FD calculator",f:[["Deposit (\u20B9)",100000],["Byaaj (% saalana)",7],["Saal",5]],fn:function(a){var v=a[0]*Math.pow(1+a[1]/400,4*a[2]);return["Deposit: "+inr(a[0]),"Maturity (quarterly compounding): "+inr(v),"Byaaj: "+inr(v-a[0])]}},
-{t:"Loan EMI calculator",f:[["Loan amount (\u20B9)",1000000],["Byaaj (% saalana)",9],["Saal",10]],fn:function(a){var r=a[1]/1200,n=a[2]*12,m=r?a[0]*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1):a[0]/n;return["Monthly EMI: "+inr(m),"Total dena: "+inr(m*n),"Total byaaj: "+inr(m*n-a[0])]}}];
+{t:"Loan EMI calculator",f:[["Loan amount (\u20B9)",1000000],["Byaaj (% saalana)",9],["Saal",10]],fn:function(a){var r=a[1]/1200,n=a[2]*12,m=r?a[0]*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1):a[0]/n;return["Monthly EMI: "+inr(m),"Total dena: "+inr(m*n),"Total byaaj: "+inr(m*n-a[0])]}},
+{t:"Position size calculator",f:[["Capital (\u20B9)",500000],["Risk per trade (%)",1],["Entry price (\u20B9)",100],["Stop-loss price (\u20B9)",95]],fn:function(a){var d=Math.abs(a[2]-a[3]);if(!d)return["Entry aur stop-loss alag rakho"];var r=a[0]*a[1]/100,q=Math.floor(r/d);return["Risk amount: "+inr(r),"Quantity: "+q+" shares","Position value: "+inr(q*a[2])]}},
+{t:"Average price calculator",f:[["Pehli quantity",100],["Pehla bhaav (\u20B9)",100],["Doosri quantity",50],["Doosra bhaav (\u20B9)",90]],fn:function(a){var q=a[0]+a[2];if(!q)return["Quantity daalo"];return["Total quantity: "+q,"Average bhaav: \u20B9"+((a[0]*a[1]+a[2]*a[3])/q).toFixed(2),"Total invest: "+inr(a[0]*a[1]+a[2]*a[3])]}},
+{t:"CAGR calculator",f:[["Shuruaati value (\u20B9)",100000],["Aakhri value (\u20B9)",200000],["Saal",5]],fn:function(a){if(a[0]<=0||a[2]<=0)return["Value aur saal daalo"];return["CAGR: "+((Math.pow(a[1]/a[0],1/a[2])-1)*100).toFixed(2)+"% saalana"]}},
+{t:"Profit / Loss calculator",f:[["Kharid bhaav (\u20B9)",100],["Bikri bhaav (\u20B9)",110],["Quantity",100],["Kul charges (\u20B9)",50]],fn:function(a){var net=(a[1]-a[0])*a[2]-a[3],inv=a[0]*a[2];return["Net P&L: "+inr(net),inv?"Return: "+(net/inv*100).toFixed(2)+"%":"Bhaav daalo"]}}];
 function calcInit(){var box=$("calc");CALCS.forEach(function(c){var d=document.createElement("section");d.className="card";var h=document.createElement("h3");h.textContent=c.t;d.appendChild(h);var ins=[],out=document.createElement("div");out.className="out";
 function run(){var a=ins.map(function(i){var v=parseFloat(i.value);return isNaN(v)||v<0?0:v});out.innerHTML="";c.fn(a).forEach(function(t){var r=document.createElement("div");r.textContent=t;out.appendChild(r)})}
 c.f.forEach(function(f,k){var lb=document.createElement("label");lb.textContent=f[0];var i=document.createElement("input");i.type="number";i.inputMode="decimal";i.min="0";i.value=f[1];i.oninput=run;lb.appendChild(i);d.appendChild(lb);ins.push(i)});
@@ -247,10 +276,128 @@ function glInit(){var d=document.createElement("section");d.className="card";var
 var h=document.createElement("h3");h.textContent="Market ke shabd, aasan bhasha mein";d.appendChild(h);d.appendChild(dl);var n=document.createElement("p");n.className="note2";n.textContent="Sirf jaankari ke liye. Ye kisi stock ya faisle ki salah nahi hai.";d.appendChild(n);$("gl").appendChild(d);$("gl").style.gridTemplateColumns="1fr"}
 function ipoInit(){var a=CFG.ipos;if(!Array.isArray(a)||!a.length)return;var t=document.createElement("table"),r=t.insertRow();["Company","Open","Close","Price band"].forEach(function(h){var c=document.createElement("th");c.textContent=h;r.appendChild(c)});
 a.forEach(function(x){var r=t.insertRow();[x.n,x.open,x.close,x.band].forEach(function(v){r.insertCell().textContent=v||"-"})});$("ipot").appendChild(t)}
+
+var EC=[
+["Hammer","u",1,[[80,82,70,72],[72,74,62,64],[64,66,54,56],[52,56,30,55]],"Girawat ke baad chhoti body aur lambi neeche ki wick. Bikri ka dabav aaya par khareedaron ne bhaav wapas oopar kheencha.","Aksar rukti hui girawat ka sanket maana jata hai.","Agli candle se confirmation dekhte hain. Akeli hammer candle kaafi nahi."],
+["Bullish Engulfing","u",2,[[84,86,76,78],[78,80,68,70],[70,72,60,62],[58,76,56,74]],"Chhoti lal candle ke baad badi hari candle jo pichhli candle ko poora dhak leti hai.","Khareedaron ka control wapas aane ka sanket maana jata hai.","Volume zyada ho to zyada bharosemand maani jaati hai."],
+["Morning Star","u",3,[[80,82,58,60],[54,57,50,52],[54,82,52,78]],"3 candle: badi lal, chhoti body (star), phir badi hari candle.","Girawat ke thakne aur palatne ka sanket maana jata hai.","Ye kam banta hai, aur kabhi-kabhi fail bhi hota hai."],
+["Piercing Line","u",2,[[80,82,56,58],[52,74,50,72]],"Badi lal candle, phir hari candle neeche khulti hai aur pichhli body ke aadhe se upar band hoti hai.","Girawat ke baad khareedari lautne ka halka sanket.","Bullish Engulfing se kamzor maana jata hai."],
+["Three White Soldiers","u",3,[[40,56,38,54],[52,68,50,66],[64,80,62,78]],"Lagatar 3 hari candles, har ek pichhli se oopar band hoti hai.","Mazboot khareedari ka sanket maana jata hai.","Bahut tez badhat ke baad ye thakaan ka bhi ishara ho sakta hai."],
+["Shooting Star","d",1,[[30,38,28,36],[36,44,34,42],[42,50,40,48],[48,74,46,50]],"Badhat ke baad chhoti body neeche aur lambi oopar ki wick. Bhaav oopar gaya par wapas gir gaya.","Badhat ke kamzor hone ka sanket maana jata hai.","Agli candle ka confirmation dekhna zaroori hai."],
+["Bearish Engulfing","d",2,[[30,38,28,36],[36,44,34,42],[50,60,48,58],[62,64,44,46]],"Chhoti hari candle ke baad badi lal candle jo use poora dhak leti hai.","Bechne walon ka control aane ka sanket maana jata hai.","Support ke paas banne par aksar bekaar rehta hai."],
+["Evening Star","d",3,[[40,66,38,64],[68,72,64,70],[66,68,40,42]],"Badi hari, chhoti body (star), phir badi lal candle.","Badhat ke thakne aur palatne ka sanket maana jata hai.","Morning Star ka ulta. Ye bhi confirmation maangta hai."],
+["Dark Cloud Cover","d",2,[[40,66,38,64],[70,72,50,52]],"Badi hari candle, phir lal candle oopar khulti hai aur pichhli body ke aadhe se neeche band hoti hai.","Badhat mein dabav aane ka sanket.","Piercing Line ka ulta."],
+["Three Black Crows","d",3,[[80,82,64,66],[68,70,52,54],[56,58,40,42]],"Lagatar 3 lal candles, har ek pichhli se neeche band hoti hai.","Mazboot bikri ka sanket maana jata hai.","Bahut gir chuke bhaav par ye aksar der se aata hai."],
+["Hanging Man","d",1,[[30,38,28,36],[36,44,34,42],[42,50,40,48],[52,54,30,50]],"Badhat ke baad Hammer jaisi shape, par oopar banti hai.","Badhat ke kamzor hone ka halka sanket.","Akele isse zyada matlab nikalna theek nahi."],
+["Doji","n",1,[[50,70,30,50]],"Open aur close lagbhag barabar. Khareedar aur bechne wale barabar the.","Fasla-hin (indecision) ka sanket.","Ye kahan banta hai, usse matlab badalta hai."]];
+var EP=[
+["Double Bottom","u","10,20 40,75 70,40 100,78 130,40 170,15",[[10,40,170,40]],"Bhaav do baar lagbhag same neeche level tak gir kar ubharta hai (W shape).","Neckline ke upar band hone par pattern poora maana jata hai."],
+["Inverse Head & Shoulders","u","10,25 30,60 45,45 70,85 95,45 110,60 130,45 170,15",[[10,45,170,45]],"3 neeche ke point, beech wala sabse gehra (head).","Neckline ke upar nikalna bullish maana jata hai."],
+["Cup and Handle","u","10,25 25,48 45,66 70,74 95,66 115,48 130,32 140,25 150,35 160,38 172,28 190,10",[[10,25,140,25]],"Gol pyaale jaisa gadda, phir chhota sa dip (handle), phir oopar nikalna.","Handle ke baad resistance toot-na kaafi dekha jata hai."],
+["Ascending Triangle","u","10,80 40,25 60,60 85,25 100,48 120,25 135,38 150,25 175,10",[[40,25,150,25],[10,80,135,38]],"Oopar ek samaan resistance, neeche badhte hue lows.","Resistance ke upar volume ke saath nikalna bullish maana jata hai."],
+["Bull Flag","u","10,90 40,30 55,36 65,34 80,42 90,40 105,48 130,15",[],"Tez badhat (pole), phir halka neeche dhalta channel (flag), phir wapas badhat.","Flag ke upar nikalna badhat ke jaari rehne ka sanket."],
+["Double Top","d","10,80 40,25 70,60 100,22 130,60 170,85",[[10,60,170,60]],"Bhaav do baar lagbhag same oopar ke level se wapas aata hai (M shape).","Neckline ke neeche band hone par pattern poora maana jata hai."],
+["Head & Shoulders","d","10,75 30,40 45,55 70,15 95,55 110,40 130,55 170,85",[[10,55,170,55]],"3 oopar ke point, beech wala sabse oonchha (head).","Neckline ke neeche toot-na bearish maana jata hai."],
+["Descending Triangle","d","10,20 40,75 60,40 85,75 100,52 120,75 135,62 150,75 175,92",[[40,75,150,75],[10,20,135,62]],"Neeche ek samaan support, oopar girte hue highs.","Support ke neeche toot-na bearish maana jata hai."],
+["Rising Wedge","d","10,85 40,60 55,70 90,40 100,52 130,25 140,35 160,60 185,88",[],"Bhaav oopar jaata hai par range sankri hoti jaati hai.","Aksar neeche toot kar khatam hota hai."],
+["Bear Flag","d","10,10 40,70 55,64 65,66 80,58 90,60 105,52 130,85",[],"Tez girawat (pole), phir halka oopar chadhta channel, phir wapas girawat.","Flag ke neeche nikalna girawat jaari rehne ka sanket."]];
+var EI=[
+["Moving Average (SMA / EMA)","Pichhle N dino ke close ka average (EMA mein naye dino ko zyada wazan). Aam: 20, 50, 200.","Bhaav average ke oopar ho aur average upar jaa raha ho to trend upar maana jata hai. 2 averages ka crossover bhi dekha jata hai.","Peeche chalta hai (lagging). Sideways market mein baar-baar galat sanket deta hai."],
+["RSI (14)","0 se 100 ke beech ka momentum meter, pichhle 14 candles ke badhat aur girawat se.","Parampara se 70 ke upar 'overbought' aur 30 ke neeche 'oversold' kehte hain. Divergence bhi dekhte hain.","Mazboot trend mein RSI lambe samay tak 70 ke upar rah sakta hai. Akela bechne ya kharidne ka sanket nahi."],
+["MACD","12 aur 26 EMA ka antar, saath mein 9 EMA ki signal line aur histogram.","MACD signal line ko paar kare to momentum badalne ka sanket maana jata hai. Zero line trend dikhati hai.","Lagging hai, aur sideways market mein jhute sanket aate hain."],
+["Bollinger Bands","20 SMA ke oopar-neeche 2 standard deviation ke bands.","Bands chaude to volatility zyada, sankre to kam (squeeze). Bhaav bands ke andar ghoomta hai.","Band ko chhoo-na apne aap palatne ka sanket nahi. Trend mein bhaav band ke saath chalta reh sakta hai."],
+["VWAP","Din ke har trade ko volume se tol kar nikala gaya average bhaav. Sirf intraday, roz naye se shuru.","Bhaav VWAP ke oopar ho to us din khareedar bhaari, neeche ho to bechne wale. Bade investors ise benchmark ki tarah dekhte hain.","Din ke shuru mein kam data hota hai, aur ye multi-day chart ke liye nahi hai."],
+["ATR (14)","Average True Range: kisi candle mein bhaav ki average chaal, paise mein.","Volatility naapne aur stop-loss ki doori tay karne mein madad karta hai.","Ye direction nahi batata, sirf utaar-chadhav ka size."]];
+var EV=[
+["Volume","Kisi din kitne shares kharide-beche gaye.","Bhaav ka move zyada volume ke saath ho to zyada mazboot maana jata hai. Kam volume ka breakout aksar fail hota hai. Isse pichhle 20 din ke average volume se compare karte hain."],
+["Delivery %","Volume ka wo hissa jo sach mein delivery ke liye gaya, din mein square-off nahi hua.","Zyada delivery % ka matlab zyada logon ne shares apne paas rakhe. Ye NSE roz publish karta hai. Akele iska matlab nikalna theek nahi."],
+["Liquidity","Kitni aasani se shares bina bhaav ko hilaye kharide-beche ja sakte hain.","Bade stocks mein liquidity zyada hoti hai. Chhote stocks, SME aur penny stocks mein bid-ask ka fark bada ho sakta hai, aur apna order bhaav ko khud hila sakta hai (slippage)."],
+["Bid-Ask Spread aur Market Depth","Bid = sabse oonchi khareed ki bolli, Ask = sabse neeche bikri ki bolli. Depth mein dono taraf ke pending orders dikhte hain.","Spread jitna chhota, liquidity utni achhi. Depth patli ho to bada order bhaav ko bahut hilaa deta hai."],
+["Traded Value","Volume \u00D7 bhaav, yaani rupaye mein kitna kaarobaar hua.","Alag-alag bhaav ke stocks ki liquidity compare karne ke liye volume se behtar hai, kyunki sasta share aksar zyada volume dikhata hai."]];
+var ES=[
+["Trend Following","Trend ke saath chalna: bhaav lambe moving average ke oopar ho to upar wale trade, neeche ho to neeche wale.","Tay rules: kab shuru karna, stop-loss kahan, kab nikalna. Rules pehle likhte hain.","Sideways market mein baar-baar chhote nuksan hote hain."],
+["Breakout (volume ke saath)","Bhaav kisi range ya resistance se bahar nikle aur volume bhi zyada ho.","Range kaise tay karte hain, aur candle ko range ke bahar band hona chahiye ya nahi, ye pehle tay karte hain.","False breakout aam hain: bhaav bahar jaakar wapas aa jata hai."],
+["Pullback","Trend mein bhaav thoda peeche hat kar support ya moving average ke paas se wapas trend ki taraf chale.","Support kahan hai aur kab ye maan liya jaye ki trend khatam hua, ye pehle se tay karte hain.","Pullback kab 'trend palatna' ban jaye, ye pehle se pata nahi hota."],
+["Support aur Resistance","Wo bhaav jahan se pehle bhaav bar-bar palta hai. Range mein trade karne ke liye dekhte hain.","Level kitni baar chhua gaya aur kitne volume par, ye dekhte hain.","Har level aakhir mein toot sakta hai."],
+["Mean Reversion","Bhaav average se bahut door jaaye to wapas average ki taraf aane ki umeed (RSI ya Bollinger Bands se naapte hain).","Mazboot trend mein ye strategy badi galti ban sakti hai, isliye trend ka filter lagate hain.","Trend mein 'sasta' aur sasta ho sakta hai."]];
+var ER=[["Position size","Quantity = (capital \u00D7 risk %) \u00F7 (entry \u2212 stop-loss). Bahut se traders ek trade mein capital ka 1-2% hi daanv par lagate hain."],["Stop-loss pehle","Trade lene se pehle tay karo ki kahan galat maanoge. Baad mein badalna nuksan badhata hai."],["Risk : Reward","Jitna jokhim utha rahe ho, uske muqable sambhavit fayda kitna hai, ye pehle dekho."],["Journal aur test","Har trade likho. Asli paise se pehle paper trading aur purane data par test karo."]];
+function cSvg(cs,k){var W=cs.length*22+8,s='<svg viewBox="0 0 '+W+' 100" role="img" aria-label="Candlestick example">';cs.forEach(function(c,i){var x=14+i*22,cl=c[3]>=c[0]?"cu":"cd",op=i<cs.length-k?' opacity=".4"':'',h=Math.max(2,Math.abs(c[3]-c[0]));s+='<g class="'+cl+'"'+op+'><line x1="'+x+'" x2="'+x+'" y1="'+(100-c[1])+'" y2="'+(100-c[2])+'" stroke-width="2"/><rect x="'+(x-7)+'" y="'+(100-Math.max(c[0],c[3]))+'" width="14" height="'+h+'" rx="1.5"/></g>'});return s+'</svg>'}
+function pSvg(pts,col,ls){var s='<svg viewBox="0 0 200 100" role="img" aria-label="Chart pattern example">';ls.forEach(function(l){s+='<line x1="'+l[0]+'" y1="'+l[1]+'" x2="'+l[2]+'" y2="'+l[3]+'" stroke="var(--mute)" stroke-width="1.5" stroke-dasharray="4 3"/>'});return s+'<polyline points="'+pts+'" fill="none" stroke="'+col+'" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/></svg>'}
+function el(t,c,tx){var e=document.createElement(t);if(c)e.className=c;if(tx!=null)e.textContent=tx;return e}
+function eduCard(vis,title,badge,rows){var d=el("section","card");if(vis){var v=el("div","vis");v.innerHTML=vis;d.appendChild(v)}var h=el("h4","",title);if(badge){var b=el("span","bd "+badge,badge==="u"?"Bullish":badge==="d"?"Bearish":"Neutral");b.style.marginLeft="8px";h.appendChild(b)}d.appendChild(h);
+rows.forEach(function(r){var p=el("p");if(r[0]){p.appendChild(el("b","",r[0]+": "))}p.appendChild(document.createTextNode(r[1]));d.appendChild(p)});return d}
+var es="c";
+function eduInit(){var box=$("edu"),SUB=[["c","Candlestick patterns"],["p","Chart patterns"],["i","Indicators"],["v","Volume aur Liquidity"],["s","Strategies aur Risk"],["q","Quiz"]];
+function draw2(){box.innerHTML="";var n=el("div","edn","Ye sirf shiksha ke liye hai. Koi pattern ya strategy kisi stock ya trade ki salah nahi hai. Patterns aksar fail hote hain, aur SEBI ki studies mein zyadatar retail F&O traders ko nuksan hua hai. Seekhne ke liye paper trading se shuru karo.");box.appendChild(n);
+var ch=el("div","chips");SUB.forEach(function(s){var b=el("button","",s[1]);b.setAttribute("aria-pressed",es===s[0]);b.onclick=function(){es=s[0];draw2()};ch.appendChild(b)});box.appendChild(ch);
+var g=el("div","ed");
+if(es==="c"){var lg=el("p","note2","Dhundhli candles pehle ka trend dikhati hain, gehri candles pattern hai. Hari = badhi, lal = giri.");lg.style.marginTop="0";box.appendChild(lg);EC.forEach(function(x){g.appendChild(eduCard(cSvg(x[3],x[2]),x[0],x[1],[["Kaise dikhta hai",x[4]],["Aam matlab",x[5]],["Dhyan rakho",x[6]]]))})}
+if(es==="p"){EP.forEach(function(x){g.appendChild(eduCard(pSvg(x[2],x[1]==="u"?"var(--up)":"var(--dn)",x[3]),x[0],x[1],[["Kaise dikhta hai",x[4]],["Aam matlab",x[5]],["Dhyan rakho","Pattern aksar fail hote hain. Volume aur doosre sanket bhi dekhte hain."]]))})}
+if(es==="i")EI.forEach(function(x){g.appendChild(eduCard("",x[0],"",[["Kya hai",x[1]],["Kaise padhte hain",x[2]],["Limit",x[3]]]))});
+if(es==="v")EV.forEach(function(x){g.appendChild(eduCard("",x[0],"",[["Kya hai",x[1]],["Kyun zaroori",x[2]]]))});
+if(es==="s"){ES.forEach(function(x){g.appendChild(eduCard("",x[0],"",[["Idea",x[1]],["Aam rules",x[2]],["Jokhim",x[3]]]))});g.appendChild(eduCard("","Risk management (sabse zaroori)","",ER.map(function(r){return[r[0],r[1]]})))}
+if(es==="q"){quiz(box);return}
+box.appendChild(g)}
+eduRedraw=draw2;draw2()}
+
+var eduRedraw=null,WT="";
+var QZ=[
+["P/E Ratio kis se nikalta hai?",["Market cap \u00F7 volume","Share bhaav \u00F7 per-share kamai (EPS)","Dividend \u00F7 bhaav"],1,"P/E = share ka bhaav \u00F7 EPS."],
+["Dividend yield ka formula?",["Saalana dividend \u00F7 share bhaav","Share bhaav \u00F7 dividend","Volume \u00F7 dividend"],0,"Dividend yield = saal bhar ka dividend \u00F7 share ka bhaav, % mein."],
+["Bear market aam taur par kise kehte hain?",["Ek din mein 2% ki girawat","Peak se 20% ya zyada ki girawat","Jab volume kam ho"],1,"Aam parampara: peak se 20% ya zyada gir jana."],
+["RSI kis range mein hota hai?",["0 se 10","-100 se +100","0 se 100"],2,"RSI 0 se 100 ke beech ka momentum meter hai."],
+["Hammer candle ki pehchan?",["Chhoti body aur lambi neeche ki wick","Bahut badi body, koi wick nahi","Lambi oopar ki wick, body neeche"],0,"Hammer mein chhoti body oopar aur lambi lower wick hoti hai."],
+["VWAP kis liye hota hai?",["Saal bhar ke chart ke liye","Intraday, roz naye se shuru","Sirf crypto ke liye"],1,"VWAP din ka volume-weighted average hai aur roz reset hota hai."],
+["Position size ka formula?",["Capital \u00D7 risk%","(Capital \u00D7 risk%) \u00F7 (entry \u2212 stop-loss)","Entry \u00F7 stop-loss"],1,"Quantity = risk amount \u00F7 per-share risk (entry \u2212 stop-loss)."],
+["Stock split mein company ki total keemat?",["Wahi rehti hai","Double ho jati hai","Zero ho jati hai"],0,"Share ki ginti badhti hai aur bhaav kam hota hai, total keemat wahi rehti hai."],
+["Liquidity kam ho to kya ho sakta hai?",["Spread bada aur slippage zyada","Bhaav kabhi nahi badalta","Brokerage zero ho jati hai"],0,"Kam liquidity mein bid-ask ka fark aur slippage bada ho sakta hai."],
+["Breakout ko zyada mazboot kab maana jata hai?",["Kam volume ke saath","Zyada volume ke saath","Market band hone par"],1,"Zyada volume ke saath nikla breakout aam taur par zyada bharosemand maana jata hai."]];
+var qi=0,qs=0,qd=false;
+function quiz(box){var c=el("section","card");c.style.maxWidth="640px";
+if(qi>=QZ.length){c.appendChild(el("h4","","Quiz poora! Score: "+qs+"/"+QZ.length));c.appendChild(el("p","",qs>=8?"Bahut badhiya!":qs>=5?"Achha, thoda aur practice karo.":"Education tab ek baar aur padh lo."));var r=el("div","row");var b1=el("button","","Score share karo");b1.onclick=function(){share({t:"Maine "+CFG.name+" ke Market Quiz mein "+qs+"/"+QZ.length+" score kiya!",u:location.protocol==="file:"?"":location.href.split("?")[0]})};var b2=el("button","","Dobara khelo");b2.onclick=function(){qi=0;qs=0;qd=false;eduRedraw()};r.appendChild(b1);r.appendChild(b2);c.appendChild(r);box.appendChild(c);return}
+var q=QZ[qi];c.appendChild(el("p","note2","Sawal "+(qi+1)+" / "+QZ.length));c.appendChild(el("h4","",q[0]));var fb=el("p","");
+q[1].forEach(function(o,i){var b=el("button","",o);b.style.cssText="display:block;width:100%;text-align:left;margin:6px 0;border-radius:12px;height:auto";b.onclick=function(){if(qd)return;qd=true;if(i===q[2]){qs++;b.style.borderColor="var(--up)"}else b.style.borderColor="var(--dn)";fb.textContent=(i===q[2]?"Sahi! ":"Galat. Sahi jawab: "+q[1][q[2]]+". ")+q[3];var n=el("button","",qi+1>=QZ.length?"Result dekho":"Agla sawal");n.style.cssText="margin-top:10px;background:var(--acc);color:var(--accink);border-color:var(--acc)";n.onclick=function(){qi++;qd=false;eduRedraw()};c.appendChild(n)};c.appendChild(b)});
+c.appendChild(fb);box.appendChild(c)}
+var SA=[
+["Ye sab red flags hain",["'Guaranteed' ya 'pakka' return, 'sure shot' tips","Jaldi karo, offer aaj hi khatam jaisa dabav","Personal UPI ya bank account mein paise bhejne ko kehna","Unknown WhatsApp ya Telegram group mein bade profit ke screenshots","Aisi trading app ya APK link jo official broker ki na ho","SEBI, NSE ya kisi jaane-maane analyst ke naam par fake group ya profile","OTP, password ya screen share maangna","Registration ke bina 'premium calls' ya VIP group ke paise lena"]],
+["Pehle ye check karo",["Salah dene wale ka SEBI registration (Research Analyst ya Investment Adviser) sebi.gov.in par dhoondo","Broker SEBI-registered aur NSE/BSE ka member ho","Trading sirf broker ki official app se karo, kisi link ya APK se nahi","Kisi group ya link par paisa bhejne se pehle ruk jao aur kisi bharose ke insaan se poochho"]],
+["Agar fraud ho gaya",["Turant 1930 (National Cyber Crime Helpline) par call karo. Jitni jaldi, paise rukne ki umeed utni zyada","cybercrime.gov.in par shikayat darj karo","Bank ko turant batao aur account ya card block karwao","Screenshots, chat, UPI transaction ID aur phone number sambhal kar rakho","Market se jude maamle SEBI ke SCORES portal par bhi darj kar sakte ho"]]];
+function saInit(){var b=$("sa");SA.forEach(function(s){var c=el("section","card");c.appendChild(el("h4","",s[0]));s[1].forEach(function(l){c.appendChild(el("p","","\u2022 "+l))});b.appendChild(c)});
+var h=el("section","card");h.appendChild(el("h4","","Madad kahan milegi"));var r=el("div","row");
+[["Call 1930","tel:1930"],["cybercrime.gov.in","https://cybercrime.gov.in"],["SEBI SCORES","https://scores.sebi.gov.in"]].forEach(function(x){var a=el("a","btn",x[0]);a.href=x[1];if(x[1].indexOf("http")===0){a.target="_blank";a.rel="noopener"}r.appendChild(a)});h.appendChild(r);h.appendChild(el("p","note2","Ye general jaankari hai, kanooni salah nahi."));b.appendChild(h)}
+var STK=null,SF={sec:"",sort:"name",on:{}};
+var FILT=[["up3","Aaj 3%+ badha",function(s){return s.c>=3}],["dn3","Aaj 3%+ gira",function(s){return s.c<=-3}],["vol2","Volume 20-din average se 2x+",function(s){return s.vr!=null&&s.vr>=2}],["h52","52-week high ke 2% ke andar",function(s){return s.fh>=-2}],["l52","52-week low ke 5% ke andar",function(s){return s.fl<=5}],["r70","RSI 70 ke upar",function(s){return s.rsi!=null&&s.rsi>=70}],["r30","RSI 30 ke neeche",function(s){return s.rsi!=null&&s.rsi<=30}],["a20","20-DMA ke upar",function(s){return s.d20===1}],["b20","20-DMA ke neeche",function(s){return s.d20===0}],["a50","50-DMA ke upar",function(s){return s.d50===1}],["b50","50-DMA ke neeche",function(s){return s.d50===0}]];
+function loadStocks(){if(location.protocol==="file:")return;fetch("stocks.json?t="+Date.now()).then(function(r){return r.json()}).then(function(j){STK=j;breadth();if(tab==="scn")scnDraw()}).catch(function(){})}
+function breadth(){var it=(STK&&STK.items)||[];if(!it.length){$("brd").hidden=true;return}var a=0,d=0,n=it.length;it.forEach(function(s){if(s.c>0)a++;else if(s.c<0)d++});$("ba").style.width=a/n*100+"%";$("bd").style.width=d/n*100+"%";$("bt").textContent="Badhe "+a+" | Gire "+d+" | Barabar "+(n-a-d)+(d?" | A/D "+(a/d).toFixed(2):"");$("brd").hidden=false;$("qc").hidden=false}
+function scnDraw(){var box=$("scn");box.innerHTML="";box.appendChild(el("div","edn","Ye scanner sirf tay ki hui conditions ke hisaab se stocks chhaanta hai. Ye kisi stock ko kharidne ya bechne ki salah nahi hai, aur list ka koi stock 'chuna hua' nahi hai. Data Yahoo Finance se, delayed hai aur galat bhi ho sakta hai."));
+var it=(STK&&STK.items)||[];if(!it.length){box.appendChild(el("p","note2",location.protocol==="file:"?"Scanner ka data sirf web link (GitHub Pages) par chalta hai.":"Stocks ka data abhi nahi aaya. update-stocks workflow ek baar chalane ke baad yahan dikhega."));return}
+var secs=[],sm={};it.forEach(function(s){if(!sm[s.sec]){sm[s.sec]=[];secs.push(s.sec)}sm[s.sec].push(s.c)});
+var r1=el("div","chips");function sb(label,val){var b=el("button","",label);b.setAttribute("aria-pressed",SF.sec===val);b.onclick=function(){SF.sec=val;scnDraw()};r1.appendChild(b)}
+sb("Sab sector ("+it.length+")","");secs.forEach(function(k){var v=sm[k],avg=v.reduce(function(a,b){return a+b},0)/v.length;sb(k+" "+(avg>=0?"+":"")+avg.toFixed(2)+"%",k)});box.appendChild(r1);
+var r2=el("div","chips");FILT.forEach(function(f){var b=el("button","",f[1]);b.setAttribute("aria-pressed",!!SF.on[f[0]]);b.onclick=function(){SF.on[f[0]]=!SF.on[f[0]];scnDraw()};r2.appendChild(b)});box.appendChild(r2);
+var sel=document.createElement("select");sel.setAttribute("aria-label","Sort");[["name","Naam (A-Z)"],["c","Aaj ka change"],["vr","Volume vs average"],["tv","Traded value"]].forEach(function(o){var op=document.createElement("option");op.value=o[0];op.textContent="Sort: "+o[1];if(SF.sort===o[0])op.selected=true;sel.appendChild(op)});sel.onchange=function(){SF.sort=sel.value;scnDraw()};
+var act=FILT.filter(function(f){return SF.on[f[0]]}),l=it.filter(function(s){return(!SF.sec||s.sec===SF.sec)&&act.every(function(f){return f[2](s)})});
+l.sort(SF.sort==="name"?function(a,b){return a.n<b.n?-1:1}:function(a,b){return(b[SF.sort]||0)-(a[SF.sort]||0)});
+var top=el("div","row",null);top.style.alignItems="center";top.appendChild(sel);top.appendChild(el("span","note2",l.length+" stocks mile"+(act.length?" (saari conditions ek saath)":"")+(STK.updated?" - data "+ago(STK.updated)+" ka":"")));box.appendChild(top);
+var w=el("div","tbl"),t=document.createElement("table"),hr=t.insertRow();["Stock","Sector","Bhaav","Aaj %","Vol vs avg","Traded (Cr)","RSI"].forEach(function(h){hr.appendChild(el("th","",h))});
+l.forEach(function(s){var r=t.insertRow();[s.n,s.sec,s.p.toLocaleString("en-IN"),(s.c>=0?"+":"")+s.c.toFixed(2)+"%",s.vr==null?"-":s.vr.toFixed(1)+"x",s.tv.toLocaleString("en-IN"),s.rsi==null?"-":s.rsi].forEach(function(v,i){var c=r.insertCell();c.textContent=v;if(i===3)c.className=s.c>=0?"u":"d"})});
+w.appendChild(t);box.appendChild(w)}
+function wrap(j){var qs=j.quotes||[],it=(j.items||[]).filter(function(x){return x.c!=="hindi"}).slice(0,5);if(!qs.length&&!it.length){$("wrap").hidden=true;return}
+var pick=["Nifty 50","Sensex","Bank Nifty","India VIX","Dow Jones","Nasdaq","Bitcoin","Gold /oz"],L=[CFG.name+" | Market Wrap "+new Date().toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric",timeZone:"Asia/Kolkata"}),""];
+qs.forEach(function(q){if(pick.indexOf(q.n)>-1)L.push(q.n+": "+(q.cur||"")+q.p.toLocaleString("en-IN",{maximumFractionDigits:2})+" ("+(q.c>=0?"+":"")+q.c.toFixed(2)+"%)")});
+if(it.length){L.push("","Top khabrein:");it.forEach(function(x,i){L.push((i+1)+". "+x.t)})}
+L.push("",location.protocol==="file:"?"":location.href.split("?")[0],"Sirf news hai, investment salah nahi.");WT=L.join("\n").replace(/\n{3,}/g,"\n\n");$("wt").textContent=WT;$("wrap").hidden=false}
+$("wcp").onclick=function(){var b=this;try{navigator.clipboard.writeText(WT).then(function(){b.textContent="Copy ho gaya"},function(){b.textContent="Copy nahi hua"})}catch(e){b.textContent="Copy nahi hua"}setTimeout(function(){b.textContent="Copy karo"},1600)};
+$("wsh").onclick=function(){if(navigator.share)navigator.share({text:WT}).catch(function(){});else window.open("https://wa.me/?text="+encodeURIComponent(WT),"_blank","noopener")};
+function videos(j){var v=(j.videos||[]).filter(function(x){return /^https:\/\/(www\.)?youtube\.com\//.test(x.u||"")}),b=$("vl");b.innerHTML="";if(!v.length){$("vid").hidden=true;return}
+v.slice(0,4).forEach(function(x){var a=document.createElement("a");a.className="vi";a.href=x.u;a.target="_blank";a.rel="noopener";if(/^https:\/\/i\d?\.ytimg\.com\//.test(x.th||"")){var im=document.createElement("img");im.src=x.th;im.alt="";im.loading="lazy";a.appendChild(im)}var s=document.createElement("span");s.textContent=x.t;a.appendChild(s);b.appendChild(a)});$("vid").hidden=false}
+function events(){var a=Array.isArray(CFG.events)?CFG.events:[],today=new Date().toLocaleDateString("en-CA",{timeZone:"Asia/Kolkata"}),b=$("evl");b.innerHTML="";
+var l=a.filter(function(e){return e&&/^\d{4}-\d{2}-\d{2}$/.test(e.d)&&e.d>=today&&e.t}).sort(function(x,y){return x.d<y.d?-1:1}).slice(0,6);if(!l.length){$("evc").hidden=true;return}
+l.forEach(function(e){var r=document.createElement("div");r.style.cssText="margin-bottom:8px;font-size:14px";var d=document.createElement("b");d.textContent=new Date(e.d+"T00:00:00").toLocaleDateString("en-IN",{day:"numeric",month:"short"})+": ";r.appendChild(d);r.appendChild(document.createTextNode(e.t));b.appendChild(r)});$("evc").hidden=false}
 function market(){var d=new Date(new Date().toLocaleString("en-US",{timeZone:"Asia/Kolkata"})),w=d.getDay(),m=d.getHours()*60+d.getMinutes(),open=w>0&&w<6&&m>=555&&m<930,b=$("mk");b.innerHTML="";
 var i=document.createElement("i");i.className="dot";if(!open){i.style.animation="none";i.style.background="var(--mute)"}b.appendChild(i);b.appendChild(document.createTextNode(open?"Market khula hai (9:15 AM - 3:30 PM IST)":"Market band hai (Mon-Fri 9:15 AM - 3:30 PM IST, holidays alag)"))}
 $("lm").onclick=function(){lim+=30;draw()};
-function apply(j,saved){data=j.items||[];flash(j);mood(j);$("st").textContent=(j.updated?"Last update: "+ago(j.updated)+" ("+data.length+" headlines)":"News abhi load nahi hui. Thodi der baad check karo.")+(saved?" - saved copy":"");draw()}
+function apply(j,saved){data=j.items||[];flash(j);mood(j);videos(j);wrap(j);$("st").textContent=(j.updated?"Last update: "+ago(j.updated)+" ("+data.length+" headlines)":"News abhi load nahi hui. Thodi der baad check karo.")+(saved?" - saved copy":"");draw()}
 function load(){
 var best=window.NEWS||null;
 try{var c=JSON.parse(localStorage.getItem("td-news")||"null");if(c&&c.items&&c.items.length&&(!best||!best.updated||(c.updated&&c.updated>best.updated)))best=c}catch(e){}
@@ -260,5 +407,5 @@ fetch("news.json?t="+Date.now()).then(function(r){return r.json()}).then(functio
 .catch(function(){if(!best){$("st").textContent="News load nahi ho payi. Internet check karo.";draw()}})}
 window.addEventListener("online",load);
 if("serviceWorker" in navigator&&location.protocol.indexOf("http")===0)navigator.serviceWorker.register("sw.js").catch(function(){});
-$("q").oninput=function(){lim=30;draw()};brand();market();calcInit();glInit();ipoInit();load();setInterval(load,300000);setInterval(market,60000);
+$("q").oninput=function(){lim=30;draw()};brand();market();calcInit();glInit();ipoInit();eduInit();saInit();events();loadStocks();load();setInterval(function(){load();loadStocks()},300000);setInterval(market,60000);
 </script></body></html>
