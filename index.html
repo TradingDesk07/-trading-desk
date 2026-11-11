@@ -7,9 +7,9 @@
 <meta property="og:type" content="website"><meta property="og:title" content="Trading Desk: Market News"><meta property="og:description" content="Stocks, results, IPO, crypto aur gold/silver ki news ek jagah.">
 <meta property="og:image" content="https://tradingdesk07.github.io/-trading-desk/logo-c-monitor.png"><meta name="twitter:card" content="summary">
 <style>
-:root{--bg:#f4f6fb;--card:#fff;--ink:#0f172a;--mute:#5b6779;--line:#e1e6ef;--acc:#0b8f63;--accink:#fff;--soft:#e3f5ed;--up:#0a8a4f;--dn:#d1342b;--glow:#cfeee1;--sh:0 1px 2px rgba(15,23,42,.06),0 8px 24px rgba(15,23,42,.06)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0a0f1e;--card:#111a2e;--ink:#e9eef8;--mute:#93a0b8;--line:#1e2a45;--acc:#3ddc9f;--accink:#06251b;--soft:#13352c;--up:#5fe0a0;--dn:#ff8a80;--glow:#0f3b32;--sh:0 1px 2px rgba(0,0,0,.4),0 10px 28px rgba(0,0,0,.35)}}
-:root[data-theme="dark"]{--bg:#0a0f1e;--card:#111a2e;--ink:#e9eef8;--mute:#93a0b8;--line:#1e2a45;--acc:#3ddc9f;--accink:#06251b;--soft:#13352c;--up:#5fe0a0;--dn:#ff8a80;--glow:#0f3b32;--sh:0 1px 2px rgba(0,0,0,.4),0 10px 28px rgba(0,0,0,.35)}
+:root{color-scheme:light;--bg:#f4f6fb;--card:#fff;--ink:#0f172a;--mute:#5b6779;--line:#e1e6ef;--acc:#0b8f63;--accink:#fff;--soft:#e3f5ed;--up:#0a8a4f;--dn:#d1342b;--glow:#cfeee1;--sh:0 1px 2px rgba(15,23,42,.06),0 8px 24px rgba(15,23,42,.06)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0a0f1e;--card:#111a2e;--ink:#e9eef8;--mute:#93a0b8;--line:#1e2a45;--acc:#3ddc9f;--accink:#06251b;--soft:#13352c;--up:#5fe0a0;--dn:#ff8a80;--glow:#0f3b32;--sh:0 1px 2px rgba(0,0,0,.4),0 10px 28px rgba(0,0,0,.35)}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0a0f1e;--card:#111a2e;--ink:#e9eef8;--mute:#93a0b8;--line:#1e2a45;--acc:#3ddc9f;--accink:#06251b;--soft:#13352c;--up:#5fe0a0;--dn:#ff8a80;--glow:#0f3b32;--sh:0 1px 2px rgba(0,0,0,.4),0 10px 28px rgba(0,0,0,.35)}
 html{box-sizing:border-box;scroll-padding-top:70px}*,*::before,*::after{box-sizing:inherit}[hidden]{display:none!important}
 body{margin:0;color:var(--ink);font:16px/1.5 "Segoe UI",system-ui,-apple-system,Roboto,sans-serif;background:radial-gradient(900px 380px at 50% -140px,var(--glow),transparent),var(--bg);padding-bottom:env(safe-area-inset-bottom,0)}
 .wrap{max-width:1080px;margin:0 auto;padding:0 16px}
@@ -47,7 +47,9 @@ h1{font:800 clamp(26px,5.5vw,42px)/1.12 "Segoe UI",system-ui,sans-serif;letter-s
 @keyframes pl{70%{box-shadow:0 0 0 8px transparent}100%{box-shadow:0 0 0 0 transparent}}
 /* tabs */
 .stick{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0)}
-.tabs{display:flex;gap:8px;overflow-x:auto;padding:10px 0;scrollbar-width:none}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;padding:10px 0}
+.stick .wrap{position:relative}
+@media (max-width:700px){.tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin;-webkit-overflow-scrolling:touch;padding-bottom:12px}.stick .wrap::after{content:"";position:absolute;right:0;top:0;bottom:0;width:36px;background:linear-gradient(90deg,transparent,var(--bg));pointer-events:none}}
 .tabs button{flex:none;font-weight:600}
 .tabs button[aria-pressed="true"]{background:var(--acc);color:var(--accink);border-color:var(--acc)}
 .ct{font-size:12px;opacity:.75;font-weight:700}
@@ -105,8 +107,16 @@ details.about{margin-top:14px}details.about summary{cursor:pointer;font-weight:7
 select{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:99px;padding:8px 14px;min-height:44px}
 .vi{display:flex;gap:10px;align-items:center;margin-bottom:10px;text-decoration:none;color:var(--ink);font-size:14px;font-weight:600}.vi img{width:104px;height:58px;object-fit:cover;border-radius:8px;flex:none}
 .bar{display:flex;height:12px;border-radius:99px;overflow:hidden;background:var(--line);margin:10px 0}.bar i{display:block;height:100%}#ba{background:var(--up)}#bd{background:var(--dn)}
-#wt{white-space:pre-wrap;font:13px/1.5 inherit;background:var(--bg);border-radius:10px;padding:10px;margin:0 0 10px;max-height:220px;overflow:auto}
+#wt{white-space:pre-wrap;overflow-wrap:anywhere;font-family:inherit;font-size:13px;line-height:1.5;background:var(--bg);border-radius:10px;padding:10px;margin:0 0 10px;max-height:220px;overflow-y:auto;overflow-x:hidden}
 .tbl td.u{color:var(--up);font-weight:700}.tbl td.d{color:var(--dn);font-weight:700}
+.tabs{-webkit-overflow-scrolling:touch}
+#tabs2{padding-top:0}#tabs2 button{border-style:dashed;font-size:14px;min-height:38px}
+@media (min-width:700px){.tabs{flex-wrap:wrap;overflow-x:visible}}
+.ply{position:relative;aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden;margin-bottom:10px}.ply img,.ply iframe{position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:cover}
+.pb{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:68px;height:68px;border-radius:50%;background:#e00000;color:#fff;border:0;font-size:26px;display:grid;place-items:center;padding:0}
+.vg{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));margin-top:14px}
+.vc{display:block;text-align:left;border-radius:12px;padding:0;overflow:hidden;height:auto;background:var(--card)}.vc img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}.vc span{display:block;padding:8px 10px;font-size:14px;font-weight:600}
+.qp{white-space:pre-wrap;overflow-wrap:anywhere}
 </style></head><body>
 <a id="ann" class="ann" hidden></a>
 <div class="tk" id="tq" hidden aria-label="Index aur price flash"></div>
@@ -114,7 +124,7 @@ select{font:inherit;color:var(--ink);background:var(--card);border:1px solid var
 <header class="wrap top"><div class="brand"><span class="logo" id="logo">TD</span><b id="nm">Trading Desk</b></div>
 <div class="act"><span id="soc" class="act"></span><button id="th" aria-label="Light ya dark mode badlo">&#9680;</button></div></header>
 <section class="hero wrap"><h1 id="hl"></h1><p id="tg"></p><span class="pill"><i class="dot"></i><span id="st" aria-live="polite">News load ho rahi hai...</span></span> <span class="pill" id="mk"></span></section>
-<nav class="stick" aria-label="News section"><div class="wrap"><div class="tabs" id="tabs" role="group"></div></div></nav>
+<nav class="stick" aria-label="News section"><div class="wrap"><div class="tabs" id="tabs" role="group" aria-label="News"></div><div class="tabs" id="tabs2" role="group" aria-label="Tools aur Seekho"></div></div></nav>
 <div class="wrap grid">
 <section id="qc" class="card" hidden><h3>Markets (delayed)</h3><div class="qg" id="qg"></div>
 <div id="brd" hidden style="margin-top:14px"><h3>Large-cap breadth (approx)</h3><div class="bar"><i id="ba"></i><i id="bd"></i></div><div class="gl"><b id="bt"></b></div><p class="note2">Sirf hamare bade stocks ka hisaab hai, NSE ka asli ADR nahi.</p></div>
@@ -130,6 +140,8 @@ select{font:inherit;color:var(--ink);background:var(--card);border:1px solid var
 <div id="edu" hidden></div>
 <div id="scn" hidden></div>
 <div class="ed" id="sa" hidden></div>
+<div id="vids" hidden></div>
+<div id="qa" hidden></div>
 <ul id="list"><li class="sk"></li><li class="sk"></li><li class="sk"></li><li class="sk"></li></ul>
 <div id="em"></div><button id="lm" hidden>Aur dikhao</button>
 </main>
@@ -154,6 +166,8 @@ var CFG={
  logoImg:"logo-c-monitor.svg",
  accent:"",
  links:{youtube:"https://www.youtube.com/@TradingDeskWithSuraj07",instagram:"https://www.instagram.com/tradingdeskwithsuraj07",telegram:"https://t.me/tradingdeskwithsuraj",whatsapp:"https://chat.whatsapp.com/HnNIF39XQ8LFZCuuljmGzN",x:"",website:""},
+ askForm:"https://docs.google.com/forms/d/e/1FAIpQLSfYF4yY-P1INPB0ZKOzRYpEB6d7t9TjbpYNa1vM3lHKQtpPxg/viewform",              /* Google Form ka link jahan log sawal bhejte hain (khali = button nahi) */
+ qaSheet:"https://docs.google.com/spreadsheets/d/e/2PACX-1vRwWK9VWf_vvBCBz3eX-aUFYRRkVRJfbsmjTolYRRC6iBfCJOArTKyf0kB-IVQJhMFLn2n_V9XQxx8u/pub?gid=1662182016&single=true&output=csv",              /* Google Sheet ka "Publish to web" CSV link, jisme aapke jawab hain (khali = jawab nahi dikhenge) */
  newsletter:"",           /* email newsletter signup ka link (Buttondown/Mailchimp), khali = button nahi */
  goatcounter:"",          /* GoatCounter ka naam (goatcounter.com par free account), jaise "tradingdesk" (khali = band) */
  events:[],               /* aane wale events, jaise [{d:"2026-11-20",t:"RBI policy"},{d:"2026-11-25",t:"Q2 results season ka aakhri hafta"}] */
@@ -173,7 +187,7 @@ whatsapp:'<path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.1-1.3A10 10 0 1 0 12 2zm5.2 1
 x:'<path d="M18 3h3l-7.2 8.3L22 21h-6.5l-5-6.3L4.7 21H1.6l7.7-8.8L1 3h6.7l4.5 5.8zM16.9 19h1.7L6.3 4.9H4.5z"/>',
 website:'<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18" fill="none" stroke="currentColor" stroke-width="2"/>'};
 var NM={youtube:"YouTube",instagram:"Instagram",telegram:"Telegram",whatsapp:"WhatsApp",x:"X (Twitter)",website:"Website"};
-var TABS=[["all","Sab"],["stocks","Stocks"],["results","Results"],["crypto","Crypto"],["commodities","Gold & Silver"],["ipo","IPO"],["global","Global"],["economy","Economy"],["hindi","Hindi"],["wl","\u2605 Meri List"],["bm","Saved"],["scn","Scanner"],["sa","Scam Alert"],["edu","Education"],["gl","Glossary"],["calc","Calculators"]];
+var TABS=[["all","Sab"],["stocks","Stocks"],["results","Results"],["crypto","Crypto"],["commodities","Gold & Silver"],["ipo","IPO"],["global","Global"],["economy","Economy"],["hindi","Hindi"],["vids","\u25B6 Videos"],["qa","Sawal-Jawab"],["wl","\u2605 Meri List"],["bm","Saved"],["scn","Scanner"],["sa","Scam Alert"],["edu","Education"],["gl","Glossary"],["calc","Calculators"]];
 var SECT=["Banking","IT","Auto","Pharma","Metals","Energy"];
 var CATN={stocks:"STOCKS",results:"RESULTS",crypto:"CRYPTO",commodities:"GOLD & SILVER",ipo:"IPO",global:"GLOBAL",economy:"ECONOMY",hindi:"HINDI"};
 var TAGS=["Results","Dividend / Bonus / Split","Board & Deals"];
@@ -186,6 +200,7 @@ var lg=$("logo");if(CFG.logoImg){var im=document.createElement("img");im.src=CFG
 if(/^#[0-9a-f]{6}$/i.test(CFG.accent)){var n=parseInt(CFG.accent.slice(1),16),L=0.299*(n>>16)+0.587*((n>>8)&255)+0.114*(n&255),s=document.documentElement.style;s.setProperty("--acc",CFG.accent);s.setProperty("--accink",L>150?"#10151c":"#ffffff")}
 addSoc($("soc"));addSoc($("soc2"));
 [[CFG.feedback,"Kuch aur chahiye? Batao"],[CFG.newsletter,"Roz ki news email par"]].forEach(function(x){if(/^https?:\/\//.test(x[0]||"")){var fb=document.createElement("a");fb.className="btn";fb.href=x[0];fb.target="_blank";fb.rel="noopener";fb.textContent=x[1];$("soc2").appendChild(fb)}});
+var yb=document.querySelector("#soc2 .s-youtube");if(yb){yb.href=CFG.links.youtube.split("?")[0]+"?sub_confirmation=1";var yl=yb.querySelector(".lb");if(yl)yl.textContent="Subscribe"}
 if(/^[a-z0-9-]+$/.test(CFG.goatcounter||"")){var gc=document.createElement("script");gc.async=true;gc.src="https://gc.zgo.at/count.js";gc.setAttribute("data-goatcounter","https://"+CFG.goatcounter+".goatcounter.com/count");document.head.appendChild(gc);var pv=document.createElement("p");pv.textContent="Analytics: ye site anonymous visitor ginti ke liye GoatCounter use karti hai (cookies ya personal tracking nahi).";document.querySelector("details.about").appendChild(pv)}
 var an=$("ann");if(CFG.announce&&CFG.announce.text){an.textContent=CFG.announce.text;if(/^https?:\/\//.test(CFG.announce.link||"")){an.href=CFG.announce.link;an.target="_blank";an.rel="noopener"}an.hidden=false}
 if(CFG.contact&&/^[^\s@]+@[^\s@]+$/.test(CFG.contact)){var ca=document.createElement("a");ca.href="mailto:"+CFG.contact;ca.textContent=CFG.contact;$("ct").appendChild(document.createTextNode("Contact: "));$("ct").appendChild(ca)}}
@@ -202,7 +217,7 @@ var c=document.createElement("b");c.className=u?"up":"dn";c.textContent=(u?"\u25
 var g=$("qg");g.innerHTML="";qs.forEach(function(q){var u=q.c>=0,d=document.createElement("div");d.className="qd";var a=document.createElement("small");a.textContent=q.n;var b=document.createElement("b");b.textContent=(q.cur||"")+q.p.toLocaleString("en-IN",{maximumFractionDigits:2});var i=document.createElement("i");i.className=u?"up":"dn";i.textContent=(u?"\u25B2 +":"\u25BC ")+q.c.toFixed(2)+"%";d.appendChild(a);d.appendChild(b);d.appendChild(i);g.appendChild(d)});$("qc").hidden=false}
 else{$("tq").hidden=true;$("qc").hidden=true}
 if(CFG.showFlash&&j.items&&j.items.length){var m=[],l2=document.createElement("span");l2.className="lab";l2.textContent="NEWS FLASH";m.push(l2);
-j.items.slice(0,12).forEach(function(x){var a=document.createElement("a");a.href=x.u;a.target="_blank";a.rel="noopener";a.textContent=x.t;m.push(a)});mq($("tn"),m,70)}else $("tn").hidden=true}
+j.items.filter(function(x){return x.c!=="hindi"}).slice(0,12).forEach(function(x){var a=document.createElement("a");a.href=x.u;a.target="_blank";a.rel="noopener";a.textContent=x.t;m.push(a)});mq($("tn"),m,70)}else $("tn").hidden=true}
 function inr(n){return "\u20B9"+Math.round(n).toLocaleString("en-IN")}
 function lsGet(k){try{var v=JSON.parse(localStorage.getItem(k)||"[]");return Array.isArray(v)?v:[]}catch(e){return[]}}
 function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
@@ -222,18 +237,21 @@ $("wa").onclick=addWL;$("wi").onkeydown=function(e){if(e.key==="Enter")addWL()};
 function draw(){
 var wm=data.filter(matchWL),seen=0;try{seen=+localStorage.getItem("td-wl-seen")||0}catch(e){}
 var nn=wm.filter(function(x){return new Date(x.d)>seen}).length;
-var cnt={all:data.length,wl:(nn>0&&tab!=="wl"&&WL.length?wm.length+" (+"+nn+" nayi)":wm.length),bm:BM.length};data.forEach(function(x){cnt[x.c]=(cnt[x.c]||0)+1});
-btn($("tabs"),TABS,function(){return tab},function(v){tab=v;tag="";sec=""},cnt);
-var nl=tab==="calc"||tab==="gl"||tab==="edu"||tab==="scn"||tab==="sa",showF=(tab==="all"||tab==="stocks"||tab==="results");
-["sr","list","em","lm"].forEach(function(i){$(i).hidden=nl});$("calc").hidden=tab!=="calc";$("gl").hidden=tab!=="gl";$("edu").hidden=tab!=="edu";$("scn").hidden=tab!=="scn";$("sa").hidden=tab!=="sa";$("ipo").hidden=tab!=="ipo";$("wl").hidden=tab!=="wl";
+var cnt={all:data.filter(function(x){return x.c!=="hindi"}).length,wl:(nn>0&&tab!=="wl"&&WL.length?wm.length+" (+"+nn+" nayi)":wm.length),bm:BM.length};data.forEach(function(x){cnt[x.c]=(cnt[x.c]||0)+1});
+var gt=function(){return tab},st=function(v){tab=v;tag="";sec=""};
+btn($("tabs"),TABS.slice(0,9),gt,st,cnt);btn($("tabs2"),TABS.slice(9),gt,st,cnt);
+var ab=document.querySelector('.tabs button[aria-pressed="true"]');if(ab&&ab.scrollIntoView)ab.scrollIntoView({inline:"nearest",block:"nearest"});
+var ap=$("tabs").querySelector('[aria-pressed="true"]');if(ap&&ap.scrollIntoView&&$("tabs").scrollWidth>$("tabs").clientWidth)ap.scrollIntoView({inline:"center",block:"nearest"});
+var nl=tab==="calc"||tab==="gl"||tab==="edu"||tab==="scn"||tab==="sa"||tab==="vids"||tab==="qa",showF=(tab==="all"||tab==="stocks"||tab==="results");
+["sr","list","em","lm"].forEach(function(i){$(i).hidden=nl});$("calc").hidden=tab!=="calc";$("gl").hidden=tab!=="gl";$("edu").hidden=tab!=="edu";$("scn").hidden=tab!=="scn";$("sa").hidden=tab!=="sa";$("vids").hidden=tab!=="vids";$("qa").hidden=tab!=="qa";$("ipo").hidden=tab!=="ipo";$("wl").hidden=tab!=="wl";
 btn($("tags"),[["","Sab type"]].concat(TAGS.map(function(t){return[t,t]})),function(){return tag},function(v){tag=v});
 btn($("sect"),[["","Sab sector"]].concat(SECT.map(function(t){return[t,t]})),function(){return sec},function(v){sec=v});
 $("tags").hidden=!showF||nl;$("sect").hidden=!showF||nl;
 if(tab==="wl"){drawWL();try{localStorage.setItem("td-wl-seen",String(Date.now()))}catch(e){}}
-if(tab==="scn")scnDraw();
+if(tab==="scn")scnDraw();if(tab==="vids")vidsDraw();if(tab==="qa"){qaDraw();qaLoad()}
 if(nl)return;
 var q=$("q").value.trim().toLowerCase(),src=tab==="bm"?BM:data;
-var l=src.filter(function(x){if(tab==="wl"&&!matchWL(x))return false;if(tab!=="all"&&tab!=="wl"&&tab!=="bm"&&x.c!==tab)return false;if(tag&&x.g!==tag)return false;if(sec&&x.sc!==sec)return false;return !q||x.t.toLowerCase().indexOf(q)>-1});
+var l=src.filter(function(x){if(tab==="wl"&&!matchWL(x))return false;if(tab==="all"&&x.c==="hindi")return false;if(tab==="all"&&x.c==="hindi")return false;if(tab!=="all"&&tab!=="wl"&&tab!=="bm"&&x.c!==tab)return false;if(tag&&x.g!==tag)return false;if(sec&&x.sc!==sec)return false;return !q||x.t.toLowerCase().indexOf(q)>-1});
 var ul=$("list");ul.innerHTML="";
 l.slice(0,lim).forEach(function(x){var li=document.createElement("li"),a=document.createElement("a");li.className="nc c-"+x.c;a.href=x.u;a.target="_blank";a.rel="noopener";a.textContent=x.t;
 var m=document.createElement("div");m.className="meta";var ct=document.createElement("span");ct.className="cat";ct.textContent=CATN[x.c]||"NEWS";m.appendChild(ct);
@@ -389,11 +407,37 @@ if(it.length){L.push("","Top khabrein:");it.forEach(function(x,i){L.push((i+1)+"
 L.push("",location.protocol==="file:"?"":location.href.split("?")[0],"Sirf news hai, investment salah nahi.");WT=L.join("\n").replace(/\n{3,}/g,"\n\n");$("wt").textContent=WT;$("wrap").hidden=false}
 $("wcp").onclick=function(){var b=this;try{navigator.clipboard.writeText(WT).then(function(){b.textContent="Copy ho gaya"},function(){b.textContent="Copy nahi hua"})}catch(e){b.textContent="Copy nahi hua"}setTimeout(function(){b.textContent="Copy karo"},1600)};
 $("wsh").onclick=function(){if(navigator.share)navigator.share({text:WT}).catch(function(){});else window.open("https://wa.me/?text="+encodeURIComponent(WT),"_blank","noopener")};
-function videos(j){var v=(j.videos||[]).filter(function(x){return /^https:\/\/(www\.)?youtube\.com\//.test(x.u||"")}),b=$("vl");b.innerHTML="";if(!v.length){$("vid").hidden=true;return}
+function videos(j){var v=(j.videos||[]).filter(function(x){return /^https:\/\/(www\.)?youtube\.com\//.test(x.u||"")}),b=$("vl");VIDS=v;if(tab==="vids")vidsDraw();b.innerHTML="";if(!v.length){$("vid").hidden=true;return}
 v.slice(0,4).forEach(function(x){var a=document.createElement("a");a.className="vi";a.href=x.u;a.target="_blank";a.rel="noopener";if(/^https:\/\/i\d?\.ytimg\.com\//.test(x.th||"")){var im=document.createElement("img");im.src=x.th;im.alt="";im.loading="lazy";a.appendChild(im)}var s=document.createElement("span");s.textContent=x.t;a.appendChild(s);b.appendChild(a)});$("vid").hidden=false}
 function events(){var a=Array.isArray(CFG.events)?CFG.events:[],today=new Date().toLocaleDateString("en-CA",{timeZone:"Asia/Kolkata"}),b=$("evl");b.innerHTML="";
 var l=a.filter(function(e){return e&&/^\d{4}-\d{2}-\d{2}$/.test(e.d)&&e.d>=today&&e.t}).sort(function(x,y){return x.d<y.d?-1:1}).slice(0,6);if(!l.length){$("evc").hidden=true;return}
 l.forEach(function(e){var r=document.createElement("div");r.style.cssText="margin-bottom:8px;font-size:14px";var d=document.createElement("b");d.textContent=new Date(e.d+"T00:00:00").toLocaleDateString("en-IN",{day:"numeric",month:"short"})+": ";r.appendChild(d);r.appendChild(document.createTextNode(e.t));b.appendChild(r)});$("evc").hidden=false}
+
+var VIDS=[],QA=null,vsel=0;
+function vid(x){var m=/[?&]v=([\w-]{11})/.exec(x.u||"");return m?m[1]:""}
+function vsrc(x){return /^https:\/\/i\d?\.ytimg\.com\//.test(x.th||"")?x.th:"https://i.ytimg.com/vi/"+vid(x)+"/hqdefault.jpg"}
+function vidsDraw(){var box=$("vids");box.innerHTML="";var yt=(CFG.links.youtube||"https://www.youtube.com").split("?")[0];
+var top=el("div","row");top.style.marginBottom="12px";var sb=el("a","btn soc s-youtube","Subscribe");sb.href=yt+"?sub_confirmation=1";sb.target="_blank";sb.rel="noopener";var all=el("a","btn","Sab videos dekho");all.href=yt+"/videos";all.target="_blank";all.rel="noopener";top.appendChild(sb);top.appendChild(all);box.appendChild(top);
+var v=VIDS.filter(function(x){return vid(x)});if(!v.length){box.appendChild(el("p","note2","Videos abhi load nahi hue. update-news workflow chalne ke baad yahan aa jayenge."));return}
+if(vsel>=v.length)vsel=0;var cur=v[vsel],pl=el("div","card"),ph=el("div","ply");
+var im=document.createElement("img");im.src=vsrc(cur);im.alt="";ph.appendChild(im);var pb=el("button","pb","\u25B6");pb.setAttribute("aria-label","Video chalao");ph.appendChild(pb);
+pb.onclick=function(){var f=document.createElement("iframe");f.src="https://www.youtube-nocookie.com/embed/"+vid(cur)+"?autoplay=1&rel=0";f.title=cur.t;f.allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture";f.allowFullscreen=true;f.referrerPolicy="strict-origin-when-cross-origin";ph.innerHTML="";ph.appendChild(f)};
+pl.appendChild(ph);pl.appendChild(el("h4","",cur.t));var lk=el("a","btn","YouTube par dekho");lk.href=cur.u;lk.target="_blank";lk.rel="noopener";pl.appendChild(lk);box.appendChild(pl);
+var g=el("div","vg");v.forEach(function(x,i){if(i===vsel)return;var b=el("button","vc");var t=document.createElement("img");t.src=vsrc(x);t.alt="";t.loading="lazy";b.appendChild(t);b.appendChild(el("span","",x.t));b.onclick=function(){vsel=i;vidsDraw()};g.appendChild(b)});box.appendChild(g)}
+function csv(t){var r=[],row=[],c="",q=false;for(var i=0;i<t.length;i++){var ch=t[i];if(q){if(ch==='"'){if(t[i+1]==='"'){c+='"';i++}else q=false}else c+=ch}else if(ch==='"')q=true;else if(ch===","){row.push(c);c=""}else if(ch==="\n"||ch==="\r"){if(ch==="\r"&&t[i+1]==="\n")i++;row.push(c);c="";r.push(row);row=[]}else c+=ch}if(c!==""||row.length){row.push(c);r.push(row)}return r}
+function qaLoad(){if(!/^https:\/\/docs\.google\.com\/spreadsheets\//.test(CFG.qaSheet||""))return;
+fetch(CFG.qaSheet).then(function(r){return r.text()}).then(function(t){var r=csv(t),h=(r.shift()||[]).map(function(x){return x.trim().toLowerCase()});QA=r.filter(function(x){return x.join("").trim()}).map(function(x){var o={};h.forEach(function(k,i){o[k]=(x[i]||"").trim()});return o});if(tab==="qa")qaDraw()}).catch(function(){if(!QA)QA=[];if(tab==="qa")qaDraw()})}
+function qaDraw(){var box=$("qa");box.innerHTML="";var a=el("section","card");a.appendChild(el("h4","","Apna sawal poochho"));a.appendChild(el("p","note2","Market ya trading ke concepts par sawal poochho. Kisi stock ko kharidne-bechne ki salah nahi di jayegi. Kisi bhi group ya link par paisa ya personal details mat bhejna."));
+var r=el("div","row");if(/^https?:\/\//.test(CFG.askForm||"")){var b=el("a","btn soc s-website","Sawal poochho (form)");b.href=CFG.askForm;b.target="_blank";b.rel="noopener";r.appendChild(b)}
+[["telegram","Telegram par poochho"],["whatsapp","WhatsApp par poochho"]].forEach(function(k){var u=CFG.links[k[0]];if(/^https?:\/\//.test(u||"")){var x=el("a","btn",k[1]);x.href=u;x.target="_blank";x.rel="noopener";r.appendChild(x)}});
+a.appendChild(r);box.appendChild(a);
+if(!CFG.qaSheet){box.appendChild(el("p","note2","Jald hi yahan aapke sawalon ke jawab aur updates dikhenge."));return}
+if(!QA){box.appendChild(el("p","note2","Jawab load ho rahe hain..."));return}
+if(!QA.length){box.appendChild(el("p","note2","Abhi koi jawab ya update nahi hai."));return}
+var l=QA.slice().sort(function(x,y){return(y.date||"")<(x.date||"")?-1:1}),g=el("div","ed");g.style.gridTemplateColumns="1fr";
+l.forEach(function(x){var c=el("section","card"),ty=(x.type||"").toLowerCase()==="update"?"Update":"Sawal-Jawab";var bd=el("span","bd n",ty);c.appendChild(bd);var d=el("span","note2",x.date||"");d.style.marginLeft="10px";c.appendChild(d);
+if(x.title)c.appendChild(el("h4","",x.title));if(x.body)c.appendChild(el("p","qp",x.body));
+if(/^https?:\/\//.test(x.link||"")){var k=el("a","btn","Dekho");k.href=x.link;k.target="_blank";k.rel="noopener";k.style.marginTop="8px";c.appendChild(k)}g.appendChild(c)});box.appendChild(g)}
 function market(){var d=new Date(new Date().toLocaleString("en-US",{timeZone:"Asia/Kolkata"})),w=d.getDay(),m=d.getHours()*60+d.getMinutes(),open=w>0&&w<6&&m>=555&&m<930,b=$("mk");b.innerHTML="";
 var i=document.createElement("i");i.className="dot";if(!open){i.style.animation="none";i.style.background="var(--mute)"}b.appendChild(i);b.appendChild(document.createTextNode(open?"Market khula hai (9:15 AM - 3:30 PM IST)":"Market band hai (Mon-Fri 9:15 AM - 3:30 PM IST, holidays alag)"))}
 $("lm").onclick=function(){lim+=30;draw()};
@@ -407,5 +451,5 @@ fetch("news.json?t="+Date.now()).then(function(r){return r.json()}).then(functio
 .catch(function(){if(!best){$("st").textContent="News load nahi ho payi. Internet check karo.";draw()}})}
 window.addEventListener("online",load);
 if("serviceWorker" in navigator&&location.protocol.indexOf("http")===0)navigator.serviceWorker.register("sw.js").catch(function(){});
-$("q").oninput=function(){lim=30;draw()};brand();market();calcInit();glInit();ipoInit();eduInit();saInit();events();loadStocks();load();setInterval(function(){load();loadStocks()},300000);setInterval(market,60000);
+$("q").oninput=function(){lim=30;draw()};brand();market();calcInit();glInit();ipoInit();eduInit();saInit();events();loadStocks();qaLoad();load();setInterval(function(){load();loadStocks()},300000);setInterval(market,60000);
 </script></body></html>
