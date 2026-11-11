@@ -7,7 +7,7 @@ from email.utils import parsedate_to_datetime
 from datetime import datetime, timezone
 
 SITE_URL = "https://tradingdesk07.github.io/-trading-desk/"
-YT_CHANNEL_ID = ""   # apne YouTube channel ki ID yahan daalo (UC se shuru hoti hai). Khali = videos section band.
+YT_CHANNEL_ID = "UCfg8cHXHAs-VXuVpv3fE-PQ"   # apne YouTube channel ki ID yahan daalo (UC se shuru hoti hai). Khali = videos section band.
 
 def gn(q, hi=False):
     p = {"q": q + " when:2d", "hl": "hi" if hi else "en-IN", "gl": "IN", "ceid": "IN:hi" if hi else "IN:en"}
