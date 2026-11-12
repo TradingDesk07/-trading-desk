@@ -1,0 +1,28 @@
+name: daily-short
+on:
+  schedule:
+    - cron: "30 10 * * 1-5"   # roz 4:00 PM IST (Mon-Fri)
+  workflow_dispatch:
+jobs:
+  make:
+    runs-on: ubuntu-latest
+    env:
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      REQUIRE_VOICE: "1"        # awaaz na bane to video nahi banegi (silent video se bachne ke liye)
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg fonts-dejavu-core
+      - run: pip install pillow edge-tts
+      - run: python make_short.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: market-wrap-short
+          path: out/
+      - name: Telegram par bhejo
+        if: ${{ env.TELEGRAM_BOT_TOKEN != '' }}
+        run: |
+          curl -s -F chat_id="$TELEGRAM_CHAT_ID" -F video=@out/market-wrap-short.mp4 -F caption="Aaj ka Market Wrap. Sirf jaankari, investment salah nahi." "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendVideo"
