@@ -123,6 +123,14 @@ select{font:inherit;color:var(--ink);background:var(--card);border:1px solid var
 #ins{padding:8px 14px;font-weight:600;background:var(--acc);color:var(--accink);border-color:var(--acc)}
 textarea{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px 12px;width:100%;min-height:90px}
 .chk label{display:flex;gap:10px;align-items:center;padding:6px 0;font-size:15px}.chk input{width:20px;height:20px;min-height:0;padding:0;flex:none}
+.ed svg .su,.ed svg .sd,.ed svg .si,.ed svg .sa{fill:none;stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
+.ed svg .su{stroke:var(--up)}.ed svg .sd{stroke:var(--dn)}.ed svg .si{stroke:var(--ink)}.ed svg .sa{stroke:var(--acc)}
+.ed svg .sm{stroke:var(--mute);fill:none;stroke-width:1.2;stroke-dasharray:4 3}
+.ed svg .fu{fill:var(--up);stroke:var(--up)}.ed svg .fd{fill:var(--dn);stroke:var(--dn)}
+.ed svg .fu2{fill:var(--up);opacity:.4;stroke:none}.ed svg .fd2{fill:var(--dn);opacity:.4;stroke:none}
+.ed svg text{fill:var(--mute);font-size:7px;font-family:inherit;stroke:none}.ed svg text.ti{fill:var(--ink);font-weight:700}
+.qopt{display:block;width:100%;text-align:left;margin:6px 0;border-radius:12px;height:auto}
+.qstat{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}.qstat span{border:1px solid var(--line);border-radius:99px;padding:3px 12px;font-size:13px}
 </style></head><body>
 <a id="ann" class="ann" hidden></a>
 <div class="tk" id="tq" hidden aria-label="Index aur price flash"></div>
@@ -365,11 +373,11 @@ function el(t,c,tx){var e=document.createElement(t);if(c)e.className=c;if(tx!=nu
 function eduCard(vis,title,badge,rows){var d=el("section","card");if(vis){var v=el("div","vis");v.innerHTML=vis;d.appendChild(v)}var h=el("h4","",title);if(badge){var b=el("span","bd "+badge,badge==="u"?"Bullish":badge==="d"?"Bearish":"Neutral");b.style.marginLeft="8px";h.appendChild(b)}d.appendChild(h);
 rows.forEach(function(r){var p=el("p");if(r[0]){p.appendChild(el("b","",r[0]+": "))}p.appendChild(document.createTextNode(r[1]));d.appendChild(p)});return d}
 var es="b";
-function eduInit(){var box=$("edu"),SUB=[["b","Basics"],["c","Candlestick patterns"],["p","Chart patterns"],["i","Indicators"],["v","Volume aur Liquidity"],["s","Strategies aur Risk"],["o","Options basics"],["f","Fundamentals"],["m","Funds aur SIP"],["a","Account aur Tax"],["y","Psychology"],["r","Results padhna"],["q","Quiz"]];
+function eduInit(){var box=$("edu"),SUB=[["w","Seekhne ka raasta"],["b","Basics"],["g","Chitron se samjho"],["c","Candlestick patterns"],["p","Chart patterns"],["i","Indicators"],["v","Volume aur Liquidity"],["s","Strategies aur Risk"],["o","Options basics"],["f","Fundamentals"],["m","Funds aur SIP"],["a","Account aur Tax"],["y","Psychology"],["r","Results padhna"],["q","Quiz"]];
 function draw2(){box.innerHTML="";var n=el("div","edn","Ye sirf shiksha ke liye hai. Koi pattern ya strategy kisi stock ya trade ki salah nahi hai. Patterns aksar fail hote hain, aur SEBI ki studies mein zyadatar retail F&O traders ko nuksan hua hai. Seekhne ke liye paper trading se shuru karo.");box.appendChild(n);
 var ch=el("div","chips");SUB.forEach(function(s){var b=el("button","",s[1]);b.setAttribute("aria-pressed",es===s[0]);b.onclick=function(){es=s[0];draw2()};ch.appendChild(b)});box.appendChild(ch);
 var g=el("div","ed");
-if(E2[es])E2[es].forEach(function(x){g.appendChild(eduCard("",x[0],"",x[1]))});
+if(E2[es])E2[es].forEach(function(x){g.appendChild(eduCard(x[2]||"",x[0],"",x[1]))});
 if(es==="c"){var lg=el("p","note2","Dhundhli candles pehle ka trend dikhati hain, gehri candles pattern hai. Hari = badhi, lal = giri.");lg.style.marginTop="0";box.appendChild(lg);EC.forEach(function(x){g.appendChild(eduCard(cSvg(x[3],x[2]),x[0],x[1],[["Kaise dikhta hai",x[4]],["Aam matlab",x[5]],["Dhyan rakho",x[6]]]))})}
 if(es==="p"){EP.forEach(function(x){g.appendChild(eduCard(pSvg(x[2],x[1]==="u"?"var(--up)":"var(--dn)",x[3]),x[0],x[1],[["Kaise dikhta hai",x[4]],["Aam matlab",x[5]],["Dhyan rakho","Pattern aksar fail hote hain. Volume aur doosre sanket bhi dekhte hain."]]))})}
 if(es==="i")EI.forEach(function(x){g.appendChild(eduCard("",x[0],"",[["Kya hai",x[1]],["Kaise padhte hain",x[2]],["Limit",x[3]]]))});
@@ -381,23 +389,90 @@ box.appendChild(g)}
 eduRedraw=draw2;draw2()}
 
 var eduRedraw=null,WT="";
-var QZ=[
-["P/E Ratio kis se nikalta hai?",["Market cap \u00F7 volume","Share bhaav \u00F7 per-share kamai (EPS)","Dividend \u00F7 bhaav"],1,"P/E = share ka bhaav \u00F7 EPS."],
-["Dividend yield ka formula?",["Saalana dividend \u00F7 share bhaav","Share bhaav \u00F7 dividend","Volume \u00F7 dividend"],0,"Dividend yield = saal bhar ka dividend \u00F7 share ka bhaav, % mein."],
-["Bear market aam taur par kise kehte hain?",["Ek din mein 2% ki girawat","Peak se 20% ya zyada ki girawat","Jab volume kam ho"],1,"Aam parampara: peak se 20% ya zyada gir jana."],
-["RSI kis range mein hota hai?",["0 se 10","-100 se +100","0 se 100"],2,"RSI 0 se 100 ke beech ka momentum meter hai."],
-["Hammer candle ki pehchan?",["Chhoti body aur lambi neeche ki wick","Bahut badi body, koi wick nahi","Lambi oopar ki wick, body neeche"],0,"Hammer mein chhoti body oopar aur lambi lower wick hoti hai."],
-["VWAP kis liye hota hai?",["Saal bhar ke chart ke liye","Intraday, roz naye se shuru","Sirf crypto ke liye"],1,"VWAP din ka volume-weighted average hai aur roz reset hota hai."],
-["Position size ka formula?",["Capital \u00D7 risk%","(Capital \u00D7 risk%) \u00F7 (entry \u2212 stop-loss)","Entry \u00F7 stop-loss"],1,"Quantity = risk amount \u00F7 per-share risk (entry \u2212 stop-loss)."],
-["Stock split mein company ki total keemat?",["Wahi rehti hai","Double ho jati hai","Zero ho jati hai"],0,"Share ki ginti badhti hai aur bhaav kam hota hai, total keemat wahi rehti hai."],
-["Liquidity kam ho to kya ho sakta hai?",["Spread bada aur slippage zyada","Bhaav kabhi nahi badalta","Brokerage zero ho jati hai"],0,"Kam liquidity mein bid-ask ka fark aur slippage bada ho sakta hai."],
-["Breakout ko zyada mazboot kab maana jata hai?",["Kam volume ke saath","Zyada volume ke saath","Market band hone par"],1,"Zyada volume ke saath nikla breakout aam taur par zyada bharosemand maana jata hai."]];
-var qi=0,qs=0,qd=false;
-function quiz(box){var c=el("section","card");c.style.maxWidth="640px";
-if(qi>=QZ.length){c.appendChild(el("h4","","Quiz poora! Score: "+qs+"/"+QZ.length));c.appendChild(el("p","",qs>=8?"Bahut badhiya!":qs>=5?"Achha, thoda aur practice karo.":"Education tab ek baar aur padh lo."));var r=el("div","row");var b1=el("button","","Score share karo");b1.onclick=function(){share({t:"Maine "+CFG.name+" ke Market Quiz mein "+qs+"/"+QZ.length+" score kiya!",u:location.protocol==="file:"?"":location.href.split("?")[0]})};var b2=el("button","","Dobara khelo");b2.onclick=function(){qi=0;qs=0;qd=false;eduRedraw()};r.appendChild(b1);r.appendChild(b2);c.appendChild(r);box.appendChild(c);return}
-var q=QZ[qi];c.appendChild(el("p","note2","Sawal "+(qi+1)+" / "+QZ.length));c.appendChild(el("h4","",q[0]));var fb=el("p","");
-q[1].forEach(function(o,i){var b=el("button","",o);b.style.cssText="display:block;width:100%;text-align:left;margin:6px 0;border-radius:12px;height:auto";b.onclick=function(){if(qd)return;qd=true;if(i===q[2]){qs++;b.style.borderColor="var(--up)"}else b.style.borderColor="var(--dn)";fb.textContent=(i===q[2]?"Sahi! ":"Galat. Sahi jawab: "+q[1][q[2]]+". ")+q[3];var n=el("button","",qi+1>=QZ.length?"Result dekho":"Agla sawal");n.style.cssText="margin-top:10px;background:var(--acc);color:var(--accink);border-color:var(--acc)";n.onclick=function(){qi++;qd=false;eduRedraw()};c.appendChild(n)};c.appendChild(b)});
-c.appendChild(fb);box.appendChild(c)}
+
+var QCATS=[["all","Sab topics"],["Basics","Basics"],["Charts","Charts"],["Indicators","Indicators"],["Options","Options"],["Fundamentals","Fundamentals"],["Funds","Funds & SIP"],["Risk","Risk & Psychology"],["Safety","Scam Safety"]];
+var QLV=[["all","Sab levels"],["easy","Easy"],["medium","Medium"],["hard","Hard"]];
+var QB=[
+["Basics","easy","NSE aur BSE kya hain?",["Stock exchanges","Banks","Mutual fund companies"],0,"NSE aur BSE bharat ki do badi stock exchanges hain."],
+["Basics","easy","Equity market ka regular trading time?",["9:15 AM se 3:30 PM","10:00 AM se 5:00 PM","9:00 AM se 12:00 PM"],0,"Regular session 9:15 AM se 3:30 PM (Mon-Fri) hota hai."],
+["Basics","easy","Demat account mein kya rakha jata hai?",["Shares electronic roop mein","Sirf cash","Gold coins"],0,"Demat account shares ko electronic form mein rakhta hai."],
+["Basics","easy","Intraday trade ka matlab?",["Usi din kharidna aur bechna","Saal bhar rakhna","Sirf IPO mein paisa lagana"],0,"Intraday mein position usi din band ki jati hai."],
+["Basics","medium","Limit order ka matlab?",["Aap bhaav tay karte ho, wo bhaav aaye tabhi chalta hai","Jo bhaav chal raha hai turant chalta hai","Order kabhi nahi chalta"],0,"Limit order mein kharid ya bikri ka bhaav aap khud tay karte ho."],
+["Basics","medium","SEBI kya hai?",["Securities market ka regulator","Ek stock broker","Ek mutual fund"],0,"SEBI bharat ke securities market ka regulator hai."],
+["Basics","hard","T+1 settlement ka matlab?",["Trade ke agle working din settlement","Trade ke 1 mahine baad settlement","Trade ke usi minute settlement"],0,"T+1 mein trade ke agle working din shares aur paise settle hote hain."],
+["Charts","easy","Hari candle aam taur par kya dikhati hai?",["Close open se upar","Close open se neeche","Volume zero"],0,"Hari (bullish) candle mein close open se upar hota hai."],
+["Charts","easy","Candle ki wicks kya dikhati hain?",["Us period ka high aur low","Dividend","Brokerage"],0,"Wicks us period ke sabse oonche aur sabse neeche bhaav dikhati hain."],
+["Charts","medium","Hammer candle mein kya hota hai?",["Chhoti body aur lambi neeche ki wick","Lambi oopar ki wick, body neeche","Na body, na wick"],0,"Hammer mein chhoti body aur lambi lower wick hoti hai."],
+["Charts","medium","Doji kya dikhata hai?",["Open aur close lagbhag barabar (fasla)","Bahut badi badhat","Trading band"],0,"Doji mein open aur close lagbhag same hote hain, yaani indecision."],
+["Charts","medium","Double Top aam taur par kaisa pattern maana jata hai?",["Bearish","Bullish","Volume ka pattern"],0,"Double Top (M shape) aam taur par bearish maana jata hai."],
+["Charts","hard","Bullish Engulfing mein doosri candle kaisi hoti hai?",["Badi hari, pehli lal candle ko dhak leti hai","Chhoti hari, pehli ke andar","Doji"],0,"Badi hari candle pichhli lal candle ko poora dhak leti hai."],
+["Charts","hard","Breakout par bharosa kab badhta hai?",["Zyada volume ke saath nikle","Bahut kam volume par","Market band hone par"],0,"Zyada volume ke saath nikla breakout aam taur par zyada mazboot maana jata hai."],
+["Indicators","easy","RSI kis range mein hota hai?",["0 se 100","0 se 10","-50 se 50"],0,"RSI 0 se 100 ke beech ka momentum meter hai."],
+["Indicators","medium","Parampara se RSI 70 ke upar ko kya kehte hain?",["Overbought","Oversold","Neutral"],0,"70 ke upar overbought maana jata hai, par ye akela sanket nahi hai."],
+["Indicators","medium","Simple moving average (SMA) kya hai?",["Pichhle N dino ke close ka average","Volume ka total","Dividend ka average"],0,"SMA pichhle N dino ke close ka average hota hai."],
+["Indicators","medium","VWAP kis liye hota hai?",["Intraday, roz reset hota hai","Saal bhar ke chart ke liye","Sirf IPO ke liye"],0,"VWAP din ka volume-weighted average bhaav hai aur roz reset hota hai."],
+["Indicators","hard","Bollinger Bands ki aam setting?",["20 SMA ke oopar-neeche 2 standard deviation","Volume par 10 din","P/E par 5 saal"],0,"Aam setting: 20 SMA aur 2 standard deviation."],
+["Indicators","hard","MACD kis ka antar hai?",["12 EMA aur 26 EMA ka","50 SMA aur 200 SMA ka","RSI aur volume ka"],0,"MACD = 12 EMA minus 26 EMA."],
+["Indicators","hard","ATR kya naapta hai?",["Volatility (candles ki average chaal)","Dividend yield","Debt"],0,"ATR (Average True Range) volatility ka maap hai."],
+["Options","easy","Call option kab fayda deta hai?",["Bhaav badhne par","Bhaav girne par","Kabhi nahi"],0,"Call buyer ko bhaav badhne par fayda hota hai."],
+["Options","easy","Put option kab fayde mein hota hai?",["Bhaav girne par","Bhaav badhne par","Sirf expiry ke din"],0,"Put buyer ko bhaav girne par fayda hota hai."],
+["Options","medium","Option buyer ka zyada se zyada nuksan?",["Premium tak","Unlimited","Zero"],0,"Buyer ka nuksan premium tak seemit hota hai."],
+["Options","medium","Time decay (theta) ka asar?",["Expiry ke paas option ki keemat zyada ghatti hai","Option ki keemat badhti hai","Koi asar nahi"],0,"Time ke saath option ki time value ghatti hai, khaaskar expiry ke paas."],
+["Options","hard","Strike price kya hai?",["Wo tay bhaav jis par adhikar milta hai","Option ki keemat","Expiry ki date"],0,"Strike wo tay bhaav hai jis par kharidne ya bechne ka adhikar hota hai."],
+["Options","hard","Call option ITM kab hota hai?",["Strike current bhaav se neeche ho","Strike current bhaav se upar ho","Option expire ho jaye"],0,"Call ITM tab hota hai jab strike spot bhaav se neeche ho."],
+["Options","medium","SEBI ki studies mein retail F&O traders ka aam natija?",["Zyadatar ko nuksan hua","Zyadatar ko fayda hua","Sabko barabar"],0,"SEBI ki studies mein zyadatar retail F&O traders ko nuksan hua hai."],
+["Fundamentals","easy","P/E ratio kya hai?",["Bhaav aur EPS ka ratio","Volume aur bhaav ka ratio","Dividend aur EPS ka ratio"],0,"P/E = share ka bhaav / per-share kamai (EPS)."],
+["Fundamentals","easy","Market cap kaise nikalte hain?",["Share ka bhaav x total shares","Profit x 10","Volume x bhaav"],0,"Market cap = share ka bhaav x total shares."],
+["Fundamentals","medium","EPS ka matlab?",["Per-share kamai","Per-share dividend","Per-share udhaar"],0,"EPS = net profit / shares ki ginti."],
+["Fundamentals","medium","YoY ka matlab?",["Pichhle saal ki usi period se compare","Pichhli quarter se compare","Roz ka change"],0,"YoY = Year-over-Year, pichhle saal ki usi period se compare."],
+["Fundamentals","medium","ROE kya naapta hai?",["Shareholders ke paise par return","Company ka udhaar","Volume"],0,"ROE shareholders ki equity par mile return ko dikhata hai."],
+["Fundamentals","hard","Debt-to-Equity zyada ho to?",["Udhaar apne paise ke muqable zyada hai","Udhaar kam hai","Dividend zyada hai"],0,"D/E zyada matlab udhaar apne paise ke muqable zyada, jo jokhim badhata hai."],
+["Fundamentals","hard","Promoter pledge zyada hone ko aam taur par kya maana jata hai?",["Jokhim ka sanket","Hamesha achhi baat","Kuch matlab nahi"],0,"Zyada pledge aam taur par jokhim ka sanket maana jata hai."],
+["Funds","easy","SIP kya hai?",["Har mahine tay amount invest karna","Ek baar bada amount lagana","Share udhaar lena"],0,"SIP mein har mahine tay amount lagate hain."],
+["Funds","easy","NAV kya hai?",["Mutual fund ki ek unit ki keemat","Fund manager ki salary","Fund ka naam"],0,"NAV = fund ki ek unit ki keemat."],
+["Funds","medium","Direct plan ka expense ratio aam taur par?",["Regular se kam","Regular se zyada","Barabar"],0,"Direct plan mein distributor ka commission nahi hota."],
+["Funds","medium","Index fund kya karta hai?",["Kisi index (jaise Nifty 50) ko follow karta hai","Sirf sona kharidta hai","Sirf IPO mein lagata hai"],0,"Index fund kisi index ko follow karta hai."],
+["Funds","medium","Mutual fund returns ke baare mein sahi kya hai?",["Guaranteed nahi hote","Hamesha guaranteed hote hain","Hamesha 12% hote hain"],0,"Mutual fund returns market jokhim ke adheen hain, guaranteed nahi."],
+["Funds","hard","Rupee cost averaging ka matlab?",["Alag-alag bhaav par units lena, average cost balance hota hai","Ek hi bhaav par khareedna","Sirf sasta khareedna"],0,"SIP mein bhaav kam ho to zyada units, zyada ho to kam units milte hain."],
+["Funds","hard","Risk-o-meter kya dikhata hai?",["Scheme ka jokhim level","Fund ka naam","Dividend"],0,"Risk-o-meter scheme ke jokhim ka level dikhata hai."],
+["Risk","easy","Stop-loss ka kaam?",["Nuksan seemit karna","Profit pakka karna","Brokerage kam karna"],0,"Stop-loss tay level par nikal kar nuksan seemit karta hai."],
+["Risk","easy","Ek trade mein capital ka kitna risk lena aam salah hai (traders mein)?",["1-2% ke aaspaas","50%","Pura capital"],0,"Kai traders ek trade mein capital ka 1-2% hi risk lete hain."],
+["Risk","medium","Position size ka formula?",["(Capital x risk%) / (entry - stop-loss)","Capital x 2","Entry / stop-loss"],0,"Quantity = risk amount / per-share risk."],
+["Risk","medium","FOMO kya hai?",["Dusron ko kamate dekh kar jaldbaazi mein trade lena","Kam trade karna","Stop-loss lagana"],0,"FOMO = Fear Of Missing Out."],
+["Risk","medium","Revenge trading kya hai?",["Nuksan ke baad turant bada trade lena","Journal likhna","Break lena"],0,"Nuksan wapas paane ki jaldbaazi mein trade lena revenge trading hai."],
+["Risk","hard","Risk:Reward 1:2 ka matlab?",["1 risk par 2 sambhavit fayda","2 risk par 1 fayda","Koi risk nahi"],0,"1:2 matlab jitna risk, uska do guna sambhavit fayda."],
+["Risk","hard","Trading journal ka fayda?",["Galtiyan aur pattern pehchan kar sudharna","Tax bachana","Bhaav badhana"],0,"Journal se apni galtiyan aur aadatein dikhti hain."],
+["Safety","easy","'Guaranteed return' ka daava karne wala group?",["Red flag, door raho","Sahi hai","Turant join kar lo"],0,"Market mein guaranteed return ka daava dhokhe ka sanket hai."],
+["Safety","easy","Fraud mein paise gaye to pehle kya karein?",["Turant 1930 par call karo","Intezaar karo","Group mein poochho"],0,"1930 National Cyber Crime Helpline hai, jaldi call karna zaroori hai."],
+["Safety","medium","Trading app kahan se lein?",["Broker ki official app (Play Store ya App Store)","WhatsApp par aaya APK","Anjaan link"],0,"Sirf broker ki official app use karo."],
+["Safety","medium","SEBI-registered advisor kaise check karein?",["SEBI ki website par registration dhoondo","Instagram followers dekho","Kuch check nahi karna"],0,"SEBI ki official site par registered intermediaries ki list hoti hai."],
+["Safety","medium","OTP kise dena chahiye?",["Kisi ko nahi","Broker ke 'support' ko","Group admin ko"],0,"OTP kabhi kisi ke saath share mat karo."],
+["Safety","hard","Koi personal UPI ya account mein paise bhejne ko kahe to?",["Ruk jao, ye red flag hai","Turant bhej do","Dost se pooch kar bhejo"],0,"Aise maamlon mein ruk kar official channel aur registration check karo."],
+["Safety","hard","'VIP calls' ya paid tips group ke paise maange jayen to?",["Savdhaan raho, bina registration ke ye allowed nahi hota","Hamesha theek hai","Sirf sasta ho to theek hai"],0,"Bina SEBI registration ke paid advice dena allowed nahi hai."]];
+var QS={cat:"all",lv:"all",n:10,run:null};
+function qShuf(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+function qStart(){var pool=QB.filter(function(q){return(QS.cat==="all"||q[0]===QS.cat)&&(QS.lv==="all"||q[1]===QS.lv)});pool=qShuf(pool).slice(0,QS.n);if(!pool.length)return;
+QS.run={list:pool.map(function(q){var idx=qShuf(q[3].map(function(_,i){return i}));return{c:q[0],q:q[2],o:idx.map(function(i){return q[3][i]}),a:idx.indexOf(q[4]),e:q[5]}}),i:0,score:0,wrong:[],ans:false,done:false};eduRedraw()}
+function qEnd(){var r=QS.run,st=lsObj("td-qstat",{best:0,played:0,cats:{}}),n=r.list.length,pct=Math.round(r.score/n*100);r.done=true;r.pct=pct;st.played++;if(pct>st.best)st.best=pct;
+r.list.forEach(function(x){var c=st.cats[x.c]||[0,0];c[1]++;if(!x.wrong)c[0]++;st.cats[x.c]=c});try{localStorage.setItem("td-qstat",JSON.stringify(st))}catch(e){}}
+function quiz(box){var r=QS.run,c=el("section","card");c.style.maxWidth="680px";
+if(!r){c.appendChild(el("h4","","Quiz: apna gyaan check karo"));c.appendChild(el("p","note2","Har baar naye sawal aate hain aur options ka order badal jata hai. "+QB.length+" sawalon ka bank hai."));
+function row(label,list,key){var rw=el("div","chips");rw.setAttribute("aria-label",label);list.forEach(function(x){var b=el("button","",x[1]);b.setAttribute("aria-pressed",QS[key]===x[0]);b.onclick=function(){QS[key]=x[0];eduRedraw()};rw.appendChild(b)});return rw}
+c.appendChild(row("Topic",QCATS,"cat"));c.appendChild(row("Level",QLV,"lv"));c.appendChild(row("Sawal",[[5,"5 sawal"],[10,"10 sawal"],[20,"20 sawal"]],"n"));
+var go=el("button","","Quiz shuru karo");go.style.cssText="background:var(--acc);color:var(--accink);border-color:var(--acc);font-weight:700;margin-top:6px";go.onclick=qStart;c.appendChild(go);
+var st=lsObj("td-qstat",{best:0,played:0,cats:{}});if(st.played){var s=el("div","qstat");s.appendChild(el("span","","Ab tak: "+st.played+" quiz"));s.appendChild(el("span","","Best: "+st.best+"%"));c.appendChild(s);
+var weak=Object.keys(st.cats).filter(function(k){var v=st.cats[k];return v[1]>=3&&v[0]/v[1]<0.6});if(weak.length)c.appendChild(el("p","note2","Kamzor topics (60% se kam): "+weak.join(", ")+". Inhe Education mein dobara padho."))}
+box.appendChild(c);return}
+if(r.done){var n=r.list.length;c.appendChild(el("h4","","Quiz poora! Score: "+r.score+"/"+n+" ("+r.pct+"%)"));c.appendChild(el("p","",r.pct>=80?"Bahut badhiya!":r.pct>=50?"Achha, thoda aur practice karo.":"Education tab ek baar aur padh lo, phir dobara try karo."));
+if(r.wrong.length){c.appendChild(el("h4","","Jo galat hue"));r.wrong.slice(0,10).forEach(function(w){var d=el("div");d.style.cssText="border-top:1px solid var(--line);padding:8px 0";d.appendChild(el("p","qp",w.q));d.appendChild(el("p","note2","Sahi jawab: "+w.o[w.a]+". "+w.e));c.appendChild(d)})}
+var rw=el("div","row");rw.style.marginTop="10px";var b1=el("button","","Naye sawal (same settings)"),b2=el("button","","Settings badlo"),b3=el("button","","Score share karo");
+b1.onclick=qStart;b2.onclick=function(){QS.run=null;eduRedraw()};b3.onclick=function(){share({t:"Maine "+CFG.name+" ke Market Quiz mein "+r.score+"/"+n+" score kiya!",u:location.protocol==="file:"?"":location.href.split("?")[0]})};
+rw.appendChild(b1);rw.appendChild(b2);rw.appendChild(b3);c.appendChild(rw);box.appendChild(c);return}
+var q=r.list[r.i];c.appendChild(el("p","note2","Sawal "+(r.i+1)+" / "+r.list.length+"  |  "+q.c));c.appendChild(el("h4","",q.q));var fb=el("p","");
+q.o.forEach(function(o,i){var b=el("button","qopt",o);b.onclick=function(){if(r.ans)return;r.ans=true;if(i===q.a){r.score++;b.style.borderColor="var(--up)"}else{b.style.borderColor="var(--dn)";q.wrong=true;r.wrong.push(q)}
+fb.textContent=(i===q.a?"Sahi! ":"Galat. Sahi jawab: "+q.o[q.a]+". ")+q.e;var nx=el("button","",r.i+1>=r.list.length?"Result dekho":"Agla sawal");nx.style.cssText="margin-top:10px;background:var(--acc);color:var(--accink);border-color:var(--acc)";
+nx.onclick=function(){r.i++;r.ans=false;if(r.i>=r.list.length)qEnd();eduRedraw()};c.appendChild(nx)};c.appendChild(b)});c.appendChild(fb);box.appendChild(c)}
+
 var SA=[
 ["Ye sab red flags hain",["'Guaranteed' ya 'pakka' return, 'sure shot' tips","Jaldi karo, offer aaj hi khatam jaisa dabav","Personal UPI ya bank account mein paise bhejne ko kehna","Unknown WhatsApp ya Telegram group mein bade profit ke screenshots","Aisi trading app ya APK link jo official broker ki na ho","SEBI, NSE ya kisi jaane-maane analyst ke naam par fake group ya profile","OTP, password ya screen share maangna","Registration ke bina 'premium calls' ya VIP group ke paise lena"]],
 ["Pehle ye check karo",["Salah dene wale ka SEBI registration (Research Analyst ya Investment Adviser) sebi.gov.in par dhoondo","Broker SEBI-registered aur NSE/BSE ka member ho","Trading sirf broker ki official app se karo, kisi link ya APK se nahi","Kisi group ya link par paisa bhejne se pehle ruk jao aur kisi bharose ke insaan se poochho"]],
@@ -534,6 +609,34 @@ r:[
 ["YoY aur QoQ",[["Matlab","YoY pichhle saal ki us hi quarter se compare hai (mausam ya tyohar ka asar kam). QoQ pichhli quarter se."]]],
 ["One-off items",[["Dhyan","Kabhi profit kisi ek baar ki income (jaise asset ki bikri) se badhta hai. Isliye exceptional items dekhte hain."]]],
 ["Aur kya dekhein",[["Cheezein","Debt kitna hai, cash flow kaisa hai, management ki guidance kya hai, aur result ke saath company ka statement."]]]]};
+function dsv(x,l){return '<svg viewBox="0 0 200 100" role="img" aria-label="'+(l||"Diagram")+'">'+x+'</svg>'}
+function dpl(c,pts){return '<polyline class="'+c+'" points="'+pts+'"/>'}
+function dln(x1,y1,x2,y2){return '<line class="sm" x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'"/>'}
+function dtx(x,y,t,c){return '<text x="'+x+'" y="'+y+'"'+(c?' class="'+c+'"':'')+'>'+t+'</text>'}
+var dHB=[],dhv=[-10,-18,-12,-4,6,14,20,16,8,-2],dvb=[8,10,7,9,8,9,30,26];
+dhv.forEach(function(h,i){dHB.push('<rect class="'+(h>0?"fu2":"fd2")+'" x="'+(14+i*17)+'" y="'+(h>0?60-h:60)+'" width="10" height="'+Math.abs(h)+'"/>')});
+var dVB=[];dvb.forEach(function(h,i){dVB.push('<rect class="fu2" x="'+(14+i*22)+'" y="'+(100-h)+'" width="14" height="'+h+'"/>')});
+E2.g=[
+["Candlestick ki banawat",[["Kya hai","Har candle open, high, low aur close dikhati hai. Body open aur close ke beech hoti hai, wicks high aur low tak."],["Rang","Hari candle mein close open se upar, lal mein neeche."]],dsv('<g class="cu"><line x1="50" y1="15" x2="50" y2="85" stroke-width="3"/><rect x="38" y="35" width="24" height="32" rx="3"/></g><g class="cd"><line x1="140" y1="15" x2="140" y2="85" stroke-width="3"/><rect x="128" y="35" width="24" height="32" rx="3"/></g>'+dtx(66,20,"High")+dtx(66,40,"Close")+dtx(66,66,"Open")+dtx(66,90,"Low")+dtx(156,40,"Open")+dtx(156,66,"Close")+dtx(24,9,"Hari (bullish)","ti")+dtx(112,9,"Lal (bearish)","ti"))],
+["Support aur Resistance",[["Support","Wo level jahan se bhaav bar-bar neeche se palta hai."],["Resistance","Wo level jahan se bhaav bar-bar oopar se palta hai."],["Dhyan","Level kabhi bhi toot sakta hai."]],dsv(dln(10,32,190,32)+dln(10,68,190,68)+dpl("si","10,58 30,34 50,66 70,36 90,66 110,36 130,66 150,34 170,64 190,40")+dtx(12,27,"Resistance")+dtx(12,80,"Support"))],
+["Trend aur Trendline",[["Uptrend","Higher highs aur higher lows. Trendline lows ko jodti hai."],["Downtrend","Lower highs aur lower lows."],["Dhyan","Trendline toot-na trend badalne ka sanket ho sakta hai, pakka nahi."]],dsv(dpl("su","10,88 30,62 45,72 70,46 85,56 115,30 130,40 160,14")+'<line class="sm" x1="10" y1="88" x2="150" y2="36"/>'+dtx(12,12,"Uptrend: higher highs, higher lows"))],
+["Moving Average crossover",[["Kya hai","Tez (fast) average dheemi (slow) average ko paar kare to momentum badalne ka sanket maana jata hai."],["Limit","Peeche chalta hai. Sideways market mein baar-baar jhuta sanket deta hai."]],dsv(dpl("si","10,60 190,38")+dpl("su","10,75 190,25")+'<circle class="fu" cx="106" cy="48" r="3.5"/>'+dtx(136,20,"Fast MA")+dtx(136,58,"Slow MA")+dtx(66,40,"Crossover"))],
+["RSI ke zones",[["70 ke upar","Parampara se overbought. Mazboot trend mein lambe samay tak rah sakta hai."],["30 ke neeche","Parampara se oversold."],["Dhyan","Ye akela bechne ya kharidne ka sanket nahi."]],dsv(dln(10,25,190,25)+dln(10,75,190,75)+dpl("si","10,55 30,40 50,20 70,45 90,72 110,82 130,55 150,30 170,18 190,40")+dtx(64,21,"70: overbought")+dtx(12,92,"30: oversold"))],
+["Bollinger Bands",[["Kya hai","20 SMA ke oopar-neeche 2 standard deviation ke bands."],["Padhna","Bands sankre ho to volatility kam (squeeze), chaude ho to zyada."],["Dhyan","Band ko chhoo-na apne aap palatne ka sanket nahi."]],dsv(dpl("sm","10,25 50,22 90,28 130,18 170,24 190,22")+dpl("sm","10,75 50,78 90,72 130,82 170,76 190,78")+dpl("si","10,52 30,35 50,62 70,48 90,70 110,40 130,60 150,30 170,55 190,45")+dtx(12,15,"Upper band")+dtx(12,94,"Lower band"))],
+["MACD",[["Kya hai","Do lines (MACD aur signal) aur histogram. Histogram dono ke beech ka antar dikhata hai."],["Padhna","Lines ka crossover aur zero line se door ya paas hona momentum dikhata hai."],["Limit","Lagging hai."]],dsv(dln(10,60,190,60)+dHB.join("")+dpl("su","10,70 50,66 90,56 130,40 170,46 190,52")+dpl("sd","10,76 50,72 90,62 130,50 170,44 190,48")+dtx(12,10,"MACD (hara), signal (lal)"))],
+["Volume aur Breakout",[["Idea","Bhaav resistance ke upar nikle aur volume bhi zyada ho to breakout zyada mazboot maana jata hai."],["Dhyan","Kam volume ke breakout aksar fail hote hain."]],dsv(dln(10,42,190,42)+dpl("si","10,50 40,45 70,48 100,42 130,45 150,40 170,18 190,8")+dVB.join("")+dtx(12,64,"Zyada volume = mazboot breakout"))],
+["Order book (Bid-Ask)",[["Bids","Kharidne walon ke pending orders."],["Asks","Bechne walon ke pending orders."],["Spread","Sabse oonchi bid aur sabse neechi ask ka fark. Chhota spread matlab achhi liquidity."]],dsv('<polygon class="fu2" points="95,90 95,70 75,70 75,55 55,55 55,40 35,40 35,28 10,28 10,90"/><polygon class="fd2" points="105,90 105,70 125,70 125,55 145,55 145,40 165,40 165,28 190,28 190,90"/>'+dtx(12,22,"Bids (kharidne wale)")+dtx(116,22,"Asks (bechne wale)")+dtx(84,97,"Spread"))],
+["Long Call ka payoff",[["Kya hai","Call kharidne par nuksan premium tak seemit, aur bhaav strike se upar jaye to fayda badhta hai."],["Breakeven","Strike + premium."]],dsv(dln(10,60,190,60)+dpl("su","10,80 100,80 190,10")+'<circle class="fu" cx="126" cy="60" r="3"/>'+dtx(12,92,"Max nuksan: premium")+dtx(96,56,"Strike")+dtx(132,70,"Breakeven"))],
+["Long Put ka payoff",[["Kya hai","Put kharidne par nuksan premium tak seemit, aur bhaav strike se neeche jaye to fayda badhta hai."],["Breakeven","Strike minus premium."]],dsv(dln(10,60,190,60)+dpl("sd","10,10 100,80 190,80")+'<circle class="fd" cx="74" cy="60" r="3"/>'+dtx(108,92,"Max nuksan: premium")+dtx(40,56,"Breakeven")+dtx(104,70,"Strike"))],
+["SIP ka compounding asar",[["Idea","Samay ke saath kamai par bhi kamai judti hai, isliye lambe samay mein farak bada ho sakta hai."],["Dhyan","Graph sirf samajhne ke liye hai, returns guaranteed nahi hote."]],dsv(dpl("sm","10,85 190,45")+dpl("su","10,85 40,80 70,72 100,62 130,48 160,30 190,8")+dtx(12,14,"Value (maan lo)")+dtx(110,92,"Invest kiya (seedhi line)"))],
+["Risk : Reward",[["Idea","Trade se pehle tay karo ki kitna risk hai (stop-loss tak) aur sambhavit fayda kitna hai (target tak)."],["Example","Risk 15 aur reward 30 ho to ratio 1:2."]],dsv('<rect class="fu2" x="40" y="20" width="120" height="30"/><rect class="fd2" x="40" y="50" width="120" height="15"/>'+dln(10,50,190,50)+dtx(44,17,"Target")+dtx(44,47,"Entry")+dtx(44,78,"Stop-loss")+dtx(166,37,"Reward")+dtx(166,60,"Risk")+dtx(12,95,"Risk:Reward 1:2 (example)"))]];
+E2.w=[
+["Level 1: Shuruaat",[["Padho","Basics tab: market kaise chalta hai, order types, demat. Glossary tab bhi."],["Karo","Quiz mein Basics ka round khelo."]]],
+["Level 2: Charts",[["Padho","Candlestick patterns, Chart patterns aur Chitron se samjho."],["Karo","Roz ek chart dekh kar support, resistance aur trend pehchano."]]],
+["Level 3: Indicators aur Risk",[["Padho","Indicators, Volume aur Liquidity, Strategies aur Risk."],["Karo","Paper Trading mein position size aur stop-loss ke saath practice karo. Diary mein likho."]]],
+["Level 4: Fundamentals",[["Padho","Fundamentals, Results padhna, Funds aur SIP, Account aur Tax."],["Karo","Ek quarterly result khud padho (revenue, profit, margin) aur apne shabdon mein likho."]]],
+["Level 5: Options aur Psychology",[["Padho","Options basics aur Psychology."],["Dhyan","Options mein jaldi mat karo. Pehle paper trading."]]],
+["Hamesha",[["Safety","Scam Alert tab padho. Guaranteed return ya tips wale group se door raho."],["Aadat","Roz ka checklist aur journal."]]]];
 function lsObj(k,d){try{var v=JSON.parse(localStorage.getItem(k));return v&&typeof v==="object"&&!Array.isArray(v)?v:d}catch(e){return d}}
 var CHK=["Aaj ki market news padhi","Trade se pehle entry, stop-loss aur risk likha","Ek trade mein capital ka 1-2% se zyada risk nahi","Emotion check kiya: FOMO ya revenge to nahi?","Din ke end mein journal likha"];
 function today(){return new Date().toLocaleDateString("en-CA",{timeZone:"Asia/Kolkata"})}
