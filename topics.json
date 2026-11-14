@@ -1,0 +1,781 @@
+[
+{
+"type": "candle",
+"label": "Candlestick pattern",
+"name": "Hammer",
+"badge": "u",
+"k": 1,
+"candles": [
+[
+80,
+82,
+70,
+72
+],
+[
+72,
+74,
+62,
+64
+],
+[
+64,
+66,
+54,
+56
+],
+[
+52,
+56,
+30,
+55
+]
+],
+"s1": "Girawat ke baad chhoti body aur lambi neeche ki wick. Bikri ka dabav aaya par khareedaron ne bhaav wapas oopar kheencha.",
+"s2": "Aksar rukti hui girawat ka sanket maana jata hai.",
+"s3": "Agli candle se confirmation dekhte hain. Akeli hammer candle kaafi nahi.",
+"h1": "Kaise dikhta hai",
+"h2": "Aam matlab",
+"h3": "Dhyan rakho"
+},
+{
+"type": "candle",
+"label": "Candlestick pattern",
+"name": "Bullish Engulfing",
+"badge": "u",
+"k": 2,
+"candles": [
+[
+84,
+86,
+76,
+78
+],
+[
+78,
+80,
+68,
+70
+],
+[
+70,
+72,
+60,
+62
+],
+[
+58,
+76,
+56,
+74
+]
+],
+"s1": "Chhoti lal candle ke baad badi hari candle jo pichhli candle ko poora dhak leti hai.",
+"s2": "Khareedaron ka control wapas aane ka sanket maana jata hai.",
+"s3": "Volume zyada ho to zyada bharosemand maani jaati hai.",
+"h1": "Kaise dikhta hai",
+"h2": "Aam matlab",
+"h3": "Dhyan rakho"
+},
+{
+"type": "candle",
+"label": "Candlestick pattern",
+"name": "Morning Star",
+"badge": "u",
+"k": 3,
+"candles": [
+[
+80,
+82,
+58,
+60
+],
+[
+54,
+57,
+50,
+52
+],
+[
+54,
+82,
+52,
+78
+]
+],
+"s1": "3 candle: badi lal, chhoti body (star), phir badi hari candle.",
+"s2": "Girawat ke thakne aur palatne ka sanket maana jata hai.",
+"s3": "Ye kam banta hai, aur kabhi-kabhi fail bhi hota hai.",
+"h1": "Kaise dikhta hai",
+"h2": "Aam matlab",
+"h3": "Dhyan rakho"
+},
+{
+"type": "candle",
+"label": "Candlestick pattern",
+"name": "Piercing Line",
+"badge": "u",
+"k": 2,
+"candles": [
+[
+80,
+82,
+56,
+58
+],
+[
+52,
+74,
+50,
+72
+]
+],
+"s1": "Badi lal candle, phir hari candle neeche khulti hai aur pichhli body ke aadhe se upar band hoti hai.",
+"s2": "Girawat ke baad khareedari lautne ka halka sanket.",
+"s3": "Bullish Engulfing se kamzor maana jata hai.",
+"h1": "Kaise dikhta hai",
+"h2": "Aam matlab",
+"h3": "Dhyan rakho"
+},
+{
+"type": "candle",
+"label": "Candlestick pattern",
+"name": "Three White Soldiers",
+"badge": "u",
+"k": 3,
+"candles": [
+[
+40,
+56,
+38,
+54
+],
+[
+52,
+68,
+50,
+66
+],
+[
+64,
+80,
+62,
+78
+]
+],
+"s1": "Lagatar 3 hari candles, har ek pichhli se oopar band hoti hai.",
+"s2": "Mazboot khareedari ka sanket maana jata hai.",
+"s3": "Bahut tez badhat ke baad ye thakaan ka bhi ishara ho sakta hai.",
+"h1": "Kaise dikhta hai",
+"h2": "Aam matlab",
+"h3": "Dhyan rakho"
+},
+{
+"type": "candle",
+"label": "Candlestick pattern",
+"name": "Shooting Star",
+"badge": "d",
+"k": 1,
+"candles": [
+[
+30,
+38,
+28,
+36
+],
+[
+36,
+44,
+34,
+42
+],
+[
+42,
+50,
+40,
+48
+],
+[
+48,
+74,
+46,
+50
+]
+],
+"s1": "Badhat ke baad chhoti body neeche aur lambi oopar ki wick. Bhaav oopar gaya par wapas gir gaya.",
+"s2": "Badhat ke kamzor hone ka sanket maana jata hai.",
+"s3": "Agli candle ka confirmation dekhna zaroori hai.",
+"h1": "Kaise dikhta hai",
+"h2": "Aam matlab",
+"h3": "Dhyan rakho"
+},
+{
+"type": "candle",
+"label": "Candlestick pattern",
+"name": "Bearish Engulfing",
+"badge": "d",
+"k": 2,
+"candles": [
+[
+30,
+38,
+28,
+36
+],
+[
+36,
+44,
+34,
+42
+],
+[
+50,
+60,
+48,
+58
+],
+[
+62,
+64,
+44,
+46
+]
+],
+"s1": "Chhoti hari candle ke baad badi lal candle jo use poora dhak leti hai.",
+"s2": "Bechne walon ka control aane ka sanket maana jata hai.",
+"s3": "Support ke paas banne par aksar bekaar rehta hai.",
+"h1": "Kaise dikhta hai",
+"h2": "Aam matlab",
+"h3": "Dhyan rakho"
+},
+{
+"type": "candle",
+"label": "Candlestick pattern",
+"name": "Evening Star",
+"badge": "d",
+"k": 3,
+"candles": [
+[
+40,
+66,
+38,
+64
+],
+[
+68,
+72,
+64,
+70
+],
+[
+66,
+68,
+40,
+42
+]
+],
+"s1": "Badi hari, chhoti body (star), phir badi lal candle.",
+"s2": "Badhat ke thakne aur palatne ka sanket maana jata hai.",
+"s3": "Morning Star ka ulta. Ye bhi confirmation maangta hai.",
+"h1": "Kaise dikhta hai",
+"h2": "Aam matlab",
+"h3": "Dhyan rakho"
+},
+{
+"type": "candle",
+"label": "Candlestick pattern",
+"name": "Dark Cloud Cover",
+"badge": "d",
+"k": 2,
+"candles": [
+[
+40,
+66,
+38,
+64
+],
+[
+70,
+72,
+50,
+52
+]
+],
+"s1": "Badi hari candle, phir lal candle oopar khulti hai aur pichhli body ke aadhe se neeche band hoti hai.",
+"s2": "Badhat mein dabav aane ka sanket.",
+"s3": "Piercing Line ka ulta.",
+"h1": "Kaise dikhta hai",
+"h2": "Aam matlab",
+"h3": "Dhyan rakho"
+},
+{
+"type": "candle",
+"label": "Candlestick pattern",
+"name": "Three Black Crows",
+"badge": "d",
+"k": 3,
+"candles": [
+[
+80,
+82,
+64,
+66
+],
+[
+68,
+70,
+52,
+54
+],
+[
+56,
+58,
+40,
+42
+]
+],
+"s1": "Lagatar 3 lal candles, har ek pichhli se neeche band hoti hai.",
+"s2": "Mazboot bikri ka sanket maana jata hai.",
+"s3": "Bahut gir chuke bhaav par ye aksar der se aata hai.",
+"h1": "Kaise dikhta hai",
+"h2": "Aam matlab",
+"h3": "Dhyan rakho"
+},
+{
+"type": "candle",
+"label": "Candlestick pattern",
+"name": "Hanging Man",
+"badge": "d",
+"k": 1,
+"candles": [
+[
+30,
+38,
+28,
+36
+],
+[
+36,
+44,
+34,
+42
+],
+[
+42,
+50,
+40,
+48
+],
+[
+52,
+54,
+30,
+50
+]
+],
+"s1": "Badhat ke baad Hammer jaisi shape, par oopar banti hai.",
+"s2": "Badhat ke kamzor hone ka halka sanket.",
+"s3": "Akele isse zyada matlab nikalna theek nahi.",
+"h1": "Kaise dikhta hai",
+"h2": "Aam matlab",
+"h3": "Dhyan rakho"
+},
+{
+"type": "candle",
+"label": "Candlestick pattern",
+"name": "Doji",
+"badge": "n",
+"k": 1,
+"candles": [
+[
+50,
+70,
+30,
+50
+]
+],
+"s1": "Open aur close lagbhag barabar. Khareedar aur bechne wale barabar the.",
+"s2": "Fasla-hin (indecision) ka sanket.",
+"s3": "Ye kahan banta hai, usse matlab badalta hai.",
+"h1": "Kaise dikhta hai",
+"h2": "Aam matlab",
+"h3": "Dhyan rakho"
+},
+{
+"type": "chart",
+"label": "Chart pattern",
+"name": "Double Bottom",
+"badge": "u",
+"pts": "10,20 40,75 70,40 100,78 130,40 170,15",
+"lines": [
+[
+10,
+40,
+170,
+40
+]
+],
+"s1": "Bhaav do baar lagbhag same neeche level tak gir kar ubharta hai (W shape).",
+"s2": "Neckline ke upar band hone par pattern poora maana jata hai.",
+"s3": "Pattern aksar fail hote hain. Volume aur doosre sanket bhi dekho.",
+"h1": "Kaise dikhta hai",
+"h2": "Aam matlab",
+"h3": "Dhyan rakho"
+},
+{
+"type": "chart",
+"label": "Chart pattern",
+"name": "Inverse Head & Shoulders",
+"badge": "u",
+"pts": "10,25 30,60 45,45 70,85 95,45 110,60 130,45 170,15",
+"lines": [
+[
+10,
+45,
+170,
+45
+]
+],
+"s1": "3 neeche ke point, beech wala sabse gehra (head).",
+"s2": "Neckline ke upar nikalna bullish maana jata hai.",
+"s3": "Pattern aksar fail hote hain. Volume aur doosre sanket bhi dekho.",
+"h1": "Kaise dikhta hai",
+"h2": "Aam matlab",
+"h3": "Dhyan rakho"
+},
+{
+"type": "chart",
+"label": "Chart pattern",
+"name": "Cup and Handle",
+"badge": "u",
+"pts": "10,25 25,48 45,66 70,74 95,66 115,48 130,32 140,25 150,35 160,38 172,28 190,10",
+"lines": [
+[
+10,
+25,
+140,
+25
+]
+],
+"s1": "Gol pyaale jaisa gadda, phir chhota sa dip (handle), phir oopar nikalna.",
+"s2": "Handle ke baad resistance toot-na kaafi dekha jata hai.",
+"s3": "Pattern aksar fail hote hain. Volume aur doosre sanket bhi dekho.",
+"h1": "Kaise dikhta hai",
+"h2": "Aam matlab",
+"h3": "Dhyan rakho"
+},
+{
+"type": "chart",
+"label": "Chart pattern",
+"name": "Ascending Triangle",
+"badge": "u",
+"pts": "10,80 40,25 60,60 85,25 100,48 120,25 135,38 150,25 175,10",
+"lines": [
+[
+40,
+25,
+150,
+25
+],
+[
+10,
+80,
+135,
+38
+]
+],
+"s1": "Oopar ek samaan resistance, neeche badhte hue lows.",
+"s2": "Resistance ke upar volume ke saath nikalna bullish maana jata hai.",
+"s3": "Pattern aksar fail hote hain. Volume aur doosre sanket bhi dekho.",
+"h1": "Kaise dikhta hai",
+"h2": "Aam matlab",
+"h3": "Dhyan rakho"
+},
+{
+"type": "chart",
+"label": "Chart pattern",
+"name": "Bull Flag",
+"badge": "u",
+"pts": "10,90 40,30 55,36 65,34 80,42 90,40 105,48 130,15",
+"lines": [],
+"s1": "Tez badhat (pole), phir halka neeche dhalta channel (flag), phir wapas badhat.",
+"s2": "Flag ke upar nikalna badhat ke jaari rehne ka sanket.",
+"s3": "Pattern aksar fail hote hain. Volume aur doosre sanket bhi dekho.",
+"h1": "Kaise dikhta hai",
+"h2": "Aam matlab",
+"h3": "Dhyan rakho"
+},
+{
+"type": "chart",
+"label": "Chart pattern",
+"name": "Double Top",
+"badge": "d",
+"pts": "10,80 40,25 70,60 100,22 130,60 170,85",
+"lines": [
+[
+10,
+60,
+170,
+60
+]
+],
+"s1": "Bhaav do baar lagbhag same oopar ke level se wapas aata hai (M shape).",
+"s2": "Neckline ke neeche band hone par pattern poora maana jata hai.",
+"s3": "Pattern aksar fail hote hain. Volume aur doosre sanket bhi dekho.",
+"h1": "Kaise dikhta hai",
+"h2": "Aam matlab",
+"h3": "Dhyan rakho"
+},
+{
+"type": "chart",
+"label": "Chart pattern",
+"name": "Head & Shoulders",
+"badge": "d",
+"pts": "10,75 30,40 45,55 70,15 95,55 110,40 130,55 170,85",
+"lines": [
+[
+10,
+55,
+170,
+55
+]
+],
+"s1": "3 oopar ke point, beech wala sabse oonchha (head).",
+"s2": "Neckline ke neeche toot-na bearish maana jata hai.",
+"s3": "Pattern aksar fail hote hain. Volume aur doosre sanket bhi dekho.",
+"h1": "Kaise dikhta hai",
+"h2": "Aam matlab",
+"h3": "Dhyan rakho"
+},
+{
+"type": "chart",
+"label": "Chart pattern",
+"name": "Descending Triangle",
+"badge": "d",
+"pts": "10,20 40,75 60,40 85,75 100,52 120,75 135,62 150,75 175,92",
+"lines": [
+[
+40,
+75,
+150,
+75
+],
+[
+10,
+20,
+135,
+62
+]
+],
+"s1": "Neeche ek samaan support, oopar girte hue highs.",
+"s2": "Support ke neeche toot-na bearish maana jata hai.",
+"s3": "Pattern aksar fail hote hain. Volume aur doosre sanket bhi dekho.",
+"h1": "Kaise dikhta hai",
+"h2": "Aam matlab",
+"h3": "Dhyan rakho"
+},
+{
+"type": "chart",
+"label": "Chart pattern",
+"name": "Rising Wedge",
+"badge": "d",
+"pts": "10,85 40,60 55,70 90,40 100,52 130,25 140,35 160,60 185,88",
+"lines": [],
+"s1": "Bhaav oopar jaata hai par range sankri hoti jaati hai.",
+"s2": "Aksar neeche toot kar khatam hota hai.",
+"s3": "Pattern aksar fail hote hain. Volume aur doosre sanket bhi dekho.",
+"h1": "Kaise dikhta hai",
+"h2": "Aam matlab",
+"h3": "Dhyan rakho"
+},
+{
+"type": "chart",
+"label": "Chart pattern",
+"name": "Bear Flag",
+"badge": "d",
+"pts": "10,10 40,70 55,64 65,66 80,58 90,60 105,52 130,85",
+"lines": [],
+"s1": "Tez girawat (pole), phir halka oopar chadhta channel, phir wapas girawat.",
+"s2": "Flag ke neeche nikalna girawat jaari rehne ka sanket.",
+"s3": "Pattern aksar fail hote hain. Volume aur doosre sanket bhi dekho.",
+"h1": "Kaise dikhta hai",
+"h2": "Aam matlab",
+"h3": "Dhyan rakho"
+},
+{
+"type": "text",
+"label": "Indicator",
+"name": "Moving Average (SMA / EMA)",
+"s1": "Pichhle N dino ke close ka average (EMA mein naye dino ko zyada wazan). Aam: 20, 50, 200.",
+"s2": "Bhaav average ke oopar ho aur average upar jaa raha ho to trend upar maana jata hai. 2 averages ka crossover bhi dekha jata hai.",
+"s3": "Peeche chalta hai (lagging). Sideways market mein baar-baar galat sanket deta hai.",
+"h1": "Kya hai",
+"h2": "Kaise padhte hain",
+"h3": "Limit"
+},
+{
+"type": "text",
+"label": "Indicator",
+"name": "RSI (14)",
+"s1": "0 se 100 ke beech ka momentum meter, pichhle 14 candles ke badhat aur girawat se.",
+"s2": "Parampara se 70 ke upar 'overbought' aur 30 ke neeche 'oversold' kehte hain. Divergence bhi dekhte hain.",
+"s3": "Mazboot trend mein RSI lambe samay tak 70 ke upar rah sakta hai. Akela bechne ya kharidne ka sanket nahi.",
+"h1": "Kya hai",
+"h2": "Kaise padhte hain",
+"h3": "Limit"
+},
+{
+"type": "text",
+"label": "Indicator",
+"name": "MACD",
+"s1": "12 aur 26 EMA ka antar, saath mein 9 EMA ki signal line aur histogram.",
+"s2": "MACD signal line ko paar kare to momentum badalne ka sanket maana jata hai. Zero line trend dikhati hai.",
+"s3": "Lagging hai, aur sideways market mein jhute sanket aate hain.",
+"h1": "Kya hai",
+"h2": "Kaise padhte hain",
+"h3": "Limit"
+},
+{
+"type": "text",
+"label": "Indicator",
+"name": "Bollinger Bands",
+"s1": "20 SMA ke oopar-neeche 2 standard deviation ke bands.",
+"s2": "Bands chaude to volatility zyada, sankre to kam (squeeze). Bhaav bands ke andar ghoomta hai.",
+"s3": "Band ko chhoo-na apne aap palatne ka sanket nahi. Trend mein bhaav band ke saath chalta reh sakta hai.",
+"h1": "Kya hai",
+"h2": "Kaise padhte hain",
+"h3": "Limit"
+},
+{
+"type": "text",
+"label": "Indicator",
+"name": "VWAP",
+"s1": "Din ke har trade ko volume se tol kar nikala gaya average bhaav. Sirf intraday, roz naye se shuru.",
+"s2": "Bhaav VWAP ke oopar ho to us din khareedar bhaari, neeche ho to bechne wale. Bade investors ise benchmark ki tarah dekhte hain.",
+"s3": "Din ke shuru mein kam data hota hai, aur ye multi-day chart ke liye nahi hai.",
+"h1": "Kya hai",
+"h2": "Kaise padhte hain",
+"h3": "Limit"
+},
+{
+"type": "text",
+"label": "Indicator",
+"name": "ATR (14)",
+"s1": "Average True Range: kisi candle mein bhaav ki average chaal, paise mein.",
+"s2": "Volatility naapne aur stop-loss ki doori tay karne mein madad karta hai.",
+"s3": "Ye direction nahi batata, sirf utaar-chadhav ka size.",
+"h1": "Kya hai",
+"h2": "Kaise padhte hain",
+"h3": "Limit"
+},
+{
+"type": "text",
+"label": "Volume aur Liquidity",
+"name": "Volume",
+"s1": "Kisi din kitne shares kharide-beche gaye.",
+"s2": "Bhaav ka move zyada volume ke saath ho to zyada mazboot maana jata hai. Kam volume ka breakout aksar fail hota hai. Isse pichhle 20 din ke average volume se compare karte hain.",
+"s3": "Akele ek number ka matlab nikalna theek nahi. Poori tasveer dekho.",
+"h1": "Kya hai",
+"h2": "Kyun zaroori",
+"h3": "Dhyan rakho"
+},
+{
+"type": "text",
+"label": "Volume aur Liquidity",
+"name": "Delivery %",
+"s1": "Volume ka wo hissa jo sach mein delivery ke liye gaya, din mein square-off nahi hua.",
+"s2": "Zyada delivery % ka matlab zyada logon ne shares apne paas rakhe. Ye NSE roz publish karta hai. Akele iska matlab nikalna theek nahi.",
+"s3": "Akele ek number ka matlab nikalna theek nahi. Poori tasveer dekho.",
+"h1": "Kya hai",
+"h2": "Kyun zaroori",
+"h3": "Dhyan rakho"
+},
+{
+"type": "text",
+"label": "Volume aur Liquidity",
+"name": "Liquidity",
+"s1": "Kitni aasani se shares bina bhaav ko hilaye kharide-beche ja sakte hain.",
+"s2": "Bade stocks mein liquidity zyada hoti hai. Chhote stocks, SME aur penny stocks mein bid-ask ka fark bada ho sakta hai, aur apna order bhaav ko khud hila sakta hai (slippage).",
+"s3": "Akele ek number ka matlab nikalna theek nahi. Poori tasveer dekho.",
+"h1": "Kya hai",
+"h2": "Kyun zaroori",
+"h3": "Dhyan rakho"
+},
+{
+"type": "text",
+"label": "Volume aur Liquidity",
+"name": "Bid-Ask Spread aur Market Depth",
+"s1": "Bid = sabse oonchi khareed ki bolli, Ask = sabse neeche bikri ki bolli. Depth mein dono taraf ke pending orders dikhte hain.",
+"s2": "Spread jitna chhota, liquidity utni achhi. Depth patli ho to bada order bhaav ko bahut hilaa deta hai.",
+"s3": "Akele ek number ka matlab nikalna theek nahi. Poori tasveer dekho.",
+"h1": "Kya hai",
+"h2": "Kyun zaroori",
+"h3": "Dhyan rakho"
+},
+{
+"type": "text",
+"label": "Volume aur Liquidity",
+"name": "Traded Value",
+"s1": "Volume × bhaav, yaani rupaye mein kitna kaarobaar hua.",
+"s2": "Alag-alag bhaav ke stocks ki liquidity compare karne ke liye volume se behtar hai, kyunki sasta share aksar zyada volume dikhata hai.",
+"s3": "Akele ek number ka matlab nikalna theek nahi. Poori tasveer dekho.",
+"h1": "Kya hai",
+"h2": "Kyun zaroori",
+"h3": "Dhyan rakho"
+},
+{
+"type": "text",
+"label": "Strategy ka concept",
+"name": "Trend Following",
+"s1": "Trend ke saath chalna: bhaav lambe moving average ke oopar ho to upar wale trade, neeche ho to neeche wale.",
+"s2": "Tay rules: kab shuru karna, stop-loss kahan, kab nikalna. Rules pehle likhte hain.",
+"s3": "Sideways market mein baar-baar chhote nuksan hote hain.",
+"h1": "Idea",
+"h2": "Aam rules",
+"h3": "Jokhim"
+},
+{
+"type": "text",
+"label": "Strategy ka concept",
+"name": "Breakout (volume ke saath)",
+"s1": "Bhaav kisi range ya resistance se bahar nikle aur volume bhi zyada ho.",
+"s2": "Range kaise tay karte hain, aur candle ko range ke bahar band hona chahiye ya nahi, ye pehle tay karte hain.",
+"s3": "False breakout aam hain: bhaav bahar jaakar wapas aa jata hai.",
+"h1": "Idea",
+"h2": "Aam rules",
+"h3": "Jokhim"
+},
+{
+"type": "text",
+"label": "Strategy ka concept",
+"name": "Pullback",
+"s1": "Trend mein bhaav thoda peeche hat kar support ya moving average ke paas se wapas trend ki taraf chale.",
+"s2": "Support kahan hai aur kab ye maan liya jaye ki trend khatam hua, ye pehle se tay karte hain.",
+"s3": "Pullback kab 'trend palatna' ban jaye, ye pehle se pata nahi hota.",
+"h1": "Idea",
+"h2": "Aam rules",
+"h3": "Jokhim"
+},
+{
+"type": "text",
+"label": "Strategy ka concept",
+"name": "Support aur Resistance",
+"s1": "Wo bhaav jahan se pehle bhaav bar-bar palta hai. Range mein trade karne ke liye dekhte hain.",
+"s2": "Level kitni baar chhua gaya aur kitne volume par, ye dekhte hain.",
+"s3": "Har level aakhir mein toot sakta hai.",
+"h1": "Idea",
+"h2": "Aam rules",
+"h3": "Jokhim"
+},
+{
+"type": "text",
+"label": "Strategy ka concept",
+"name": "Mean Reversion",
+"s1": "Bhaav average se bahut door jaaye to wapas average ki taraf aane ki umeed (RSI ya Bollinger Bands se naapte hain).",
+"s2": "Mazboot trend mein ye strategy badi galti ban sakti hai, isliye trend ka filter lagate hain.",
+"s3": "Trend mein 'sasta' aur sasta ho sakta hai.",
+"h1": "Idea",
+"h2": "Aam rules",
+"h3": "Jokhim"
+}
+]

@@ -131,6 +131,7 @@ textarea{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var
 .ed svg text{fill:var(--mute);font-size:7px;font-family:inherit;stroke:none}.ed svg text.ti{fill:var(--ink);font-weight:700}
 .qopt{display:block;width:100%;text-align:left;margin:6px 0;border-radius:12px;height:auto}
 .qstat{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}.qstat span{border:1px solid var(--line);border-radius:99px;padding:3px 12px;font-size:13px}
+.stg{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));margin:10px 0}.stg>div{border:1px solid var(--line);border-radius:12px;padding:8px 12px;background:var(--card)}.stg small{display:block;color:var(--mute);font-size:12px}.stg b{font-size:17px}
 </style></head><body>
 <a id="ann" class="ann" hidden></a>
 <div class="tk" id="tq" hidden aria-label="Index aur price flash"></div>
@@ -640,9 +641,29 @@ E2.w=[
 function lsObj(k,d){try{var v=JSON.parse(localStorage.getItem(k));return v&&typeof v==="object"&&!Array.isArray(v)?v:d}catch(e){return d}}
 var CHK=["Aaj ki market news padhi","Trade se pehle entry, stop-loss aur risk likha","Ek trade mein capital ka 1-2% se zyada risk nahi","Emotion check kiya: FOMO ya revenge to nahi?","Din ke end mein journal likha"];
 function today(){return new Date().toLocaleDateString("en-CA",{timeZone:"Asia/Kolkata"})}
+
+function sgn(n){return(n>=0?"+":"-")+inr(Math.abs(n))}
+function trStats(T){var S=T.slice().sort(function(a,b){return a.d<b.d?-1:a.d>b.d?1:a.t-b.t}),n=S.length,w=S.filter(function(t){return t.p>0}),l=S.filter(function(t){return t.p<0}),tot=0,gw=0,gl=0,cum=0,peak=0,dd=0,pts=[0];
+S.forEach(function(t){tot+=t.p;if(t.p>0)gw+=t.p;else gl-=t.p;cum+=t.p;pts.push(cum);if(cum>peak)peak=cum;if(peak-cum>dd)dd=peak-cum});
+return{n:n,w:w.length,l:l.length,tot:tot,wr:n?w.length/n*100:0,aw:w.length?gw/w.length:0,al:l.length?gl/l.length:0,pf:gl?gw/gl:null,ex:n?tot/n:0,dd:dd,best:n?Math.max.apply(null,S.map(function(t){return t.p})):0,worst:n?Math.min.apply(null,S.map(function(t){return t.p})):0,pts:pts}}
+function trDraw(box){var T=lsGet("td-trades"),c=el("section","card");c.style.marginTop="14px";c.appendChild(el("h4","","Trade log aur stats"));
+c.appendChild(el("p","note2","Apne band kiye hue trades likho. Stats aur equity curve sirf aapke browser mein banti hai. Ye hisaab aur seekhne ke liye hai, salah nahi."));
+function inp(t,ph,w){var i=document.createElement("input");i.type=t;i.placeholder=ph;i.setAttribute("aria-label",ph);i.style.flex="0 1 "+w+"px";return i}
+var f=el("div","row");f.style.alignItems="center";var dt=inp("date","Date",150);dt.value=today();var sy=inp("text","Symbol",110),sd=document.createElement("select");sd.setAttribute("aria-label","Side");["Long","Short"].forEach(function(s){var o=document.createElement("option");o.textContent=s;sd.appendChild(o)});
+var q=inp("number","Qty",90),en=inp("number","Entry",100),xt=inp("number","Exit",100),fe=inp("number","Charges",100),add=el("button","","Trade add karo");
+add.onclick=function(){var Q=+q.value,E=+en.value,X=+xt.value,F=+fe.value||0;if(!(Q>0)||!(E>0)||!(X>0))return;var pnl=(sd.value==="Long"?X-E:E-X)*Q-F;T.push({d:dt.value||today(),s:sy.value.trim().toUpperCase()||"-",sd:sd.value,q:Q,en:E,ex:X,f:F,p:pnl,t:Date.now()});try{localStorage.setItem("td-trades",JSON.stringify(T.slice(-300)))}catch(e){}dyDraw()};
+[dt,sy,sd,q,en,xt,fe,add].forEach(function(x){f.appendChild(x)});c.appendChild(f);
+if(!T.length){c.appendChild(el("p","note2","Abhi koi trade nahi. Upar se apna pehla trade add karo."));box.appendChild(c);return}
+var s=trStats(T),g=el("div","stg");function cell(l,v,cl){var d=el("div");d.appendChild(el("small","",l));var b=el("b","",v);if(cl)b.className=cl;d.appendChild(b);g.appendChild(d)}
+cell("Trades",s.n+" (jeet "+s.w+", haar "+s.l+")");cell("Win rate",s.wr.toFixed(0)+"%");cell("Net P&L",sgn(s.tot),s.tot>=0?"up":"dn");cell("Avg jeet",inr(s.aw),"up");cell("Avg haar",inr(s.al),"dn");cell("Profit factor",s.pf==null?"-":s.pf.toFixed(2));cell("Expectancy / trade",sgn(s.ex),s.ex>=0?"up":"dn");cell("Max drawdown",inr(s.dd),"dn");cell("Sabse achha / bura",sgn(s.best)+" / "+sgn(s.worst));c.appendChild(g);
+var mn=Math.min.apply(null,s.pts),mx=Math.max.apply(null,s.pts),rg=(mx-mn)||1,pp=s.pts.map(function(v,i){return(i/Math.max(1,s.pts.length-1)*190+5).toFixed(1)+","+(55-(v-mn)/rg*50).toFixed(1)}).join(" ");
+var cv=el("div");cv.innerHTML='<svg viewBox="0 0 200 60" role="img" aria-label="Equity curve" style="width:100%;height:90px"><polyline points="'+pp+'" style="fill:none;stroke:var(--acc);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round"/></svg>';c.appendChild(cv);c.appendChild(el("p","note2","Equity curve: trades ke saath kul P&L kaise chala."));
+var w=el("div","tbl"),t=document.createElement("table"),hr=t.insertRow();["Date","Symbol","Side","Qty","Entry","Exit","P&L",""].forEach(function(h){hr.appendChild(el("th","",h))});
+T.slice(-10).reverse().forEach(function(tr){var r=t.insertRow();[tr.d,tr.s,tr.sd,tr.q,tr.en,tr.ex,sgn(tr.p)].forEach(function(v,i){var cc=r.insertCell();cc.textContent=v;if(i===6)cc.className=tr.p>=0?"u":"d"});var cc=r.insertCell(),b=el("button","","Hatao");b.onclick=function(){var k=T.indexOf(tr);if(k>-1)T.splice(k,1);try{localStorage.setItem("td-trades",JSON.stringify(T))}catch(e){}dyDraw()};cc.appendChild(b)});w.appendChild(t);c.appendChild(w);
+var xb=el("button","","Export (.csv)");xb.style.marginTop="10px";xb.onclick=function(){var s2="date,symbol,side,qty,entry,exit,charges,pnl\n"+T.map(function(a){return[a.d,a.s,a.sd,a.q,a.en,a.ex,a.f,a.p.toFixed(2)].join(",")}).join("\n"),b=new Blob([s2],{type:"text/csv"}),u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download="trades.csv";document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},3000)};c.appendChild(xb);box.appendChild(c)}
 function dyDraw(){var box=$("dy");box.innerHTML="";var ck=lsObj("td-chk",{d:"",c:[]});if(ck.d!==today())ck={d:today(),c:[]};
 var c=el("section","card chk");c.appendChild(el("h4","","Roz ka checklist"));
-CHK.forEach(function(t,i){var l=document.createElement("label"),x=document.createElement("input");x.type="checkbox";x.checked=!!ck.c[i];x.onchange=function(){ck.c[i]=x.checked?1:0;try{localStorage.setItem("td-chk",JSON.stringify(ck))}catch(e){}};l.appendChild(x);l.appendChild(document.createTextNode(t));c.appendChild(l)});box.appendChild(c);
+CHK.forEach(function(t,i){var l=document.createElement("label"),x=document.createElement("input");x.type="checkbox";x.checked=!!ck.c[i];x.onchange=function(){ck.c[i]=x.checked?1:0;try{localStorage.setItem("td-chk",JSON.stringify(ck))}catch(e){}};l.appendChild(x);l.appendChild(document.createTextNode(t));c.appendChild(l)});box.appendChild(c);trDraw(box);
 var j=el("section","card");j.style.marginTop="14px";j.appendChild(el("h4","","Mera Journal / Diary"));j.appendChild(el("p","note2","Ye sirf aapke apne browser mein save hota hai, kisi ko nazar nahi aata."));
 var ta=document.createElement("textarea");ta.placeholder="Aaj kya socha, kya kiya, kya seekha...";ta.setAttribute("aria-label","Journal");j.appendChild(ta);
 var r=el("div","row");r.style.marginTop="8px";var mo=document.createElement("select");mo.setAttribute("aria-label","Mood");["Shaant","Utsahit","Chinta","Lalach","Dar"].forEach(function(m){var o=document.createElement("option");o.textContent=m;mo.appendChild(o)});
