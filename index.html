@@ -132,13 +132,26 @@ textarea{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var
 .qopt{display:block;width:100%;text-align:left;margin:6px 0;border-radius:12px;height:auto}
 .qstat{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}.qstat span{border:1px solid var(--line);border-radius:99px;padding:3px 12px;font-size:13px}
 .stg{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));margin:10px 0}.stg>div{border:1px solid var(--line);border-radius:12px;padding:8px 12px;background:var(--card)}.stg small{display:block;color:var(--mute);font-size:12px}.stg b{font-size:17px}
+@keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.card,.wel{animation:fu .35s ease both}
+@media (prefers-reduced-motion:reduce){.card,.wel{animation:none}}
+#dc .dcb{display:grid;gap:14px;grid-template-columns:210px 1fr;align-items:center}#dc .vis{background:var(--bg);border-radius:12px;padding:8px}#dc svg{width:100%;height:120px;display:block}
+#dc .dl{font-size:12px;letter-spacing:.8px;text-transform:uppercase;color:var(--acc);font-weight:800}#dc h3{margin:4px 0 6px;font-size:22px;text-transform:none;letter-spacing:0;color:var(--ink)}#dc p{margin:0 0 10px;color:var(--mute);font-size:14.5px}
+@media (max-width:600px){#dc .dcb{grid-template-columns:1fr}}
+.hm{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));margin-bottom:12px}
+.hmt{display:flex;flex-direction:column;align-items:flex-start;border-radius:14px;border:1px solid var(--line);padding:10px 12px;height:auto;min-height:64px}.hmt b{font-size:14px}.hmt span{font-size:18px;font-weight:700}
+#bn{display:none}
+@media (max-width:699px){#bn{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:20;background:color-mix(in srgb,var(--card) 92%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));justify-content:space-around;gap:4px}
+#bn button{flex:1;min-height:52px;border:0;background:none;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:11px;color:var(--mute);padding:4px 2px}
+#bn button[aria-pressed="true"]{color:var(--acc);background:var(--soft);font-weight:700}#bn .ic{font-size:20px;line-height:1}
+body{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}}
 </style></head><body>
 <a id="ann" class="ann" hidden></a>
 <div class="tk" id="tq" hidden aria-label="Index aur price flash"></div>
 <div class="tk" id="tn" hidden aria-label="News flash"></div>
 <header class="wrap top"><div class="brand"><span class="logo" id="logo">TD</span><b id="nm">Trading Desk</b></div>
 <div class="act"><span id="soc" class="act"></span><button id="ins" hidden>App install karo</button><button id="th" aria-label="Light ya dark mode badlo">&#9680;</button></div></header>
-<section class="hero wrap"><h1 id="hl"></h1><p id="tg"></p><span class="pill"><i class="dot"></i><span id="st" aria-live="polite">News load ho rahi hai...</span></span> <span class="pill" id="mk"></span><div class="row" id="cta" style="margin-top:14px"></div></section>
+<section class="hero wrap"><h1 id="hl"></h1><p id="tg"></p><span class="pill"><i class="dot"></i><span id="st" aria-live="polite">News load ho rahi hai...</span></span> <span class="pill" id="mk"></span> <span class="pill" id="stk" hidden></span><div class="row" id="cta" style="margin-top:14px"></div></section>
 <nav class="stick" aria-label="News section"><div class="wrap"><div class="tabs" id="tabs" role="group" aria-label="News"></div><div class="tabs" id="tabs2" role="group" aria-label="Tools aur Seekho"></div></div></nav>
 <div class="wrap grid">
 <section id="qc" class="card" hidden><h3>Markets (delayed)</h3><div class="qg" id="qg"></div>
@@ -146,6 +159,7 @@ textarea{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var
 <div id="mood" hidden style="margin-top:14px"><h3>Crypto market mood</h3><div class="gauge"><i id="gm"></i></div><div class="gl"><b id="mv"></b><span>Fear &larr; &rarr; Greed</span></div><p class="note2">Source: alternative.me. Ye sirf crypto market ka sentiment hai, kharidne-bechne ki salah nahi.</p></div></section>
 <main>
 <section class="wel" id="wel" hidden></section>
+<section class="card" id="dc" hidden style="margin-bottom:14px"></section>
 <div class="sr" id="sr"><input id="q" type="search" placeholder="Company ya keyword search karo (Reliance, Bitcoin...)" aria-label="Search"><a class="btn" id="more" target="_blank" rel="noopener">Google News pe aur dekho</a></div>
 <div class="chips" id="tags" role="group" aria-label="Filter"></div>
 <div class="chips" id="sect" role="group" aria-label="Sector"></div>
@@ -176,6 +190,7 @@ textarea{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var
 <p><b>Privacy:</b> Ye site khud koi account ya personal data nahi maangti. Aapki watchlist, saved news aur theme sirf aapke apne browser mein save hoti hain. Headline kholne par aap publisher ki website par jaate ho, jiski apni privacy policy hoti hai.</p>
 <p id="ct"></p></details></aside>
 </div>
+<nav id="bn" aria-label="Quick menu"></nav>
 <script src="news.js"></script>
 <script>
 /* ===== APNI SETTINGS YAHAN BADLO ===== */
@@ -277,7 +292,7 @@ btn($("sect"),[["","Sab sector"]].concat(SECT.map(function(t){return[t,t]})),fun
 $("tags").hidden=!showF||nl;$("sect").hidden=!showF||nl;
 if(tab==="wl"){drawWL();try{localStorage.setItem("td-wl-seen",String(Date.now()))}catch(e){}}
 if(tab==="scn")scnDraw();if(tab==="dy")dyDraw();if(tab==="cr")crDraw();if(tab==="pt")ptDraw();if(tab==="vids")vidsDraw();if(tab==="qa"){qaDraw();qaLoad()}
-welcome();
+welcome();dcDraw();bnDraw();
 if(nl)return;
 var q=$("q").value.trim().toLowerCase(),src=tab==="bm"?BM:data;
 var l=src.filter(function(x){if(tab==="wl"&&!matchWL(x))return false;if(tab==="all"&&x.c==="hindi")return false;if(tab==="all"&&x.c==="hindi")return false;if(tab!=="all"&&tab!=="wl"&&tab!=="bm"&&x.c!==tab)return false;if(tag&&x.g!==tag)return false;if(sec&&x.sc!==sec)return false;return !q||x.t.toLowerCase().indexOf(q)>-1});
@@ -488,6 +503,7 @@ function breadth(){var it=(STK&&STK.items)||[];if(!it.length){$("brd").hidden=tr
 function scnDraw(){var box=$("scn");box.innerHTML="";box.appendChild(el("div","edn","Ye scanner sirf tay ki hui conditions ke hisaab se stocks chhaanta hai. Ye kisi stock ko kharidne ya bechne ki salah nahi hai, aur list ka koi stock 'chuna hua' nahi hai. Data Yahoo Finance se, delayed hai aur galat bhi ho sakta hai."));
 var it=(STK&&STK.items)||[];if(!it.length){box.appendChild(el("p","note2",location.protocol==="file:"?"Scanner ka data sirf web link (GitHub Pages) par chalta hai.":"Stocks ka data abhi nahi aaya. update-stocks workflow ek baar chalane ke baad yahan dikhega."));return}
 var secs=[],sm={};it.forEach(function(s){if(!sm[s.sec]){sm[s.sec]=[];secs.push(s.sec)}sm[s.sec].push(s.c)});
+var hm=el("div","hm");secs.forEach(function(k){var v=sm[k],avg=v.reduce(function(a,b){return a+b},0)/v.length,a=Math.min(1,Math.abs(avg)/3),t=el("button","hmt");t.style.background="color-mix(in srgb,"+(avg>=0?"var(--up)":"var(--dn)")+" "+Math.round(15+a*55)+"%,var(--card))";t.appendChild(el("b","",k));t.appendChild(el("span","",(avg>=0?"+":"")+avg.toFixed(2)+"%"));t.onclick=function(){SF.sec=k;scnDraw()};hm.appendChild(t)});box.appendChild(hm);
 var r1=el("div","chips");function sb(label,val){var b=el("button","",label);b.setAttribute("aria-pressed",SF.sec===val);b.onclick=function(){SF.sec=val;scnDraw()};r1.appendChild(b)}
 sb("Sab sector ("+it.length+")","");secs.forEach(function(k){var v=sm[k],avg=v.reduce(function(a,b){return a+b},0)/v.length;sb(k+" "+(avg>=0?"+":"")+avg.toFixed(2)+"%",k)});box.appendChild(r1);
 var r2=el("div","chips");FILT.forEach(function(f){var b=el("button","",f[1]);b.setAttribute("aria-pressed",!!SF.on[f[0]]);b.onclick=function(){SF.on[f[0]]=!SF.on[f[0]];scnDraw()};r2.appendChild(b)});box.appendChild(r2);
@@ -649,10 +665,10 @@ return{n:n,w:w.length,l:l.length,tot:tot,wr:n?w.length/n*100:0,aw:w.length?gw/w.
 function trDraw(box){var T=lsGet("td-trades"),c=el("section","card");c.style.marginTop="14px";c.appendChild(el("h4","","Trade log aur stats"));
 c.appendChild(el("p","note2","Apne band kiye hue trades likho. Stats aur equity curve sirf aapke browser mein banti hai. Ye hisaab aur seekhne ke liye hai, salah nahi."));
 function inp(t,ph,w){var i=document.createElement("input");i.type=t;i.placeholder=ph;i.setAttribute("aria-label",ph);i.style.flex="0 1 "+w+"px";return i}
-var f=el("div","row");f.style.alignItems="center";var dt=inp("date","Date",150);dt.value=today();var sy=inp("text","Symbol",110),sd=document.createElement("select");sd.setAttribute("aria-label","Side");["Long","Short"].forEach(function(s){var o=document.createElement("option");o.textContent=s;sd.appendChild(o)});
-var q=inp("number","Qty",90),en=inp("number","Entry",100),xt=inp("number","Exit",100),fe=inp("number","Charges",100),add=el("button","","Trade add karo");
-add.onclick=function(){var Q=+q.value,E=+en.value,X=+xt.value,F=+fe.value||0;if(!(Q>0)||!(E>0)||!(X>0))return;var pnl=(sd.value==="Long"?X-E:E-X)*Q-F;T.push({d:dt.value||today(),s:sy.value.trim().toUpperCase()||"-",sd:sd.value,q:Q,en:E,ex:X,f:F,p:pnl,t:Date.now()});try{localStorage.setItem("td-trades",JSON.stringify(T.slice(-300)))}catch(e){}dyDraw()};
-[dt,sy,sd,q,en,xt,fe,add].forEach(function(x){f.appendChild(x)});c.appendChild(f);
+trTop(c,T);var f=el("div","row");f.style.alignItems="center";var dt=inp("date","Date",150);dt.value=today();var sy=inp("text","Symbol",110),sd=document.createElement("select");sd.setAttribute("aria-label","Side");["Long","Short"].forEach(function(s){var o=document.createElement("option");o.textContent=s;sd.appendChild(o)});
+var q=inp("number","Qty",90),en=inp("number","Entry",100),xt=inp("number","Exit",100),fe=inp("number","Charges",100),tg=document.createElement("select"),add=el("button","","Trade add karo");tg.setAttribute("aria-label","Tag");MTAGS.forEach(function(s){var o=document.createElement("option");o.textContent=s;tg.appendChild(o)});
+add.onclick=function(){var Q=+q.value,E=+en.value,X=+xt.value,F=+fe.value||0;if(!(Q>0)||!(E>0)||!(X>0))return;var pnl=(sd.value==="Long"?X-E:E-X)*Q-F;T.push({d:dt.value||today(),s:sy.value.trim().toUpperCase()||"-",sd:sd.value,q:Q,en:E,ex:X,f:F,p:pnl,g:tg.selectedIndex>0?tg.value:"",t:Date.now()});try{localStorage.setItem("td-trades",JSON.stringify(T.slice(-300)))}catch(e){}dyDraw()};
+[dt,sy,sd,q,en,xt,fe,tg,add].forEach(function(x){f.appendChild(x)});c.appendChild(f);
 if(!T.length){c.appendChild(el("p","note2","Abhi koi trade nahi. Upar se apna pehla trade add karo."));box.appendChild(c);return}
 var s=trStats(T),g=el("div","stg");function cell(l,v,cl){var d=el("div");d.appendChild(el("small","",l));var b=el("b","",v);if(cl)b.className=cl;d.appendChild(b);g.appendChild(d)}
 cell("Trades",s.n+" (jeet "+s.w+", haar "+s.l+")");cell("Win rate",s.wr.toFixed(0)+"%");cell("Net P&L",sgn(s.tot),s.tot>=0?"up":"dn");cell("Avg jeet",inr(s.aw),"up");cell("Avg haar",inr(s.al),"dn");cell("Profit factor",s.pf==null?"-":s.pf.toFixed(2));cell("Expectancy / trade",sgn(s.ex),s.ex>=0?"up":"dn");cell("Max drawdown",inr(s.dd),"dn");cell("Sabse achha / bura",sgn(s.best)+" / "+sgn(s.worst));c.appendChild(g);
@@ -660,7 +676,7 @@ var mn=Math.min.apply(null,s.pts),mx=Math.max.apply(null,s.pts),rg=(mx-mn)||1,pp
 var cv=el("div");cv.innerHTML='<svg viewBox="0 0 200 60" role="img" aria-label="Equity curve" style="width:100%;height:90px"><polyline points="'+pp+'" style="fill:none;stroke:var(--acc);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round"/></svg>';c.appendChild(cv);c.appendChild(el("p","note2","Equity curve: trades ke saath kul P&L kaise chala."));
 var w=el("div","tbl"),t=document.createElement("table"),hr=t.insertRow();["Date","Symbol","Side","Qty","Entry","Exit","P&L",""].forEach(function(h){hr.appendChild(el("th","",h))});
 T.slice(-10).reverse().forEach(function(tr){var r=t.insertRow();[tr.d,tr.s,tr.sd,tr.q,tr.en,tr.ex,sgn(tr.p)].forEach(function(v,i){var cc=r.insertCell();cc.textContent=v;if(i===6)cc.className=tr.p>=0?"u":"d"});var cc=r.insertCell(),b=el("button","","Hatao");b.onclick=function(){var k=T.indexOf(tr);if(k>-1)T.splice(k,1);try{localStorage.setItem("td-trades",JSON.stringify(T))}catch(e){}dyDraw()};cc.appendChild(b)});w.appendChild(t);c.appendChild(w);
-var xb=el("button","","Export (.csv)");xb.style.marginTop="10px";xb.onclick=function(){var s2="date,symbol,side,qty,entry,exit,charges,pnl\n"+T.map(function(a){return[a.d,a.s,a.sd,a.q,a.en,a.ex,a.f,a.p.toFixed(2)].join(",")}).join("\n"),b=new Blob([s2],{type:"text/csv"}),u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download="trades.csv";document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},3000)};c.appendChild(xb);box.appendChild(c)}
+var xb=el("button","","Export (.csv)");xb.style.marginTop="10px";xb.onclick=function(){var s2="date,symbol,side,qty,entry,exit,charges,pnl,tag\n"+T.map(function(a){return[a.d,a.s,a.sd,a.q,a.en,a.ex,a.f,a.p.toFixed(2),a.g||""].join(",")}).join("\n"),b=new Blob([s2],{type:"text/csv"}),u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download="trades.csv";document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},3000)};c.appendChild(xb);trExtra(c,T);box.appendChild(c)}
 function dyDraw(){var box=$("dy");box.innerHTML="";var ck=lsObj("td-chk",{d:"",c:[]});if(ck.d!==today())ck={d:today(),c:[]};
 var c=el("section","card chk");c.appendChild(el("h4","","Roz ka checklist"));
 CHK.forEach(function(t,i){var l=document.createElement("label"),x=document.createElement("input");x.type="checkbox";x.checked=!!ck.c[i];x.onchange=function(){ck.c[i]=x.checked?1:0;try{localStorage.setItem("td-chk",JSON.stringify(ck))}catch(e){}};l.appendChild(x);l.appendChild(document.createTextNode(t));c.appendChild(l)});box.appendChild(c);trDraw(box);
@@ -699,6 +715,29 @@ function crDraw(){var b=$("cr");b.innerHTML="";var it=(CUR.items||[]).filter(fun
 if(!it.length){c.appendChild(el("p","note2","News load hone ke baad yahan dhancha banega."));b.appendChild(c);return}
 var L=["HOOK: Aaj market mein kya hua? 60 second mein jaano.","","Point 1: "+it[0].t,"Point 2: "+(it[1]?it[1].t:""),"Point 3: "+(it[2]?it[2].t:""),"","CLOSING: Poori khabrein, scanner aur calculators "+CFG.name+" site par, link description mein. Community join karo aur channel subscribe karo.","","DISCLAIMER: Ye sirf jaankari hai, investment salah nahi."].join("\n");
 c.appendChild(el("p","qp",L));var k=el("button","","Copy karo");k.onclick=function(){try{navigator.clipboard.writeText(L).then(function(){k.textContent="Copy ho gaya"})}catch(e){}setTimeout(function(){k.textContent="Copy karo"},1600)};c.appendChild(k);b.appendChild(c)}
+
+var MTAGS=["Tag (optional)","Plan follow kiya","FOMO","Bina stop-loss","Overtrading","Revenge trade","Jaldi exit","Der se exit"];
+function trTop(c,T){var lim=0,tp=0;try{lim=+localStorage.getItem("td-dlim")||0}catch(e){}T.forEach(function(t){if(t.d===today())tp+=t.p});
+var r=el("div","row");r.style.alignItems="center";var li=document.createElement("input");li.type="number";li.min="0";li.placeholder="Roz ka max loss (\u20B9)";li.setAttribute("aria-label","Roz ka max loss");if(lim)li.value=lim;li.style.flex="0 1 190px";
+var sb=el("button","","Limit save karo");sb.onclick=function(){try{localStorage.setItem("td-dlim",String(Math.max(0,+li.value||0)))}catch(e){}dyDraw()};r.appendChild(li);r.appendChild(sb);r.appendChild(el("span","note2","Aaj ka P&L: "+sgn(tp)));c.appendChild(r);
+if(lim>0&&tp<=-lim){var b=el("div","edn","Aaj ka loss limit ("+inr(lim)+") paar ho gaya. Aaj ke liye rukna behtar hai, kal naye dimaag se dekho.");b.style.cssText="border:2px solid var(--dn);margin-top:10px";c.appendChild(b)}
+else if(lim>0&&tp<=-lim*0.8){var b2=el("div","edn","Limit ke paas ho ("+inr(-tp)+" / "+inr(lim)+"). Dhyan se.");b2.style.marginTop="10px";c.appendChild(b2)}}
+function trExtra(c,T){var tg={};T.forEach(function(t){if(t.g){var o=tg[t.g]||(tg[t.g]={n:0,p:0});o.n++;o.p+=t.p}});var ks=Object.keys(tg);
+if(ks.length){var h4=el("h4","","Tags ke hisaab se P&L");h4.style.marginTop="14px";c.appendChild(h4);var w=el("div","tbl"),tb=document.createElement("table"),h=tb.insertRow();["Tag","Trades","P&L"].forEach(function(x){h.appendChild(el("th","",x))});
+ks.sort(function(a,b){return tg[a].p-tg[b].p}).forEach(function(k){var r=tb.insertRow();[k,tg[k].n,sgn(tg[k].p)].forEach(function(v,i){var cc=r.insertCell();cc.textContent=v;if(i===2)cc.className=tg[k].p>=0?"u":"d"})});w.appendChild(tb);c.appendChild(w);
+var worst=ks.filter(function(k){return k!=="Plan follow kiya"&&tg[k].p<0}).sort(function(a,b){return tg[a].p-tg[b].p})[0];if(worst)c.appendChild(el("p","note2","Sabse mehngi galti: "+worst+" ("+sgn(tg[worst].p)+", "+tg[worst].n+" trades). Isi par pehle kaam karo."))}
+var wk=new Date(Date.now()-6*864e5).toLocaleDateString("en-CA",{timeZone:"Asia/Kolkata"}),W=T.filter(function(t){return t.d>=wk});
+if(W.length){var s=trStats(W),days={};W.forEach(function(t){days[t.d]=(days[t.d]||0)+t.p});var dk=Object.keys(days).sort(function(a,b){return days[a]-days[b]});
+var h5=el("h4","","Pichhle 7 din ka review");h5.style.marginTop="14px";c.appendChild(h5);c.appendChild(el("p","note2",s.n+" trades | Win rate "+s.wr.toFixed(0)+"% | Net P&L "+sgn(s.tot)+" | Sabse achha din "+dk[dk.length-1]+" ("+sgn(days[dk[dk.length-1]])+") | Sabse bura din "+dk[0]+" ("+sgn(days[dk[0]])+")"))}}
+var BN=[["all","\uD83D\uDCF0","News"],["edu","\uD83C\uDF93","Seekho"],["pt","\uD83D\uDCC8","Practice"],["vids","\u25B6","Videos"],["qa","\uD83D\uDCAC","Sawal"]];
+function bnDraw(){var n=$("bn");n.innerHTML="";BN.forEach(function(x){var b=el("button","");b.setAttribute("aria-pressed",tab===x[0]);b.setAttribute("aria-label",x[2]);b.appendChild(el("span","ic",x[1]));b.appendChild(el("span","",x[2]));b.onclick=function(){tab=x[0];tag="";sec="";lim=30;draw();window.scrollTo(0,0)};n.appendChild(b)})}
+function streak(){var t=today(),s=lsObj("td-streak",{d:"",n:0});if(s.d!==t){var y=new Date(Date.now()-864e5).toLocaleDateString("en-CA",{timeZone:"Asia/Kolkata"});s={d:t,n:s.d===y?s.n+1:1};try{localStorage.setItem("td-streak",JSON.stringify(s))}catch(e){}}return s.n}
+function topicList(){var L=[];EC.forEach(function(x){L.push({t:"candle",l:"Candlestick pattern",n:x[0],b:x[1],c:x[3],k:x[2],a:x[4],m:x[5],cs:"c"})});EP.forEach(function(x){L.push({t:"chart",l:"Chart pattern",n:x[0],b:x[1],p:x[2],ls:x[3],a:x[4],m:x[5],cs:"p"})});
+EI.forEach(function(x){L.push({t:"text",l:"Indicator",n:x[0],a:x[1],m:x[2],cs:"i"})});EV.forEach(function(x){L.push({t:"text",l:"Volume aur Liquidity",n:x[0],a:x[1],m:x[2],cs:"v"})});ES.forEach(function(x){L.push({t:"text",l:"Strategy ka concept",n:x[0],a:x[1],m:x[2],cs:"s"})});return L}
+function dcDraw(){var c=$("dc");if(tab!=="all"){c.hidden=true;return}var L=topicList(),days=Math.floor((Date.now()+19800000)/864e5),x=L[(days+719163)%L.length];c.innerHTML="";
+var g=el("div","dcb"),v=el("div","vis");if(x.t==="candle")v.innerHTML=cSvg(x.c,x.k);else if(x.t==="chart")v.innerHTML=pSvg(x.p,x.b==="u"?"var(--up)":"var(--dn)",x.ls);else{v.style.padding="18px";v.appendChild(el("div","dl","Aaj ka concept"));v.appendChild(el("p","",x.l))}
+var r=el("div");r.appendChild(el("div","dl","Aaj ka concept | "+x.l));r.appendChild(el("h3","",x.n));r.appendChild(el("p","",x.a));var b=el("button","","Education mein poora padho");b.onclick=function(){es=x.cs;tab="edu";lim=30;draw();if(eduRedraw)eduRedraw();window.scrollTo(0,0)};r.appendChild(b);
+g.appendChild(v);g.appendChild(r);c.appendChild(g);c.hidden=false}
 function market(){var d=new Date(new Date().toLocaleString("en-US",{timeZone:"Asia/Kolkata"})),w=d.getDay(),m=d.getHours()*60+d.getMinutes(),hol=(CFG.holidays||[]).filter(function(h){return h.d===new Date().toLocaleDateString("en-CA",{timeZone:"Asia/Kolkata"})})[0],open=!hol&&w>0&&w<6&&m>=555&&m<930,b=$("mk");b.innerHTML="";
 var i=document.createElement("i");i.className="dot";if(!open){i.style.animation="none";i.style.background="var(--mute)"}b.appendChild(i);b.appendChild(document.createTextNode(open?"Market khula hai (9:15 AM - 3:30 PM IST)":(hol?"Market band hai: "+hol.t:"Market band hai (Mon-Fri 9:15 AM - 3:30 PM IST)")))}
 $("lm").onclick=function(){lim+=30;draw()};
@@ -712,5 +751,5 @@ fetch("news.json?t="+Date.now()).then(function(r){return r.json()}).then(functio
 .catch(function(){if(!best){$("st").textContent="News load nahi ho payi. Internet check karo.";draw()}})}
 window.addEventListener("online",load);
 if("serviceWorker" in navigator&&location.protocol.indexOf("http")===0)navigator.serviceWorker.register("sw.js").catch(function(){});
-$("q").oninput=function(){lim=30;draw()};brand();market();calcInit();glInit();ipoInit();eduInit();saInit();events();loadStocks();qaLoad();load();setInterval(function(){load();loadStocks()},300000);setInterval(market,60000);
+$("q").oninput=function(){lim=30;draw()};brand();market();calcInit();glInit();ipoInit();eduInit();saInit();events();loadStocks();qaLoad();$("stk").textContent="\uD83D\uDD25 Streak: "+streak()+" din";$("stk").hidden=false;load();setInterval(function(){load();loadStocks()},300000);setInterval(market,60000);
 </script></body></html>
