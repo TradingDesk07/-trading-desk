@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Trading Desk · Tools</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#f5f6f9;--cd:#fff;--ln:#e1e4ea;--tx:#1a1f2b;--mu:#6c7585;--up:#0a9f45;--dn:#d6283a;--ac:#c8102e;--hl:#fdecef;--am:#c98a00}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0a0a0f;--cd:#13131b;--ln:#25252f;--tx:#eceef4;--mu:#8a8fa0;--up:#1fd96a;--dn:#ff4457;--ac:#e5233f;--hl:#2a0d14;--am:#f0b400}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0a0a0f;--cd:#13131b;--ln:#25252f;--tx:#eceef4;--mu:#8a8fa0;--up:#1fd96a;--dn:#ff4457;--ac:#e5233f;--hl:#2a0d14;--am:#f0b400}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:14px system-ui,-apple-system,"Segoe UI",sans-serif}
+.app{display:flex;min-height:100vh}nav{width:210px;background:var(--cd);border-right:1px solid var(--ln);padding:14px 10px;flex-shrink:0}
+.lg{font-weight:800;font-size:16px;color:var(--ac);padding:4px 8px 2px}.tg{font-size:10px;color:var(--mu);padding:0 8px 14px}
+nav a{display:block;padding:9px 10px;border-radius:8px;color:var(--tx);text-decoration:none;margin-bottom:2px}
+nav a.on{background:var(--hl);color:var(--ac);font-weight:600}nav a:hover{background:var(--hl)}
+main{flex:1;min-width:0;padding:16px}
+@media(max-width:800px){.app{display:block}nav{width:auto;display:flex;overflow-x:auto;gap:4px;padding:8px;border:0;border-bottom:1px solid var(--ln)}.lg,.tg{display:none}nav a{white-space:nowrap}}
+h1{font-size:19px;margin:0}.s{color:var(--mu);margin:2px 0 12px}
+.wn{background:var(--hl);border:1px solid var(--ac);color:var(--tx);padding:8px 12px;border-radius:8px;font-size:12px;margin-bottom:12px}
+.c{background:var(--cd);border:1px solid var(--ln);border-radius:12px;overflow:hidden;margin-bottom:14px}
+.c h2{font-size:13px;margin:0;padding:11px 14px;border-bottom:1px solid var(--ln);display:flex;justify-content:space-between;gap:8px}
+.sc{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:600px}th{font-size:10px;color:var(--mu);text-align:left;padding:8px 10px;letter-spacing:.05em}
+td{padding:9px 10px;border-top:1px solid var(--ln);white-space:nowrap}tr.r{cursor:pointer}tr.r:hover,tr.nf{background:var(--hl)}
+.sub{font-size:10px;color:var(--mu)}.up{color:var(--up)}.dn{color:var(--dn)}.am{color:var(--am)}
+.seg{display:inline-flex;gap:2px;vertical-align:middle}.seg i{width:7px;height:12px;border-radius:1px;background:var(--ln)}.seg i.g{background:var(--up)}.seg i.n{background:var(--am)}.seg i.r{background:var(--dn)}
+.pill{font-size:10px;padding:2px 7px;border-radius:4px;border:1px solid}.pill.p{color:var(--up);border-color:var(--up)}.pill.m{color:var(--dn);border-color:var(--dn)}
+.k{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-bottom:14px}.k .c{margin:0;padding:12px 14px}.k b{font-size:22px}
+.bt{background:var(--cd);border:1px solid var(--ln);color:var(--tx);padding:6px 12px;border-radius:8px;cursor:pointer;font:inherit}
+input[type=number]{background:var(--bg);border:1px solid var(--ln);color:var(--tx);padding:8px;border-radius:8px;width:100%;font:inherit}
+.fm{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;padding:14px}label{font-size:11px;color:var(--mu);display:block;margin-bottom:3px}
+.sg{font-weight:700;padding:3px 10px;border-radius:5px}.sg.B{background:var(--up);color:#fff}.sg.S{background:var(--dn);color:#fff}
+</style></head><body><div class="app"><nav id="nav"></nav><main id="pg"></main></div>
+<script>
+/* ===== DATA LAYER: sample data. Put a data.json next to this file with the same keys and it replaces the samples ===== */
+const D={nifty:{chg:1.62},
+sectors:[["PVT BANK","NIFTY PVT BANK",3.51,.16,85,1.3,6.9],["PSU BANK","NIFTY PSU BANK",1.97,.16,70,1.2,3.5],["NBFC","Stock basket",1.25,.19,80,1.5,5],["CEMENT","Stock basket",1.08,.22,75,1.2,6.8],["AUTO","NIFTY AUTO",1.28,.16,72,1.3,5.2],["METAL","NIFTY METAL",.93,.19,70,1.2,3.4],["REALTY","NIFTY REALTY",2.34,.02,65,1,6.5],["HOUSING","Stock basket",1.72,.06,60,1.1,6],["IT","NIFTY IT",1.67,-.14,55,1,6],["HEALTHCARE","NIFTY HEALTHCARE",.63,-.32,40,.9,6.2],["PHARMA","NIFTY PHARMA",.4,-.28,30,.8,6],["ENERGY","NIFTY ENERGY",.2,-.1,35,.9,4.5],["FMCG","NIFTY FMCG",.1,-.18,40,.9,4],["DEFENCE","Stock basket",-.66,-.15,25,.9,4.2],["MEDIA","NIFTY MEDIA",-1,-.21,15,.8,3]],
+// symbol, sector, trigger time, day%, ltp, opening-range high, low, vwap, volume x avg, gap%
+stocks:[["AXISBANK","PVT BANK","09:20",4.37,1250,1240,1225,1238,1.8,1.2],["TATACONSUM","FMCG","09:20",.76,1110,1105,1095,1102,1.4,.3],["MANAPPURAM","NBFC","09:20",-1.22,281,279,275,278,1.5,-.4],["CANBK","PSU BANK","09:20",2.17,118,116.5,115,116,2.1,1.1],["PERSISTENT","IT","09:25",3.5,6200,6150,6080,6120,1.6,1.4],["SAMMAANCAP","HOUSING","09:25",-2.92,150,156,152,153,1.7,-1.6],["GODREJCP","FMCG","09:25",-.41,1180,1195,1186,1190,1.3,-.2],["HINDPETRO","ENERGY","09:25",1.39,410,418,412,414,1.3,-.9],["INFY","IT","10:45",0,1500,1498,1485,1492,1.2,.1],["APOLLOHOSP","HEALTHCARE","10:50",.4,7000,7010,6960,6985,.9,0]],
+// name, ltp, day%, 1h%, above 20DMA, above 50DMA
+indices:[["NIFTY 50",24850,1.62,.12,1,1],["BANK NIFTY",53400,2.4,.15,1,1],["FIN NIFTY",25100,2.1,.1,1,1],["NIFTY MIDCAP",58200,1.1,.05,1,0],["NIFTY IT",38900,1.67,-.14,1,0],["SENSEX",81400,1.58,.11,1,1],["NIFTY SMALLCAP",18600,.4,-.08,0,0]],
+wt:{"PVT BANK":[["HDFCBANK",28,1.9],["ICICIBANK",24,2.4],["AXISBANK",12,4.4],["KOTAKBANK",11,1.1],["INDUSINDBK",6,3.2]],"PSU BANK":[["SBIN",30,1.6],["BANKBARODA",15,2.3],["PNB",12,2.1],["CANBK",12,2.2]],"IT":[["TCS",26,1.2],["INFY",24,0],["HCLTECH",12,1.4],["PERSISTENT",6,3.5]]}};
+// pairs: A (top), B, sector, start price A, start price B, mean-reversion phi, end shock (sigma), seed. Prices are SYNTHETIC. Replace via D.prices={SYM:[closes...]} in data.json
+const PAIRS=[["HDFCBANK","ICICIBANK","Financial Services",850,1250,.88,2.2,3],["AXISBANK","SBIN","Financial Services",1250,780,.9,-2.1,5],["MANAPPURAM","MUTHOOTFIN","Financial Services",280,2400,.92,1.2,7],["CGPOWER","POWERINDIA","Capital Goods",790,25000,.85,2.5,9],["GODFRYPHLP","ITC","Fast Moving Consumer Goods",1790,430,.93,-.8,13],["ATHERENERGY","SONACOMS","Automobile",375,490,.9,2.3,17],["TCS","INFY","IT",3900,1500,.88,-1.4,19],["SUNPHARMA","CIPLA","Pharma",1700,1550,.95,1,23]];
+/* ===== LOGIC ===== */
+const cl=(x,a,b)=>Math.max(a,Math.min(b,x)),mean=a=>a.reduce((x,y)=>x+y,0)/a.length,sd=a=>{const m=mean(a);return Math.sqrt(mean(a.map(x=>(x-m)**2)))};
+// Sector strength 0-10: relative strength vs Nifty + 1h momentum + breadth + volume
+const SEC=()=>D.sectors.map(a=>({n:a[0],ref:a[1],chg:a[2],h1:a[3],br:a[4],vol:a[5],prev:a[6]})).map(s=>({...s,x:cl(5+cl(s.chg-D.nifty.chg,-3,3)*.8+cl(s.h1,-.4,.4)/.4+(s.br-50)/50*1.5+cl(s.vol-1,-1,1),0,10)}));
+const st=x=>x>=6?"STRONG":x<=4?"WEAK":"NEUTRAL";
+const comb=s=>s.h1>0&&s.chg>D.nifty.chg&&s.br>=60&&s.x>=6?"PLUS":s.h1<0&&s.x<5?"MINUS":"";
+const rot=s=>st(s.prev)!==st(s.x)?st(s.prev)+" → "+st(s.x):"";
+// Pair stats: log-price hedge ratio (OLS), spread z-score, ADF t-stat on spread (cointegration), Hurst exponent (<0.5 = mean reverting)
+function ols(x,y){const mx=mean(x),my=mean(y);let a=0,b=0;x.forEach((v,i)=>{a+=(v-mx)*(y[i]-my);b+=(v-mx)**2});const k=a/b,c=my-k*mx;let e=0;x.forEach((v,i)=>e+=(y[i]-c-k*v)**2);return{a:c,b:k,se:Math.sqrt(e/(x.length-2)/b)}}
+function pst(A,B){const la=A.map(Math.log),lb=B.map(Math.log),d=v=>v.slice(1).map((x,i)=>x-v[i]),ra=d(la),rb=d(lb);
+ const cr=ols(rb,ra).b*sd(rb)/sd(ra),f=ols(lb,la),e=la.map((v,i)=>v-f.a-f.b*lb[i]),g=ols(e.slice(0,-1),d(e)),t=g.b/g.se,lg=[],ls=[];
+ for(let L=2;L<=20;L++){lg.push(Math.log(L));ls.push(Math.log(sd(e.slice(L).map((v,i)=>v-e[i]))))}
+ const H=ols(lg,ls).b,z=(e[e.length-1]-mean(e))/sd(e),rk=(cr>=.7)+(cr>=.85)+(H<.5)+(H<.4)+(t<-2.86)+(t<-3.34);
+ return{cr,t,H,z,rk,sig:z>=2?"SELL":z<=-2?"BUY":"",w:Math.abs(z)>=1.5,pa:A[A.length-1],pb:B[B.length-1]}}
+const RNG=s=>()=>(s=(s*1664525+1013904223)%4294967296)/4294967296,gs=r=>{let u=0;for(let i=0;i<6;i++)u+=r();return(u-3)*1.414};
+function gen(p){const r=RNG(p[7]),A=[],B=[];let b=p[4],s=0;for(let i=0;i<250;i++){b*=1+.012*gs(r);s=p[5]*s+.015*gs(r);if(i==249)s+=p[6]*.04;B.push(b);A.push(p[3]*(b/p[4])*Math.exp(s))}return[A,B]}
+let PR=[];const buildPairs=()=>{PR=(D.pairs||PAIRS).map(p=>{const[A,B]=D.prices?[D.prices[p[0]],D.prices[p[1]]]:gen(p);if(!A||!B||A.length<60||A.length!=B.length)return null;return{a:p[0],b:p[1],sec:p[2],...pst(A,B)}}).filter(Boolean).sort((x,y)=>y.rk-x.rk||Math.abs(y.z)-Math.abs(x.z))};
+// Logic scanner: 6 independent logics, each votes bull(+1) / bear(-1) / none(0)
+const LOGIC=["ORB","VWAP","VOL","GAP","MOM","SECTOR","RSI","TREND","52W","REL"];
+function scanRows(){const sm={};SEC().forEach(s=>sm[s.n]=s);return D.stocks.map(a=>{const k=Array.isArray(a)?{s:a[0],sec:a[1],t:a[2],chg:a[3],ltp:a[4],oh:a[5],ol:a[6],vw:a[7],vol:a[8],gap:a[9]}:a,S=sm[k.sec],nn=x=>x!=null,v=[k.ltp>k.oh?1:k.ltp<k.ol?-1:0,k.ltp>k.vw?1:k.ltp<k.vw?-1:0,k.vol>=1.5?Math.sign(k.chg):0,k.gap>=1?1:k.gap<=-1?-1:0,k.chg>=2?1:k.chg<=-2?-1:0,S?(S.x>=6&&k.chg>0?1:S.x<=4&&k.chg<0?-1:0):0,nn(k.rsi)?(k.rsi>=60?1:k.rsi<=40?-1:0):0,nn(k.d20)&&nn(k.d50)?(k.ltp>k.d20&&k.d20>k.d50?1:k.ltp<k.d20&&k.d20<k.d50?-1:0):0,nn(k.h52)&&k.ltp>=k.h52*.97?1:nn(k.l52)&&k.ltp<=k.l52*1.03?-1:0,k.chg-D.nifty.chg>=1?1:k.chg-D.nifty.chg<=-1?-1:0],
+ bu=v.filter(x=>x>0).length,be=v.filter(x=>x<0).length;return{...k,v,sc:Math.max(bu,be),sig:bu>=4&&bu>be?"BULLISH":be>=4&&be>bu?"BEARISH":"",ph:k.t<"10:00"?"MOMENTUM":k.t>="10:30"?"TRENDING":""}}).sort((a,b)=>b.sc-a.sc)}
+/* ===== UI ===== */
+const pc=v=>`<span class="${v>0?'up':v<0?'dn':''}">${v>0?'+':''}${v.toFixed(2)}%</span>`,$=id=>document.getElementById(id);
+const bar=x=>{const n=Math.round(x),c=x>=6?"g":x<=4?"r":"n";return'<span class="seg">'+[...Array(10)].map((_,i)=>`<i class="${i<n?c:''}"></i>`).join("")+`</span> <span class="sub">${x.toFixed(1)}</span>`};
+const tb=(h,r)=>`<div class="sc"><table><tr>${h.map(x=>`<th>${x}`).join("")}</tr>${r}</table></div>`,hd=(t,s)=>`<h1>${t}</h1><p class="s">${s}</p><div class="wn">${stat()}</div>`;
+const stat=()=>{const m=D.meta;if(!m)return"Educational use only, not investment advice. SAMPLE data: run update_data.py to load real prices.";const a=Math.round((Date.now()-new Date(m.updated))/6e4);return`Educational use only, not investment advice. Data: ${m.source} · updated ${m.ist} IST (${a} min ago)${a>30?" ⚠ stale":""} · delayed, not real-time`};let sel="PVT BANK",flt=true;
+const PG={
+dashboard(){const S=SEC().sort((a,b)=>b.x-a.x),N=D.indices[0],sc=scanRows().filter(r=>r.sig),pp=PR.filter(p=>p.sig&&p.rk>=3);
+ return hd("Dashboard","Market snapshot across all tools")+`<div class="k"><div class="c"><div class="sub">NIFTY 50</div><b>${pc(D.nifty.chg)}</b><div class="sub">${N[4]&&N[5]?"Bullish · UP":"Mixed"}</div></div>
+ <div class="c"><div class="sub">STRONGEST SECTORS</div>${S.slice(0,3).map(s=>`<div>${s.n} ${pc(s.chg)}</div>`).join("")}</div>
+ <div class="c"><div class="sub">WEAKEST SECTORS</div>${S.slice(-3).reverse().map(s=>`<div>${s.n} ${pc(s.chg)}</div>`).join("")}</div>
+ <div class="c"><div class="sub">ROTATION ALERTS</div>${S.filter(s=>rot(s).endsWith("STRONG")&&rot(s)).map(s=>`<div class="up">${s.n}: ${rot(s)}</div>`).join("")||"–"}</div></div>
+ <div class="c"><h2>Pair setups (rank 3+ and |z| ≥ 2)<a href="#pairs" class="sub">open →</a></h2>${tb(["PAIR","SIGNAL","Z","RANK"],pp.map(p=>`<tr><td>${p.a} / ${p.b}<td><span class="sg ${p.sig[0]}">${p.sig}</span><td>${p.z.toFixed(2)}<td>${p.rk}/6`).join("")||"<tr><td colspan=4 class=sub>None")}</div>
+ <div class="c"><h2>Scanner triggers (${sc.length})<a href="#scanner" class="sub">open →</a></h2>${tb(["STOCK","SECTOR","SIGNAL","LOGICS"],sc.slice(0,5).map(r=>`<tr><td><b>${r.s}</b><td>${r.sec}<td class="${r.sig=="BULLISH"?"up":"dn"}">${r.sig}<td>${r.sc}/10`).join(""))}</div>`},
+sectors(){let R=SEC().sort((a,b)=>b.x-a.x);if(flt)R=R.filter(s=>st(s.x)!="NEUTRAL");const W=D.wt[sel];let t=0;
+ return hd("Sector Rotation","Strength = relative strength + 1H momentum + breadth + volume")+`<div class="c"><h2>Sectors <label class="sub"><input type="checkbox" id="fl" ${flt?"checked":""}> Strong / Weak only</label></h2>`+
+ tb(["#","SECTOR","STRENGTH","CHG","1H","COMB","ROT"],`<tr class="nf"><td>NF<td>NIFTY 50<td class="up">BULLISH · UP<td>${pc(D.nifty.chg)}<td><td><td>`+R.map((s,i)=>{const c=comb(s),r=rot(s);return`<tr class="r" data-n="${s.n}"><td>${i+1}<td><b>${s.n}</b><div class="sub">${s.ref}</div><td>${bar(s.x)}<td>${pc(s.chg)}<td>${pc(s.h1)}<td>${c?`<span class="pill ${c=="PLUS"?"p":"m"}">${c}</span>`:"–"}<td class="${r.endsWith("STRONG")?"up":"dn"}">${r}`}).join(""))+`</div>
+ <div class="c"><h2>Stock Weightage · ${sel}<span class="sub">tap a sector row</span></h2>${W?tb(["STOCK","WEIGHT","CHG","CONTRIBUTION"],W.map(w=>{const c=w[1]*w[2]/100;t+=c;return`<tr><td><b>${w[0]}</b><td>${w[1]}%<td>${pc(w[2])}<td>${pc(c)}`}).join("")+`<tr class="nf"><td>Total<td><td><td>${pc(t)}`):'<div class="sub" style="padding:12px">Add constituents for this sector in D.wt</div>'}</div>`},
+pairs(){return hd("Pair Trading","A on top, B below. Spread = ln A − β·ln B. Signal when |z| ≥ 2, watch from 1.5")+`<div class="c"><h2>Master sheet · ${PR.length} pairs</h2>`+tb(["PAIR (A / B)","SECTOR","WATCH","SIGNAL","CORRELATION","HURST (H)","COINT (t)","Z-SCORE","RANK"],PR.map(p=>`<tr><td><b>${p.a}</b> / ${p.b}<td>${p.sec}<td>${p.w?"YES":"NO"}<td>${p.sig?`<span class="sg ${p.sig[0]}">${p.sig}</span>`:"–"}<td class="${p.cr>=.7?"up":"dn"}">${(p.cr*100).toFixed(0)}%<td class="${p.H<.5?"up":"dn"}">${p.H<.5?"OK":"NO"} ${p.H.toFixed(2)}<td class="${p.t<-2.86?"up":"dn"}">${p.t.toFixed(2)}<td class="${Math.abs(p.z)>=2?"am":""}">${p.z.toFixed(2)}<td>${p.rk}/6 ${"★".repeat(Math.ceil(p.rk/2))}`).join(""))+`</div><div class="sub">Rank (6 pts): correlation ≥70%/85%, Hurst &lt;0.5/0.4, ADF t &lt; −2.86/−3.34. Signal: z ≥ 2 → SELL A, BUY B; z ≤ −2 → BUY A, SELL B. Exit when |z| &lt; 0.5. ${D.prices?"":"Prices here are SYNTHETIC."}</div>`},
+indices(){return hd("Indices","Trend = price vs 20 and 50 DMA")+`<div class="c">`+tb(["INDEX","LTP","CHG","1H","TREND"],D.indices.map(i=>{const t=i[4]&&i[5]?["UP","up"]:!i[4]&&!i[5]?["DOWN","dn"]:["SIDEWAYS","am"];return`<tr><td><b>${i[0]}</b><td>${i[1].toLocaleString("en-IN")}<td>${pc(i[2])}<td>${pc(i[3])}<td class="${t[1]}">${t[0]}`}).join(""))+`</div>`},
+scanner(){const m=x=>x>0?'<span class="up">▲</span>':x<0?'<span class="dn">▼</span>':'<span class="sub">·</span>';return hd("Logic Scanner","10 logics vote per stock (ORB, VWAP, volume, gap, momentum, sector, RSI, 20/50 DMA trend, 52-week extreme, relative strength vs Nifty); 4+ aligned votes = signal. RSI/TREND/52W need real data")+`<div class="c">`+tb(["STOCK","SECTOR","TIME","PHASE",...LOGIC,"SCORE","SIGNAL"],scanRows().map(r=>`<tr><td><b>${r.s}</b> ${pc(r.chg)}<td>${r.sec}<td>${r.t}<td class="am">${r.ph}${r.v.map(x=>`<td>${m(x)}`).join("")}<td>${r.sc}/10<td class="${r.sig=="BULLISH"?"up":"dn"}">${r.sig||"–"}${r.sig&&(r.sig=="BULLISH")!=(r.chg>=0)&&r.chg?" ⚠":""}`).join(""))+`</div>`},
+calculator(){return hd("Calculator","Position size from capital and risk")+`<div class="c"><div class="fm">${[["cap","Capital (₹)",500000],["rk","Risk %",1],["en","Entry",100],["sl","Stop loss",98],["tg","Target",106]].map(f=>`<div><label>${f[1]}</label><input type="number" id="${f[0]}" value="${f[2]}"></div>`).join("")}</div><div id="co" style="padding:0 14px 14px"></div></div>`}};
+function calc(){const v=i=>+$(i).value,r=v("cap")*v("rk")/100,ps=Math.abs(v("en")-v("sl")),q=ps?Math.floor(r/ps):0;$("co").innerHTML=`Risk <b>₹${r.toLocaleString("en-IN")}</b> · Qty <b>${q}</b> · Capital used <b>₹${(q*v("en")).toLocaleString("en-IN")}</b> · Reward:Risk <b>${ps?(Math.abs(v("tg")-v("en"))/ps).toFixed(2):"–"}</b>`}
+function route(){const h=(location.hash||"#dashboard").slice(1),k=PG[h]?h:"dashboard";$("pg").innerHTML=PG[k]();
+ $("nav").innerHTML=`<div class="lg">TRADING DESK</div><div class="tg">Your Trading Partner</div>`+[["dashboard","Dashboard"],["sectors","Sectors"],["pairs","Pair Trading"],["indices","Indices"],["scanner","Logic Scanner"],["calculator","Calculator"]].map(a=>`<a href="#${a[0]}" class="${a[0]==k?"on":""}">${a[1]}</a>`).join("")+`<a href="index.html">News</a><a href="#" id="th">Theme</a>`;
+ $("th").onclick=e=>{e.preventDefault();const r=document.documentElement;r.dataset.theme=getComputedStyle(r).getPropertyValue("--bg").trim()=="#0a0a0f"?"light":"dark"};
+ document.querySelectorAll("tr.r").forEach(e=>e.onclick=()=>{sel=e.dataset.n;route()});const f=$("fl");if(f)f.onchange=()=>{flt=f.checked;route()};if(k=="calculator"){document.querySelectorAll("#pg input").forEach(i=>i.oninput=calc);calc()}}
+let real=false;async function load(){try{const r=await fetch("data.json?t="+Date.now());if(r.ok){const j=await r.json();if(j.stocks&&j.stocks.length){Object.assign(D,j);real=true}}}catch(e){}buildPairs()}
+(async()=>{await load();route()})();setInterval(async()=>{await load();if(location.hash!="#calculator")route()},60000);
+addEventListener("hashchange",route);
+setInterval(()=>{if(real||!["#sectors","#dashboard","#indices"].includes(location.hash||"#dashboard"))return;D.sectors.forEach(s=>{s[2]+=(Math.random()-.5)*.06;s[3]=cl(s[3]+(Math.random()-.5)*.04,-.5,.5)});route()},5000); // demo ticks
+</script></body></html>
