@@ -1,0 +1,26 @@
+# Put this file at .github/workflows/update-data.yml in your repo (next to tools.html, update_data.py)
+name: update-data
+on:
+  schedule:
+    - cron: "*/5 3-10 * * 1-5"   # every 5 min, 08:30-16:25 IST, Mon-Fri (cron is in UTC)
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: update-data
+  cancel-in-progress: true
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install yfinance pandas numpy
+      - run: python update_data.py
+      - run: |
+          git config user.name "desk-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add data.json
+          git diff --cached --quiet || (git commit -m "data $(date -u +%H:%M)" && git pull --rebase && git push)
