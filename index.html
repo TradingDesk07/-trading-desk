@@ -145,6 +145,7 @@ textarea{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var
 #bn button{flex:1;min-height:52px;border:0;background:none;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:11px;color:var(--mute);padding:4px 2px}
 #bn button[aria-pressed="true"]{color:var(--acc);background:var(--soft);font-weight:700}#bn .ic{font-size:20px;line-height:1}
 body{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}}
+.tp .u{color:var(--up)}.tp .d{color:var(--dn)}.tp .a{color:#c98a00}.tw{overflow-x:auto}.tt{width:100%;border-collapse:collapse;font-size:14px;min-width:560px}.tt th{font-size:11px;color:var(--mute);text-align:left;padding:8px;letter-spacing:.04em}.tt td{padding:9px 8px;border-top:1px solid var(--line);white-space:nowrap}.tt tr.r{cursor:pointer}.tt tr.r:hover{background:var(--soft)}.sg{display:inline-block;width:7px;height:12px;margin-right:2px;border-radius:1px;background:var(--line)}.sg.g{background:var(--up)}.sg.r{background:var(--dn)}.sg.n{background:#e0a800}.bd{font-size:10px;padding:2px 7px;border:1px solid;border-radius:4px}
 </style></head><body>
 <a id="ann" class="ann" hidden></a>
 <div class="tk" id="tq" hidden aria-label="Index aur price flash"></div>
@@ -168,7 +169,7 @@ body{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}}
 <div class="cg" id="calc" hidden></div>
 <div class="cg" id="gl" hidden></div>
 <div id="edu" hidden></div>
-<div id="scn" hidden></div>
+<div id="scn" hidden></div><div id="rot" class="tp" hidden></div><div id="pair" class="tp" hidden></div><div id="lgs" class="tp" hidden></div>
 <div class="ed" id="sa" hidden></div>
 <div id="pt" hidden></div>
 <div id="vids" hidden></div>
@@ -226,7 +227,7 @@ whatsapp:'<path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.1-1.3A10 10 0 1 0 12 2zm5.2 1
 x:'<path d="M18 3h3l-7.2 8.3L22 21h-6.5l-5-6.3L4.7 21H1.6l7.7-8.8L1 3h6.7l4.5 5.8zM16.9 19h1.7L6.3 4.9H4.5z"/>',
 website:'<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18" fill="none" stroke="currentColor" stroke-width="2"/>'};
 var NM={youtube:"YouTube",instagram:"Instagram",telegram:"Telegram",whatsapp:"WhatsApp",x:"X (Twitter)",website:"Website"};
-var TABS=[["all","Sab"],["stocks","Stocks"],["results","Results"],["crypto","Crypto"],["commodities","Gold & Silver"],["ipo","IPO"],["global","Global"],["economy","Economy"],["hindi","Hindi"],["vids","\u25B6 Videos"],["qa","Sawal-Jawab"],["wl","\u2605 Meri List"],["bm","Saved"],["scn","Scanner"],["pt","Paper Trading"],["sa","Scam Alert"],["edu","Education"],["gl","Glossary"],["calc","Calculators"],["dy","Diary"]];
+var TABS=[["all","Sab"],["stocks","Stocks"],["results","Results"],["crypto","Crypto"],["commodities","Gold & Silver"],["ipo","IPO"],["global","Global"],["economy","Economy"],["hindi","Hindi"],["vids","\u25B6 Videos"],["qa","Sawal-Jawab"],["wl","\u2605 Meri List"],["bm","Saved"],["scn","Scanner"],["rot","Sectors"],["pair","Pair Trading"],["lgs","Logic Scanner"],["pt","Paper Trading"],["sa","Scam Alert"],["edu","Education"],["gl","Glossary"],["calc","Calculators"],["dy","Diary"]];
 if(/[?&]creator/.test(location.search))TABS.push(["cr","Creator"]);
 var SECT=["Banking","IT","Auto","Pharma","Metals","Energy"];
 var CATN={stocks:"STOCKS",results:"RESULTS",crypto:"CRYPTO",commodities:"GOLD & SILVER",ipo:"IPO",global:"GLOBAL",economy:"ECONOMY",hindi:"HINDI"};
@@ -285,13 +286,13 @@ var gt=function(){return tab},st=function(v){tab=v;tag="";sec=""};
 btn($("tabs"),TABS.slice(0,9),gt,st,cnt);btn($("tabs2"),TABS.slice(9),gt,st,cnt);
 var ab=document.querySelector('.tabs button[aria-pressed="true"]');if(ab&&ab.scrollIntoView)ab.scrollIntoView({inline:"nearest",block:"nearest"});
 var ap=$("tabs").querySelector('[aria-pressed="true"]');if(ap&&ap.scrollIntoView&&$("tabs").scrollWidth>$("tabs").clientWidth)ap.scrollIntoView({inline:"center",block:"nearest"});
-var nl=tab==="calc"||tab==="gl"||tab==="edu"||tab==="scn"||tab==="sa"||tab==="vids"||tab==="qa"||tab==="pt"||tab==="dy"||tab==="cr",showF=(tab==="all"||tab==="stocks"||tab==="results");
-["sr","list","em","lm"].forEach(function(i){$(i).hidden=nl});$("calc").hidden=tab!=="calc";$("gl").hidden=tab!=="gl";$("edu").hidden=tab!=="edu";$("scn").hidden=tab!=="scn";$("sa").hidden=tab!=="sa";$("vids").hidden=tab!=="vids";$("qa").hidden=tab!=="qa";$("dy").hidden=tab!=="dy";$("cr").hidden=tab!=="cr";$("pt").hidden=tab!=="pt";$("ipo").hidden=tab!=="ipo";$("wl").hidden=tab!=="wl";
+var nl=tab==="calc"||tab==="gl"||tab==="edu"||tab==="scn"||tab==="rot"||tab==="pair"||tab==="lgs"||tab==="sa"||tab==="vids"||tab==="qa"||tab==="pt"||tab==="dy"||tab==="cr",showF=(tab==="all"||tab==="stocks"||tab==="results");
+["sr","list","em","lm"].forEach(function(i){$(i).hidden=nl});$("calc").hidden=tab!=="calc";$("gl").hidden=tab!=="gl";$("edu").hidden=tab!=="edu";$("scn").hidden=tab!=="scn";$("rot").hidden=tab!=="rot";$("pair").hidden=tab!=="pair";$("lgs").hidden=tab!=="lgs";$("sa").hidden=tab!=="sa";$("vids").hidden=tab!=="vids";$("qa").hidden=tab!=="qa";$("dy").hidden=tab!=="dy";$("cr").hidden=tab!=="cr";$("pt").hidden=tab!=="pt";$("ipo").hidden=tab!=="ipo";$("wl").hidden=tab!=="wl";
 btn($("tags"),[["","Sab type"]].concat(TAGS.map(function(t){return[t,t]})),function(){return tag},function(v){tag=v});
 btn($("sect"),[["","Sab sector"]].concat(SECT.map(function(t){return[t,t]})),function(){return sec},function(v){sec=v});
 $("tags").hidden=!showF||nl;$("sect").hidden=!showF||nl;
 if(tab==="wl"){drawWL();try{localStorage.setItem("td-wl-seen",String(Date.now()))}catch(e){}}
-if(tab==="scn")scnDraw();if(tab==="dy")dyDraw();if(tab==="cr")crDraw();if(tab==="pt")ptDraw();if(tab==="vids")vidsDraw();if(tab==="qa"){qaDraw();qaLoad()}
+if(tab==="scn")scnDraw();if(tab==="dy")dyDraw();if(tab==="rot")rotDraw();if(tab==="pair")pairDraw();if(tab==="lgs")lgsDraw();if(tab==="cr")crDraw();if(tab==="pt")ptDraw();if(tab==="vids")vidsDraw();if(tab==="qa"){qaDraw();qaLoad()}
 welcome();dcDraw();bnDraw();
 if(nl)return;
 var q=$("q").value.trim().toLowerCase(),src=tab==="bm"?BM:data;
@@ -500,6 +501,57 @@ var STK=null,SF={sec:"",sort:"name",on:{}};
 var FILT=[["up3","Aaj 3%+ badha",function(s){return s.c>=3}],["dn3","Aaj 3%+ gira",function(s){return s.c<=-3}],["vol2","Volume 20-din average se 2x+",function(s){return s.vr!=null&&s.vr>=2}],["h52","52-week high ke 2% ke andar",function(s){return s.fh>=-2}],["l52","52-week low ke 5% ke andar",function(s){return s.fl<=5}],["r70","RSI 70 ke upar",function(s){return s.rsi!=null&&s.rsi>=70}],["r30","RSI 30 ke neeche",function(s){return s.rsi!=null&&s.rsi<=30}],["a20","20-DMA ke upar",function(s){return s.d20===1}],["b20","20-DMA ke neeche",function(s){return s.d20===0}],["a50","50-DMA ke upar",function(s){return s.d50===1}],["b50","50-DMA ke neeche",function(s){return s.d50===0}]];
 function loadStocks(){if(location.protocol==="file:")return;fetch("stocks.json?t="+Date.now()).then(function(r){return r.json()}).then(function(j){STK=j;breadth();if(tab==="scn")scnDraw();if(tab==="pt")ptDraw()}).catch(function(){})}
 function breadth(){var it=(STK&&STK.items)||[];if(!it.length){$("brd").hidden=true;return}var a=0,d=0,n=it.length;it.forEach(function(s){if(s.c>0)a++;else if(s.c<0)d++});$("ba").style.width=a/n*100+"%";$("bd").style.width=d/n*100+"%";$("bt").textContent="Badhe "+a+" | Gire "+d+" | Barabar "+(n-a-d)+(d?" | A/D "+(a/d).toFixed(2):"");$("brd").hidden=false;$("qc").hidden=false}
+/* ===== TOOLS: Sectors, Pair Trading, Logic Scanner (data: tools.json from fetch_tools.py) ===== */
+var TL=null,TS={flt:1,sel:""};
+function loadTools(){if(location.protocol==="file:")return;fetch("tools.json?t="+Date.now()).then(function(r){return r.json()}).then(function(j){TL=j;if(tab==="rot")rotDraw();if(tab==="pair")pairDraw();if(tab==="lgs")lgsDraw()}).catch(function(){})}
+var TT=(function(){
+var cl=function(x,a,b){return Math.max(a,Math.min(b,x))},mn=function(a){return a.reduce(function(x,y){return x+y},0)/a.length},sd=function(a){var m=mn(a);return Math.sqrt(mn(a.map(function(x){return(x-m)*(x-m)})))};
+var P=function(v){return v==null?"":'<span class="'+(v>0?"u":v<0?"d":"")+'">'+(v>0?"+":"")+v.toFixed(2)+"%</span>"};
+var strength=function(chg,h1,br,vol,nf){return cl(5+cl(chg-nf,-3,3)*.8+cl(h1,-.4,.4)/.4+(br-50)/50*1.5+cl(vol-1,-1,1),0,10)};
+var st=function(x){return x>=6?"STRONG":x<=4?"WEAK":"NEUTRAL"};
+var bar=function(x){var n=Math.round(x),c=x>=6?"g":x<=4?"r":"n",h="";for(var i=0;i<10;i++)h+='<i class="sg '+(i<n?c:"")+'"></i>';return h+" <small>"+x.toFixed(1)+"</small>"};
+var stat=function(){if(!TL||!TL.meta)return"Data abhi nahi aaya.";var a=Math.round((Date.now()-new Date(TL.meta.updated))/6e4);return"Data: "+TL.meta.source+", update "+TL.meta.ist+" IST ("+a+" min pehle)"+(a>30?", purana (market band ho to normal)":"")+". Delayed hai, real-time nahi."};
+var hd=function(t,s){return'<div class="edn"><b>'+t+":</b> "+s+" Ye sirf maths aur conditions hain, kisi stock ko kharidne ya bechne ki salah nahi. "+stat()+"</div>"};
+var empty=function(t,s){return hd(t,s)+'<p class="note2">'+(location.protocol==="file:"?"Ye tools sirf web link (GitHub Pages) par chalte hain.":"tools.json abhi nahi aaya. update-tools workflow ek baar chalane ke baad yahan dikhega.")+"</p>"};
+var sec=function(){var g={},o=[],nf=TL.nifty.chg;TL.stocks.forEach(function(s){(g[s.sec]=g[s.sec]||[]).push(s)});
+for(var k in g){var a=g[k],n=a.length,m=function(f){return mn(a.map(f))},br=100*a.filter(function(s){return s.chg>0}).length/n,pb=100*a.filter(function(s){return s.pcg>0}).length/n,vol=m(function(s){return s.vol}),chg=m(function(s){return s.chg}),h1=m(function(s){return s.h1});
+o.push({n:k,a:a,chg:chg,h1:h1,br:br,vol:vol,x:strength(chg,h1,br,vol,nf),px:strength(m(function(s){return s.pcg}),m(function(s){return s.ph}),pb,vol,TL.nifty.pcg)})}return o};
+var comb=function(s){return s.h1>0&&s.chg>TL.nifty.chg&&s.br>=60&&s.x>=6?"PLUS":s.h1<0&&s.x<5?"MINUS":""};
+var rot=function(s){return st(s.px)!==st(s.x)?st(s.px)+" \u2192 "+st(s.x):""};
+var ols=function(x,y){var mx=mn(x),my=mn(y),a=0,b=0,i;for(i=0;i<x.length;i++){a+=(x[i]-mx)*(y[i]-my);b+=(x[i]-mx)*(x[i]-mx)}var k=a/b,c=my-k*mx,e=0;for(i=0;i<x.length;i++)e+=Math.pow(y[i]-c-k*x[i],2);return{a:c,b:k,se:Math.sqrt(e/(x.length-2)/b)}};
+var dif=function(v){return v.slice(1).map(function(x,i){return x-v[i]})};
+var pst=function(A,B){var la=A.map(function(x){return Math.log(x)}),lb=B.map(function(x){return Math.log(x)}),ra=dif(la),rb=dif(lb),cr=ols(rb,ra).b*sd(rb)/sd(ra),f=ols(lb,la),e=la.map(function(v,i){return v-f.a-f.b*lb[i]}),g=ols(e.slice(0,-1),dif(e)),t=g.b/g.se,lg=[],ls=[];
+for(var L=2;L<=20;L++){lg.push(Math.log(L));ls.push(Math.log(sd(e.slice(L).map(function(v,i){return v-e[i]}))))}
+var H=ols(lg,ls).b,z=(e[e.length-1]-mn(e))/sd(e);return{cr:cr,t:t,H:H,z:z,rk:(cr>=.7)+(cr>=.85)+(H<.5)+(H<.4)+(t<-2.86)+(t<-3.34)}};
+var LG=["ORB","VWAP","VOL","GAP","MOM","SECTOR","RSI","TREND","52W","REL"];
+var scan=function(){var sm={};sec().forEach(function(s){sm[s.n]=s});var nn=function(x){return x!=null},nc=TL.nifty.chg;
+return TL.stocks.map(function(k){var S=sm[k.sec],v=[k.ltp>k.oh?1:k.ltp<k.ol?-1:0,k.ltp>k.vw?1:k.ltp<k.vw?-1:0,k.vol>=1.5?(k.chg>0?1:k.chg<0?-1:0):0,k.gap>=1?1:k.gap<=-1?-1:0,k.chg>=2?1:k.chg<=-2?-1:0,S?(S.x>=6&&k.chg>0?1:S.x<=4&&k.chg<0?-1:0):0,nn(k.rsi)?(k.rsi>=60?1:k.rsi<=40?-1:0):0,nn(k.m20)&&nn(k.m50)?(k.ltp>k.m20&&k.m20>k.m50?1:k.ltp<k.m20&&k.m20<k.m50?-1:0):0,nn(k.h52)&&k.ltp>=k.h52*.97?1:(nn(k.l52)&&k.ltp<=k.l52*1.03?-1:0),k.chg-nc>=1?1:k.chg-nc<=-1?-1:0],bu=v.filter(function(x){return x>0}).length,be=v.filter(function(x){return x<0}).length;
+return{k:k,v:v,sc:Math.max(bu,be),sig:bu>=4&&bu>be?"BULLISH":be>=4&&be>bu?"BEARISH":"",phase:k.t<"10:00"?"MOMENTUM":k.t>="10:30"?"TRENDING":""}}).sort(function(a,b){return b.sc-a.sc})};
+return{P:P,st:st,bar:bar,hd:hd,empty:empty,sec:sec,comb:comb,rot:rot,pst:pst,scan:scan,LG:LG}})();
+function rotDraw(){var b=$("rot"),T="Sector Rotation",S="Strength 0-10 = Nifty ke against relative strength + 1H momentum + breadth + volume. ROT = ek ghante pehle ka state vs ab ka state.";
+if(!TL||!TL.stocks){b.innerHTML=TT.empty(T,S);return}
+var R=TT.sec().sort(function(a,c){return c.x-a.x}),V=TS.flt?R.filter(function(s){return TT.st(s.x)!=="NEUTRAL"}):R,nf=TL.nifty,h=TT.hd(T,S);
+h+='<section class="card"><h3>Sectors <label style="font-weight:400;font-size:12px;margin-left:8px"><input type="checkbox" id="tfl"'+(TS.flt?" checked":"")+"> Sirf Strong / Weak</label></h3><div class=\"tw\"><table class=\"tt\"><tr><th>#<th>SECTOR<th>STRENGTH<th>CHG<th>1H<th>COMB<th>ROT</tr>";
+h+='<tr><td>NF<td><b>NIFTY 50</b><td class="'+(nf.tr==="UP"?"u":nf.tr==="DOWN"?"d":"a")+'">'+nf.tr+"<td>"+TT.P(nf.chg)+"<td><td><td></tr>";
+V.forEach(function(s,i){var c=TT.comb(s),r=TT.rot(s);h+='<tr class="r" data-n="'+s.n+'"><td>'+(i+1)+"<td><b>"+s.n+" <small>"+s.a.length+"</small></b><td>"+TT.bar(s.x)+"<td>"+TT.P(s.chg)+"<td>"+TT.P(s.h1)+"<td>"+(c?'<span class="bd '+(c==="PLUS"?"u":"d")+'">'+c+"</span>":"-")+'<td class="'+(/STRONG$/.test(r)?"u":"d")+'">'+r+"</tr>"});
+h+="</table></div></section>";
+var X=R.filter(function(s){return s.n===TS.sel})[0];
+if(X){h+='<section class="card"><h3>'+X.n+": sector ke stocks</h3><div class=\"tw\"><table class=\"tt\"><tr><th>STOCK<th>LTP<th>CHG<th>1H<th>VOLUME x</tr>";X.a.forEach(function(s){h+="<tr><td><b>"+s.s+"</b><td>"+s.ltp+"<td>"+TT.P(s.chg)+"<td>"+TT.P(s.h1)+"<td>"+s.vol+"</tr>"});h+="</table></div></section>"}
+else h+='<p class="note2">Kisi sector par tap karo, uske stocks yahan dikhenge.</p>';
+b.innerHTML=h;b.querySelectorAll("tr.r").forEach(function(e){e.onclick=function(){TS.sel=e.getAttribute("data-n");rotDraw()}});$("tfl").onchange=function(){TS.flt=this.checked?1:0;rotDraw()}}
+function pairDraw(){var b=$("pair"),T="Pair Trading",S="Do correlated stocks (A upar, B neeche) ka spread = ln A - beta x ln B. Z-score 2 se door ho to spread normal se bahut alag hai.";
+if(!TL||!TL.pairs){b.innerHTML=TT.empty(T,S);return}
+var R=TL.pairs.map(function(p){var s=TT.pst(p[3],p[4]);s.a=p[0];s.b=p[1];s.sec=p[2];return s}).sort(function(x,y){return y.rk-x.rk||Math.abs(y.z)-Math.abs(x.z)}),h=TT.hd(T,S);
+h+='<section class="card"><h3>Master sheet ('+R.length+' pairs)</h3><div class="tw"><table class="tt"><tr><th>PAIR (A / B)<th>SECTOR<th>WATCH<th>SPREAD<th>CORRELATION<th>HURST (H)<th>COINT (t)<th>Z-SCORE<th>RANK</tr>';
+R.forEach(function(p){var sp=p.z>=2?"A mehnga":p.z<=-2?"A sasta":"-";h+="<tr><td><b>"+p.a+"</b> / "+p.b+"<td>"+p.sec+"<td>"+(Math.abs(p.z)>=1.5?"YES":"NO")+'<td class="'+(Math.abs(p.z)>=2?"a":"")+'">'+sp+'<td class="'+(p.cr>=.7?"u":"d")+'">'+(p.cr*100).toFixed(0)+'%<td class="'+(p.H<.5?"u":"d")+'">'+(p.H<.5?"OK ":"NO ")+p.H.toFixed(2)+'<td class="'+(p.t<-2.86?"u":"d")+'">'+p.t.toFixed(2)+"<td>"+p.z.toFixed(2)+"<td>"+p.rk+"/6 "+"\u2605".repeat(Math.ceil(p.rk/2))+"</tr>"});
+b.innerHTML=h+'</table></div></section><p class="note2">Rank (6 point): correlation 70%/85%+, Hurst 0.5/0.4 se kam, ADF t -2.86/-3.34 se neeche. Daily closes ke last 250 din. "A mehnga" = A, B ke mukable apne normal se upar hai (z 2+). Ye kharidne-bechne ka signal nahi hai.</p>'}
+function lgsDraw(){var b=$("lgs"),T="Logic Scanner",S="10 logics har stock par vote karte hain: ORB, VWAP, Volume, Gap, Momentum, Sector, RSI, 20/50 DMA trend, 52-week high/low, Nifty se relative strength. 4+ logics ek taraf ho to condition BULLISH/BEARISH dikhti hai.";
+if(!TL||!TL.stocks){b.innerHTML=TT.empty(T,S);return}
+var m=function(x){return x>0?'<span class="u">\u25B2</span>':x<0?'<span class="d">\u25BC</span>':"<small>\u00B7</small>"},h=TT.hd(T,S)+'<section class="card"><h3>Scanner ('+TL.stocks.length+' stocks)</h3><div class="tw"><table class="tt"><tr><th>STOCK<th>SECTOR<th>TIME<th>PHASE';
+TT.LG.forEach(function(x){h+="<th>"+x});h+="<th>SCORE<th>CONDITION</tr>";
+TT.scan().forEach(function(r){var k=r.k,w=r.sig&&(r.sig==="BULLISH")!==(k.chg>=0)&&k.chg;h+="<tr><td><b>"+k.s+"</b> "+TT.P(k.chg)+"<td>"+k.sec+"<td>"+k.t+'<td class="a">'+r.phase;r.v.forEach(function(x){h+="<td>"+m(x)});h+="<td>"+r.sc+'/10<td class="'+(r.sig==="BULLISH"?"u":"d")+'">'+(r.sig||"-")+(w?" \u26A0":"")+"</tr>"});
+b.innerHTML=h+'</table></div></section><p class="note2">\u26A0 = condition ki direction din ke move se ulti hai. TIME = jab opening-range breakout hua (ya aakhri update). Opening range = pehle 15 minute.</p>'}
+
 function scnDraw(){var box=$("scn");box.innerHTML="";box.appendChild(el("div","edn","Ye scanner sirf tay ki hui conditions ke hisaab se stocks chhaanta hai. Ye kisi stock ko kharidne ya bechne ki salah nahi hai, aur list ka koi stock 'chuna hua' nahi hai. Data Yahoo Finance se, delayed hai aur galat bhi ho sakta hai."));
 var it=(STK&&STK.items)||[];if(!it.length){box.appendChild(el("p","note2",location.protocol==="file:"?"Scanner ka data sirf web link (GitHub Pages) par chalta hai.":"Stocks ka data abhi nahi aaya. update-stocks workflow ek baar chalane ke baad yahan dikhega."));return}
 var secs=[],sm={};it.forEach(function(s){if(!sm[s.sec]){sm[s.sec]=[];secs.push(s.sec)}sm[s.sec].push(s.c)});
@@ -751,5 +803,5 @@ fetch("news.json?t="+Date.now()).then(function(r){return r.json()}).then(functio
 .catch(function(){if(!best){$("st").textContent="News load nahi ho payi. Internet check karo.";draw()}})}
 window.addEventListener("online",load);
 if("serviceWorker" in navigator&&location.protocol.indexOf("http")===0)navigator.serviceWorker.register("sw.js").catch(function(){});
-$("q").oninput=function(){lim=30;draw()};brand();market();calcInit();glInit();ipoInit();eduInit();saInit();events();loadStocks();qaLoad();$("stk").textContent="\uD83D\uDD25 Streak: "+streak()+" din";$("stk").hidden=false;load();setInterval(function(){load();loadStocks()},300000);setInterval(market,60000);
+$("q").oninput=function(){lim=30;draw()};brand();market();calcInit();glInit();ipoInit();eduInit();saInit();events();loadStocks();loadTools();setInterval(loadTools,60000);qaLoad();$("stk").textContent="\uD83D\uDD25 Streak: "+streak()+" din";$("stk").hidden=false;load();setInterval(function(){load();loadStocks()},300000);setInterval(market,60000);
 </script></body></html>
