@@ -1,0 +1,25 @@
+# Isse repo me .github/workflows/update-tools.yml naam se rakho
+name: update-tools
+on:
+  schedule:
+    - cron: "*/5 3-10 * * 1-5"   # har 5 min, 08:30-16:25 IST, Mon-Fri (cron UTC me hota hai)
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: update-tools
+  cancel-in-progress: true
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python fetch_tools.py
+      - run: |
+          git config user.name "desk-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add tools.json
+          git diff --cached --quiet || (git commit -m "tools $(date -u +%H:%M)" && git pull --rebase && git push)
